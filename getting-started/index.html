@@ -119,7 +119,8 @@
 <li><code>parameters.py</code> and <code>database_view.sql.j2</code> in the <code>datasets/sample_dataset</code> subfolder</li>
 <li><code>seattle_weather.db</code> sqlite database in the <code>database</code> folder</li>
 </ul>
-<p>For more details, see docs for the <a href="cli-guide/init.md">init CLI</a>.</p>
+<!-- For more details, see docs for the [init CLI]. -->
+
 <h2 id="provide-the-database-connection">Provide the Database Connection</h2>
 <p>Next, create a squirrels database profile with a specified profile name of your choice. For the rest of the tutorial, we will assume the profile name is <code>myprofile</code>.</p>
 <pre><code class="language-bash">squirrels set-profile myprofile --values sqlite /./database/seattle_weather.db &quot;&quot; &quot;&quot;
@@ -130,7 +131,8 @@
 <p>It is better practice to use an absolute path in the database url for the sqlite database. We are using a relative path to <code>seattle_weather.db</code> here for simplicity.</p>
 </div>
 <p>In the <code>squirrels.yaml</code> file, set the <code>db_profile</code> to <code>myprofile</code>.</p>
-<p>For more details on database profiles, see docs for the <a href="cli-guide/set-profile.md">set-profile CLI</a>.</p>
+<!-- For more details on database profiles, see docs for the [set-profile CLI]. -->
+
 <h2 id="configure-a-dataset">Configure a Dataset</h2>
 <p>In the <code>squirrels.yaml</code> file, set the <code>product</code> property under <code>project_variables</code> to <code>seattle_weather</code>.</p>
 <p>Replace the <code>sample_dataset</code> field (under <code>datasets</code>) with <code>weather_by_time</code>. Specify the following values under the <code>weather_by_time</code> field:</p>
@@ -167,7 +169,8 @@ settings: {}
 <li>Rename <code>datasets/sample_dataset</code> to <code>datasets/weather_by_time</code></li>
 <li>Rename <code>datasets/weather_by_time/database_view1.sql.j2</code> to <code>datasets/weather_by_time/weather_by_time.sql.j2</code></li>
 </ul>
-<p>For more details on the <code>squirrels.yaml</code> file, see the docs for <a href="user-guide/squirrels-manifest.md">squirrels.yaml</a>.</p>
+<!-- For more details on the `squirrels.yaml` file, see the docs for [squirrels.yaml]. -->
+
 <h2 id="create-the-parameters">Create the Parameters</h2>
 <p>In the <code>datasets/weather_by_time/</code> folder, there's a <code>parameters.py</code> file to specify the parameters for the <code>weather_by_time</code> dataset. Replace the contents of the <code>parameters.py</code> file with the following.</p>
 <pre><code class="language-python">from typing import Callable, Dict
@@ -193,7 +196,8 @@ def main() -&gt; Dict[str, sq.Parameter]:
     }
 </code></pre>
 <p>Classes like <code>ParameterOption</code>, <code>Parameter</code>, and <code>SingleSelectParameter</code> are provided by the squirrels framework. In the code above, we extend from the existing <code>ParameterOption</code> class to create our own class with additional attributes. We will be able to use these attributes in the sql query templates we define later. The <code>parameters.py</code> file must specify a <code>main()</code> function that returns a dictionary of parameter names (as keys) to parameter objects (as value). In the code above, we specified one single-select parameter called <code>group_by</code> which will affect the dimension column used for aggregating in the sql query.</p>
-<p>For more details on the available classes for parameter configurations, see docs for <a href="user-guide/parameters.md">parameters.py</a>.</p>
+<!-- For more details on the available classes for parameter configurations, see docs for [parameters.py]. -->
+
 <h2 id="create-the-dynamic-sql-query">Create the Dynamic SQL Query</h2>
 <p>In the <code>datasets/weather_by_time/</code> folder, replace the contents of the <code>weather_by_time.sql.j2</code> file with the following.</p>
 <pre><code class="language-sql">{% set selected_group_by = prms('group_by').get_selected() -%}
@@ -210,9 +214,14 @@ GROUP BY {{ dim_col }}, {{ order_col }}
 ORDER BY {{ order_col }}
 </code></pre>
 <p>The lines written like <code>{% set ... -%}</code> uses Jinja2 syntax to create variables for the templated sql to use. The <code>prms</code> function is available to retrieve a Parameter object, and for SingleSelectParameter's, the <code>.get_selected()</code> method is available to retrieve the selected ParameterOption, which we extended as a GroupByOption. Thus, the <code>dim_col</code> and <code>order_by_col</code> attributes are available on the GroupByOption.</p>
-<p>The database view file can also be a python file. For more details, see the docs for <a href="user-guide/database-views.md">database views</a>.</p>
-<p>Note that this example only uses one "database view", and the "final view" does not apply any further transformations. For more complex use cases, you can also write Jinja2 templated sql or python files for the final view as well to process on the API server from the results of one or more database views. For more details, see the docs for <a href="user-guide/final-view.md">final view</a>.</p>
-<p>In addition, this framework also lets you define the <code>dim_col</code> and <code>order_col</code> variables through python instead of through the Jinja template. For more details, see the docs for <a href="user-guide/context.md">context.py</a>.</p>
+<!-- The database view file can also be a python file. For more details, see the docs for [database views]. -->
+
+<p>Note that this example only uses one "database view", and the "final view" does not apply any further transformations. For more complex use cases, you can also write Jinja2 templated sql or python files for the final view as well to process on the API server from the results of one or more database views. </p>
+<!-- For more details, see the docs for [final view]. -->
+
+<p>In addition, this framework also lets you define the <code>dim_col</code> and <code>order_col</code> variables through python instead of through the Jinja template. </p>
+<!-- For more details, see the docs for [context.py]. -->
+
 <h2 id="test-the-generated-output">Test the Generated Output</h2>
 <p>You can test the output of the generated SQL query and parameters response for the default parameter selections of the <code>weather_by_time</code> dataset by running:</p>
 <pre><code class="language-bash">squirrels test weather_by_time
@@ -220,7 +229,9 @@ ORDER BY {{ order_col }}
 <p>This creates a <code>outputs/weather_by_time</code> subfolder with the generated SQL query without running it yet. Confirm all outputs look as expected. You can also run the following to generate all database views and final view results as csv files.</p>
 <pre><code class="language-bash">squirrels test weather_by_time --runquery
 </code></pre>
-<p>You can also test on non-default parameter selections. For more details, see docs for the <a href="cli-guide/test.md">test CLI</a>.</p>
+<p>You can also test on non-default parameter selections. </p>
+<!-- For more details, see docs for the [test CLI]. -->
+
 <h2 id="run-the-api-server">Run the API Server</h2>
 <p>Run the following CLI command to activate the API server in "debug mode":</p>
 <pre><code class="language-bash">squirrels run --debug
@@ -241,7 +252,17 @@ ORDER BY {{ order_col }}
 </li>
 </ul>
 <p>For a simple UI to test the API interactions, go to <code>http://localhost:8000/</code> from your browser.</p>
-<p>For more details, see docs for the <a href="cli-guide/run.md">run CLI</a>.</p>
+<!-- For more details, see docs for the [run CLI]. -->
+
+<!-- [init CLI]: cli-guide/init.md
+[set-profile CLI]: cli-guide/set-profile.md
+[squirrels.yaml]: user-guide/squirrels-manifest.md
+[parameters.py]: user-guide/parameters.md
+[context.py]:user-guide/context.md
+[database views]: user-guide/database-views.md
+[final view]: user-guide/final-view.md
+[test CLI]: cli-guide/test.md
+[run CLI]: cli-guide/run.md -->
               
             </div>
           </div><footer>
