@@ -1,0 +1,12 @@
+site_name: Squirrels Documentation
+site_url: https://ty2huang.github.io/squirrels-docs/
+
+theme: readthedocs
+
+nav:
+- Home: index.md
+- Getting Started: getting-started.md
+- Overview: overview.md
+
+markdown_extensions:
+- admonition
