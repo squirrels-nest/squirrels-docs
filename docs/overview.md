@@ -44,15 +44,19 @@ Next, a copy of the cached parameter objects are created, and the parameter valu
 
 Once the parameter selections are finalized, "context variables" are constructed. These are python variables that can be created at runtime after parameter selections are set in the [context.py] file. For example, a context variable can be a comma-delimited string value of the selected options of a multi-select parameter. The [context.py] is actually optional, and no context variables are set when this file doesn't exist.
 
-Then, one or more templated sql queries are rendered to run against one or more database(s)/data warehouse(s). These templated can access python variables for parameter objects, context variables, or "project variables". Project variables are fixed values set for the squirrels project such as "version". The rendered sql queries and results are known as "database views". Alternatively, instead of templated sql, database views can also be a python function that returns a pandas dataframe. See the [database views] docs for more information.
+Then, one or more templated sql queries are rendered to run against one or more database(s)/data warehouse(s). These templated can access python variables for parameter objects, context variables, or "project variables". Project variables are fixed values set for the squirrels project such as "version". The rendered sql queries and results are known as "database views". Alternatively, instead of templated sql, database views can also be a python function that returns a pandas dataframe. 
 
-Finally, there is a "final view" that runs in the API server's memory to combine all the database views together to create the final result for the dataset. The final view can be a templated sql query as well. The API server is generally easier to horizontally scale compared to databases. This works by loading all the results of the database views as tables in an in-memory sqlite database and using the final view query to process the tables. The final view can also be a python function that takes all the database views as inputs (as pandas dataframes), and returns one pandas dataframe as a result. Or in the simplest case, the final view can just be the name of one of the database views. The final results are cached based on the query parameters provided such that two parameters API requests don't have to do the same work. See the [final view] docs for more information.
+<!-- See the [database views] docs for more information. -->
+
+Finally, there is a "final view" that runs in the API server's memory to combine all the database views together to create the final result for the dataset. The final view can be a templated sql query as well. The API server is generally easier to horizontally scale compared to databases. This works by loading all the results of the database views as tables in an in-memory sqlite database and using the final view query to process the tables. The final view can also be a python function that takes all the database views as inputs (as pandas dataframes), and returns one pandas dataframe as a result. Or in the simplest case, the final view can just be the name of one of the database views. The final results are cached based on the query parameters provided such that two parameters API requests don't have to do the same work. 
+
+<!-- See the [final view] docs for more information. -->
 
 The diagram below visualizes this workflow:
 
 ![API Workflow](img/squirrels-workflow.png)
 
-[parameters.py]: user-guide/parameters.md
+<!-- [parameters.py]: user-guide/parameters.md
 [context.py]:user-guide/context.md
 [database views]: user-guide/database-views.md
-[final view]: user-guide/final-view.md
+[final view]: user-guide/final-view.md -->
