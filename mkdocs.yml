@@ -5,8 +5,24 @@ theme: readthedocs
 
 nav:
 - Home: index.md
-- Getting Started: getting-started.md
 - Overview: overview.md
+- Tutorial:
+  - Installation: tutorial/installation.md
+  - 1. Initialize a Squirrels Project: tutorial/initialize.md
+  - 2. Configure the Manifest File: tutorial/manifest.md
+  - 3. Create the Dataset Parameters: tutorial/parameters.md
+  - 4. Create the Database View Query: tutorial/dbview.md
+  - 5. Create the Final View Query: tutorial/finalview.md
+  - 6. Test Queries & Activate REST APIs: tutorial/test.md
+  - Use a Context File: tutorial/context.md
+- Command Line Reference:
+  - init: cli/init.md
+  - load-modules: cli/load-modules.md
+  - credential management: cli/credentials.md
+  - test: cli/test.md
+  - run: cli/run.md
+- How To...:
+  - Configure Database Connections: how-to/database.md
 
 markdown_extensions:
 - admonition
