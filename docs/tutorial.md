@@ -2,7 +2,15 @@
 
 An introductory tutorial for Squirrels.
 
-#
+## Installation
+
+First, create and activate a virtual environment for your squirrels project (see Python's [venv] for reference).
+
+To install the squirrels library in your virtual environment, simply run:
+
+```bash
+pip install squirrels
+```
 
 ## Initialize a New Project
 
@@ -12,7 +20,7 @@ You can initialize the project files using:
 squirrels init
 ```
 
-Answer the prompts as follows:
+Prompts will appear for the various files you wish to include in your project. Answer the prompts as follows:
 
 ```
 [?] Include all core project files? (Y/n): y
@@ -136,7 +144,7 @@ def main() -> Dict[str, sq.Parameter]:
     }
 ```
 
-Classes like `ParameterOption`, `Parameter`, and `SingleSelectParameter` are provided by the squirrels framework. In the code above, we extend from the existing `ParameterOption` class to create our own class with additional attributes. We will be able to use these attributes in the sql query templates we define later. The `parameters.py` file must specify a `main()` function that returns a dictionary of parameter names (as keys) to parameter objects (as value). In the code above, we specified one single-select parameter called `group_by` which will affect the dimension column used for aggregating in the sql query.
+Classes like `ParameterOption`, `Parameter`, and `SingleSelectParameter` are provided by the squirrels framework. In the code above, we extend from the existing `ParameterOption` class to create our own class with additional attributes. We will be able to use these attributes in the SQL query templates we define later. The `parameters.py` file must specify a `main()` function that returns a dictionary of parameter names (as keys) to parameter objects (as value). In the code above, we specified one single-select parameter called `group_by` which will affect the dimension column used for aggregating in the SQL query.
 
 <!-- For more details on the available classes for parameter configurations, see docs for [parameters.py]. -->
 
@@ -159,15 +167,15 @@ GROUP BY {{ dim_col }}, {{ order_col }}
 ORDER BY {{ order_col }}
 ```
 
-The lines written like `{% set ... -%}` uses Jinja2 syntax to create variables for the templated sql to use. The `prms` function is available to retrieve a Parameter object, and for SingleSelectParameter's, the `.get_selected()` method is available to retrieve the selected ParameterOption, which we extended as a GroupByOption. Thus, the `dim_col` and `order_by_col` attributes are available on the GroupByOption.
+The lines written like `{% set ... -%}` uses Jinja2 syntax to create variables for the templated SQL to use. The `prms` function is available to retrieve a Parameter object, and for SingleSelectParameter's, the `.get_selected()` method is available to retrieve the selected ParameterOption, which we extended as a GroupByOption. Thus, the `dim_col` and `order_by_col` attributes are available on the GroupByOption.
 
-<!-- The database view file can also be a python file. For more details, see the docs for [database views]. -->
+<!-- The database view file can also be a Python file. For more details, see the docs for [database views]. -->
 
-Note that this example only uses one "database view", and the "final view" does not apply any further transformations. For more complex use cases, you can also write Jinja2 templated sql or python files for the final view as well to process on the API server from the results of one or more database views. 
+Note that this example only uses one "database view", and the "final view" does not apply any further transformations. For more complex use cases, you can also write Jinja2 templated SQL or Python files for the final view as well to process on the API server from the results of one or more database views. 
 
 <!-- For more details, see the docs for [final view]. -->
 
-In addition, this framework also lets you define the `dim_col` and `order_col` variables through python instead of through the Jinja template. 
+In addition, this framework also lets you define the `dim_col` and `order_col` variables through Python instead of through the Jinja template. 
 
 <!-- For more details, see the docs for [context.py]. -->
 

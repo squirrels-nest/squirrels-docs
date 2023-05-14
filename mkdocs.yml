@@ -11,10 +11,9 @@ nav:
   - 1. Initialize a Squirrels Project: tutorial/initialize.md
   - 2. Configure the Manifest File: tutorial/manifest.md
   - 3. Create the Dataset Parameters: tutorial/parameters.md
-  - 4. Create the Database View Query: tutorial/dbview.md
-  - 5. Create the Final View Query: tutorial/finalview.md
-  - 6. Test Queries & Activate REST APIs: tutorial/test.md
-  - Use a Context File: tutorial/context.md
+  - 4. Create the SQL Queries: tutorial/queries.md
+  - 5. Activate the REST APIs & Test: tutorial/testapi.md
+  - 6. Use the Context File: tutorial/context.md
 - Command Line Reference:
   - init: cli/init.md
   - load-modules: cli/load-modules.md
@@ -23,6 +22,9 @@ nav:
   - run: cli/run.md
 - How To...:
   - Configure Database Connections: how-to/database.md
+  - Create Views with SQL and Jinja: sql-views.md
+  - Create Views with Python: python-views.md
+  - Design for Commonality and Variability: how-to/common-vary.md
 
 markdown_extensions:
 - admonition
