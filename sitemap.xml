@@ -2,17 +2,97 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://ty2huang.github.io/squirrels-docs/</loc>
-         <lastmod>2023-04-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://ty2huang.github.io/squirrels-docs/getting-started/</loc>
-         <lastmod>2023-04-27</lastmod>
+         <lastmod>2023-05-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://ty2huang.github.io/squirrels-docs/overview/</loc>
-         <lastmod>2023-04-27</lastmod>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/cli/credentials/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/cli/init/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/cli/load-modules/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/cli/run/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/cli/test/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/how-to/common-vary/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/how-to/database/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/how-to/python-views/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/how-to/sql-views/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/context/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/initialize/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/installation/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/manifest/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/parameters/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/queries/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://ty2huang.github.io/squirrels-docs/tutorial/testapi/</loc>
+         <lastmod>2023-05-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

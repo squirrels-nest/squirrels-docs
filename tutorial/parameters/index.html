@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/parameters/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>3. Create the Dataset Parameters - Squirrels Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "3. Create the Dataset Parameters";
+        var mkdocs_page_input_path = "tutorial\\parameters.md";
+        var mkdocs_page_url = "/squirrels-docs/tutorial/parameters/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Squirrels Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../initialize/">1. Initialize a Squirrels Project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../manifest/">2. Configure the Manifest File</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">3. Create the Dataset Parameters</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#define-a-custom-class-for-parameter-options">Define a Custom Class for Parameter Options</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#define-the-parameter-options">Define the Parameter Options</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#define-the-parameters">Define the Parameters</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../queries/">4. Create the SQL Queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../testapi/">5. Activate the REST APIs & Test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Command Line Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/load-modules/">load-modules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/credentials/">credential management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/test/">test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Squirrels Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Tutorial &raquo;</li>
+      <li>3. Create the Dataset Parameters</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="create-the-dataset-parameters">Create the Dataset Parameters</h1>
+<p>Go into the <code>parameters.py</code> file in the <code>weather_by_time</code> dataset folder. This file contains the definitions of all the widget parameters used in the dataset through a <code>main</code> function. The possible widget parameter classes supported today are <code>SingleSelectParameter</code>, <code>MultiSelectParameter</code>, <code>DateParameter</code>, <code>NumberParameter</code>, and <code>DataSourceParameter</code>. The <code>DataSourceParameter</code> represents a parameter based on a lookup table in a database, and can convert itself into one of the other parameter types. The other parameter types should be self-explanatory.</p>
+<p>The classes (with constructors) are imported from the <code>squirrels</code> library, and all the widget parameter class constructors take <code>name</code> and <code>label</code> as required arguments. The <code>name</code> is what we use to reference the parameter in the dataset queries (as you'll see later in the tutorial), and it's also the name of the corresponding API query parameter. The <code>label</code> represents the human-readable display name to show on the user interface. Different parameter constructors have different required parameters, and most Python IDEs should be able to provide information on the required vs. optional parameters for each constructor.</p>
+<p>We will start from scratch, so remove all the existing code in the <code>main</code> function body.</p>
+<h2 id="define-a-custom-class-for-parameter-options">Define a Custom Class for Parameter Options</h2>
+<p>We will create a single-select parameter called "group_by" which will allow us to aggregate our weather metrics by year, quarter, month, etc. After the imports (before the <code>main</code> function), we can create our own "parameter option" class by extending from the existing <code>SelectParameterOption</code> class from <code>squirrels</code> and defining our own attributes. Here is the class definition:</p>
+<pre><code class="language-python">class GroupByOption(sq.SelectParameterOption):
+    def __init__(self, id, label, dim_col, order_by_col = None):
+        super().__init__(id, label)
+        self.dim_col = dim_col
+        self.order_by_col = order_by_col if order_by_col is not None else dim_col
+</code></pre>
+<p>The <code>dim_col</code> specifies the column name to group by, and the <code>order_by_col</code> lets us pick a column for ordering the results (or orders by <code>dim_col</code> if not specified). If we group by month for instance, we do not want to order by month name alphabetically.</p>
+<h2 id="define-the-parameter-options">Define the Parameter Options</h2>
+<p>Inside the <code>main</code> function, we can now use the new <code>GroupByOption</code> class to define a list of parameter options as such:</p>
+<pre><code class="language-python">group_by_options = [
+    GroupByOption('0', 'Year', 'year'),
+    GroupByOption('1', 'Quarter', 'quarter'),
+    GroupByOption('2', 'Month', 'month_name', 'month_order'),
+    GroupByOption('3', 'Day of Year', 'day_of_year'),
+    GroupByOption('4', 'Condition', 'condition')
+]
+</code></pre>
+<p>The first parameter to the constructor for each <code>SelectParameterOption</code> (or <code>GroupByOption</code> in this case) is an ID that must be distinct across options and would never change in the future. For example, once the API consumers associates ID "0" to mean "group by year" then that association should never be broken even if the label or the ordering of the dropdown options change.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SelectParameterOption class has an <code>is_default</code> attribute to specify the parameter option(s) that are selected by default. By default, <code>is_default</code> is set to False. When none of the parameter options have <code>is_default</code> as True, the first option becomes default for single select parameters.</p>
+</div>
+<h2 id="define-the-parameters">Define the Parameters</h2>
+<p>The <code>main</code> function must return a <code>ParameterSet</code> (a class from the squirrels library), and it simply takes a list of <code>Parameter</code> objects. We can define our "group_by_parameter" as such:</p>
+<pre><code class="language-python">group_by_parameter = sq.SingleSelectParameter('group_by', 'Group By', group_by_options)
+</code></pre>
+<p>Since this is the only parameter we are making for this dataset, we can return the parameter set like this:</p>
+<pre><code class="language-python">return sq.ParameterSet([group_by_parameter])
+</code></pre>
+<p>The contents of the <code>parameters.py</code> file should now look like this:</p>
+<pre><code class="language-python">from typing import Dict, Any
+import squirrels as sq
+
+class GroupByOption(sq.SelectParameterOption):
+    def __init__(self, id, label, dim_col, order_by_col = None):
+        super().__init__(id, label)
+        self.dim_col = dim_col
+        self.order_by_col = order_by_col if order_by_col is not None else dim_col
+
+
+def main(args: Dict[str, Any], *p_args, **kwargs) -&gt; sq.ParameterSet:
+    group_by_options = [
+        GroupByOption('0', 'Year', 'year'),
+        GroupByOption('1', 'Quarter', 'quarter'),
+        GroupByOption('2', 'Month', 'month_name', 'month_order'),
+        GroupByOption('3', 'Day of Year', 'day_of_year'),
+        GroupByOption('4', 'Condition', 'condition')
+    ]
+
+    group_by_parameter = sq.SingleSelectParameter('group_by', 'Group By', group_by_options)
+
+    return sq.ParameterSet([group_by_parameter])
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../manifest/" class="btn btn-neutral float-left" title="2. Configure the Manifest File"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../queries/" class="btn btn-neutral float-right" title="4. Create the SQL Queries">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../manifest/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../queries/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

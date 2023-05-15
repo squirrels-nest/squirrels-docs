@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/initialize/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>1. Initialize a Squirrels Project - Squirrels Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "1. Initialize a Squirrels Project";
+        var mkdocs_page_input_path = "tutorial\\initialize.md";
+        var mkdocs_page_url = "/squirrels-docs/tutorial/initialize/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Squirrels Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">1. Initialize a Squirrels Project</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../manifest/">2. Configure the Manifest File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../parameters/">3. Create the Dataset Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../queries/">4. Create the SQL Queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../testapi/">5. Activate the REST APIs & Test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Command Line Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/load-modules/">load-modules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/credentials/">credential management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/test/">test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Squirrels Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Tutorial &raquo;</li>
+      <li>1. Initialize a Squirrels Project</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="initialize-a-squirrels-project">Initialize a Squirrels Project</h1>
+<p>You can initialize the project files using:</p>
+<pre><code class="language-bash">squirrels init
+</code></pre>
+<p>Prompts will appear for the various files you wish to include in your project. Answer the prompts as follows:</p>
+<pre><code class="language-config">[?] Include all core project files? (Y/n): y
+
+[?] What's the file format for the database view?: sql
+ &gt; sql
+   py
+
+[?] Do you want to add a 'connections.py' file? (y/N): n
+
+[?] Do you want to add a 'context.py' file? (y/N): n
+
+[?] Do you want to add a 'selections.cfg' file? (y/N): n
+
+[?] What's the file format for the final view (if any)?: none
+ &gt; none
+   sql
+   py
+
+[?] What sample sqlite database do you wish to use (if any)?: sample_database
+   none
+ &gt; sample_database
+   seattle_weather
+</code></pre>
+<p>Once the command is executed, the following files are created.</p>
+<ul>
+<li><code>.gitignore</code>, <code>requirements.txt</code>, and <code>squirrels.yaml</code> at the project root</li>
+<li><code>parameters.py</code> and <code>database_view.sql.j2</code> in the <code>datasets/sample_dataset</code> subfolder</li>
+<li><code>sample_database.db</code> sqlite database in the <code>database</code> folder</li>
+</ul>
+<p>If we exclude the sqlite database and files that are common for all Python git projects, then <code>squirrels.yaml</code>, <code>parameters.py</code>, and <code>database_view.sql.j2</code> are essentially all you need to have a working squirrels project!</p>
+<p>Go ahead and take a quick glance at the new files (no need to fully understand them now). Then, run the API server using the command:</p>
+<pre><code class="language-bash">squirrels run
+</code></pre>
+<p>In a web browser, go to <code>http://localhost:8000/</code> or <code>http://127.0.0.1:8000/</code>. This leads you to the Squirrels UI, a convenient interface for testing the dataset APIs. Without changing the widget parameters, clicking "Apply" will show you the dataset for the default parameter selections. For now, the "Upper Bound" parameter is the only one that affects the dataset results.</p>
+<p>To see the API endpoints that provides the information on the parameters and tabular results on the "Sample Dataset", you can use the following URLs to access the JSON results for the default parameter selections:</p>
+<ol>
+<li>Parameters API: <code>http://localhost:8000/squirrels0/sample/v1/sample-dataset/parameters</code></li>
+<li>Dataset API: <code>http://localhost:8000/squirrels0/sample/v1/sample-dataset</code></li>
+</ol>
+<p>After you're done with the API Server, you can terminate it in the terminal using <code>ctrl-c</code>.</p>
+<p>Now, we will use the <code>init</code> command again to add more files that'll come in handy for the rest of the tutorial. Run:</p>
+<pre><code class="language-bash">squirrels init --context --selections-cfg --final-view sql --sample-db seattle_weather
+</code></pre>
+<p>The following files have been added.</p>
+<ul>
+<li><code>context.py</code>, <code>final_view.sql.j2</code>, and <code>selections.cfg</code> in the <code>datasets/sample_dataset</code> subfolder</li>
+<li><code>seattle_weather.db</code> sqlite database in the <code>database</code> folder</li>
+</ul>
+<p>Note that when specifying command line arguments to <code>squirrels init</code>, the prompt no longer show up. You can see <code>squirrels init --help</code> for more details on what various command line arguments do. Currently, all arguments except "--help" and "--overwrite" disables the prompts.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../installation/" class="btn btn-neutral float-left" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../manifest/" class="btn btn-neutral float-right" title="2. Configure the Manifest File">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../installation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../manifest/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

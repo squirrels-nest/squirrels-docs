@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/context/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>6. Use the Context File - Squirrels Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "6. Use the Context File";
+        var mkdocs_page_input_path = "tutorial\\context.md";
+        var mkdocs_page_url = "/squirrels-docs/tutorial/context/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Squirrels Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../initialize/">1. Initialize a Squirrels Project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../manifest/">2. Configure the Manifest File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../parameters/">3. Create the Dataset Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../queries/">4. Create the SQL Queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../testapi/">5. Activate the REST APIs & Test</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">6. Use the Context File</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#final-thoughts">Final Thoughts</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Command Line Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/load-modules/">load-modules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/credentials/">credential management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/test/">test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Squirrels Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Tutorial &raquo;</li>
+      <li>6. Use the Context File</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="use-the-context-file">Use the Context File</h1>
+<p>Let's revisit the SQL/Jinja files. In both files, we use <code>prms["group_by"].get_selected()</code> to get the selected parameter option from the <code>group_by</code> parameters, and access the <code>dim_col</code> attribute from the object. Doing all this in a SQL/Jinja file can be a poor developer experience, especially if you're using an IDE that can provide auto-completion for Python files.</p>
+<p>Instead, we can use the <code>context.py</code> file to improve the developer experience. We use its <code>main</code> function to transform all selected parameter options into useful values (usually strings) returned as dictionary values. Then, in the SQL/Jinja files, the dictionary can be referenced using the <code>ctx</code> keyword.</p>
+<p>For example, we can update the <code>context.py</code> file contents to look like this:</p>
+<pre><code class="language-python">from typing import Dict, Any
+import squirrels as sq
+
+from datasets.weather_by_time.parameters import GroupByOption
+
+def main(prms: sq.ParameterSet, args: Dict[str, Any], *p_args, **kwargs) -&gt; Dict[str, Any]:
+    group_by_param: sq.SingleSelectParameter = prms[&quot;group_by&quot;]
+    selected_group_by: GroupByOption = group_by_param.get_selected()
+    return {
+        &quot;dim_col&quot;: selected_group_by.dim_col,
+        &quot;order_col&quot;: selected_group_by.order_by_col
+    }
+</code></pre>
+<p>Notice that type hints were added for variables <code>group_by_param</code> and <code>selected_group_by</code>. This is useful to provide the IDE information on suggesting methods to auto-complete. For instance, with a list of suggestions, we don't have to memorize that the <code>.get_selected()</code> method exists for SingleSelectParameter objects to get the selected parameter option, or memorize what the method names would be for other parameter classes. Auto-completion would allow these methods to be discovered more easily.</p>
+<p>Now the SQL queries can be written more concisely to reference the context variables instead.</p>
+<p>The contents for <code>aggr_weather_metrics.sql.j2</code> can now be changed to the following.</p>
+<pre><code class="language-sql">SELECT {{ ctx[&quot;dim_col&quot;] }}
+    , {{ ctx[&quot;order_col&quot;] }} as ordering
+    , avg(temp_max) as temperature_high_C
+    , avg(temp_min) as temperature_low_C
+    , avg(precipitation) as precipitation_inches
+    , avg(wind) as wind_mph
+FROM weather
+GROUP BY {{ ctx[&quot;dim_col&quot;] }}, {{ ctx[&quot;order_col&quot;] }}
+</code></pre>
+<p>In addition, the contents for <code>final_view.sql.j2</code> can now be changed to the following.</p>
+<pre><code class="language-sql">SELECT {{ ctx[&quot;dim_col&quot;] }}
+    , temperature_high_C
+    , temperature_low_C
+    , precipitation_inches
+    , wind_mph
+FROM aggregate_weather_metrics
+ORDER BY ordering
+</code></pre>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>A Squirrels project may also contain multiple datasets, or datasets with multiple database views, but that's outside the scope of this tutorial. For an expanded version of the "seattle weather example" project, see this git repo <a href="https://github.com/squirrels-nest/weather-analytics-api-example">here</a>. It serves as an example of how to share common Python code or SQL across multiple datasets while allowing their parameters or query definitions to not be identical. You can also eee this page for how to "<a href="../../how-to/common-vary/">Design for Commonality and Variability</a>".</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../testapi/" class="btn btn-neutral float-left" title="5. Activate the REST APIs & Test"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../cli/init/" class="btn btn-neutral float-right" title="init">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../testapi/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../cli/init/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

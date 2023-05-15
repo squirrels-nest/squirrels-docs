@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/manifest/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>2. Configure the Manifest File - Squirrels Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "2. Configure the Manifest File";
+        var mkdocs_page_input_path = "tutorial\\manifest.md";
+        var mkdocs_page_url = "/squirrels-docs/tutorial/manifest/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Squirrels Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../initialize/">1. Initialize a Squirrels Project</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">2. Configure the Manifest File</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#setting-the-project-variables">Setting the Project Variables</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setting-the-database-connections">Setting the Database Connections</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#defining-the-datasets">Defining the Datasets</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../parameters/">3. Create the Dataset Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../queries/">4. Create the SQL Queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../testapi/">5. Activate the REST APIs & Test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Command Line Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/load-modules/">load-modules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/credentials/">credential management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/test/">test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Squirrels Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Tutorial &raquo;</li>
+      <li>2. Configure the Manifest File</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="configure-the-manifest-file">Configure the Manifest File</h1>
+<p>Go to the <code>squirrels.yaml</code> file. This is the manifest file to configure most of the properties of the Squirrels project.</p>
+<p>In this tutorial, we will focus on the <code>project_variables</code>, <code>db_connections</code>, and <code>datasets</code> sections. We will also assume that all comments in the <a href="https://yaml.org/">yaml</a> file (every '#' to end of line) are removed.</p>
+<h2 id="setting-the-project-variables">Setting the Project Variables</h2>
+<p>The project variables <code>product</code>, <code>major_version</code>, and <code>minor_version</code> are required. In additional to those, you are free to add any of your own project variable.</p>
+<p>In this tutorial, we will be making dataset APIs related to historical weather data in Seattle. Change the <code>product</code> to <code>seattle_weather</code>. We can leave <code>major_version</code> and <code>minor_version</code> unchanged.</p>
+<p>The <code>project_variables</code> section should now look like this:</p>
+<pre><code class="language-yaml">project_variables:
+  product: seattle_weather
+  major_version: 1
+  minor_version: 0
+</code></pre>
+<h2 id="setting-the-database-connections">Setting the Database Connections</h2>
+<p>This section is where we set all the database connection details that we need. We provide a list of connection names here and refer to them in other files. The connection name <code>default</code> must be provided for database views (and <code>DataSourceParameter</code>, which will be mentioned later) that don't specify a connection name explicitly.</p>
+<p>Under <code>default</code>, change the url from <code>sqlite://${username}:${password}@/./database/sample_database.db</code> to <code>sqlite:///./database/seattle_weather.db</code>.</p>
+<p>The syntax for the URL uses <a href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">sqlalchemy database URLs</a>. Since sqlite databases don't require a username and password, the <code>credential_key</code> field can be omitted. More details on setting and using credential keys can be found on the pages for "<a href="../../cli/credentials/">credential management</a>" command line reference and how to "<a href="../../how-to/database/">Configure Database Connections</a>".</p>
+<p>The <code>db_connections</code> section should now look like this:</p>
+<pre><code class="language-yaml">db_connections:
+  default:
+    url: 'sqlite:///./database/seattle_weather.db'
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>db_connections</code> section is optional if you choose to set the connection details in Python with a <code>connections.py</code> file or if your squirrels project doesn't require any database connections. More details can be found on the "<a href="../../how-to/database/">Configure Database Connections</a>" page.</p>
+</div>
+<h2 id="defining-the-datasets">Defining the Datasets</h2>
+<p>This section is where we define the attributes for all datasets created by the squirrels project. Every dataset defined will have their own "parameters API" and "dataset API".</p>
+<p>Currently, there is one dataset with the name <code>sample_dataset</code> (and label <code>Sample Dataset</code>). Change the name to <code>weather_by_time</code>, and change the label to <code>Weather by Time of Year</code>.</p>
+<p>Every dataset defined would have 0 or more <code>database_views</code> and exactly 1 <code>final_view</code>. Each of the <code>database_views</code>/<code>final_view</code> can either be </p>
+<ol>
+<li>A string for the file name of the SQL file (templated with <a href="https://jinja.palletsprojects.com/">Jinja</a>) or Python file to run, or </li>
+<li>An object with the <code>file</code> key and additional optional keys such as <code>db_connection</code> and <code>args</code>. </li>
+</ol>
+<p>In addition to being a templated SQL or Python file, the <code>final_view</code> can also be the name of one of the database views. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At runtime, all the database views for the dataset are run in parallel. If the final view is a SQL file, all the database view results are loaded into an in-memory sqlite database where the table names are the same as the database view names. If the final view is a Python file, the database view results are accessible as a dictionary of database view names to pandas Dataframes. More details on writing final views will come later in the tutorial.</p>
+</div>
+<p>Change the name <code>database_view1</code> to <code>aggregate_weather_metrics</code>, and replace its value from an object to the string <code>aggr_weather_metrics.sql.j2</code>. Change the value of <code>final_view</code> to <code>final_view.sql.j2</code>.</p>
+<p>You may also remove the optional <code>args</code> key to the <code>weather_by_time</code> dataset. The <code>datasets</code> section should now look like this:</p>
+<pre><code class="language-yaml">datasets:
+  weather_by_time:
+    label: Weather by Time of Year
+    database_views:
+      aggregate_weather_metrics: aggr_weather_metrics.sql.j2
+    final_view: final_view.sql.j2
+</code></pre>
+<p>Every dataset that's set in the <code>datasets</code> section must also have a matching folder name in <code>datasets</code> folder. In the <code>datasets</code> folder, rename <code>sample_dataset</code> to <code>weather_by_time</code>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../initialize/" class="btn btn-neutral float-left" title="1. Initialize a Squirrels Project"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../parameters/" class="btn btn-neutral float-right" title="3. Create the Dataset Parameters">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../initialize/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../parameters/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
