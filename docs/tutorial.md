@@ -1,62 +1,77 @@
-# Getting Started with Squirrels
+# Tutorial
 
-An introductory tutorial!
-
----
+An introductory tutorial for Squirrels.
 
 ## Installation
 
-First, in the folder for your squirrels project, create the virtual environment. For example, you can use `pipenv` (install with `pip install pipenv`) to create the virtual environment and install the squirrels library in one command:
+First, create and activate a virtual environment for your squirrels project (see Python's [venv] for reference).
+
+To install the squirrels library in your virtual environment, simply run:
 
 ```bash
-pipenv install squirrels
+pip install squirrels
 ```
-
-Activate the virtual environment with:
-
-```bash
-pipenv shell
-```
-
-and deactivate with `exit`.
 
 ## Initialize a New Project
 
 You can initialize the project files using:
 
 ```bash
-squirrels init --core --sample-db seattle-weather
+squirrels init
 ```
 
-For the purpose of this tutorial, we are using the `--sample-db` option to create a sample database to use. All the core files are also created using the `--core` option. 
+Prompts will appear for the various files you wish to include in your project. Answer the prompts as follows:
 
-!!! Note 
-    Without using any CLI options (i.e., just `squirrels init`), a set of prompts will be provided instead for the file(s) you need, and the core files would be created by default. However, the prompts go away by specifying any CLI options, and the core files are not created by default if the `--core` option is not included.
+```
+[?] Include all core project files? (Y/n): y
 
-Once the command is executed, all core files are created. This includes:
+[?] Do you want to include a 'context.py' file? (y/N): y
 
-- `.gitignore`, `requirements.txt`, and `squirrels.yaml` at the project root
-- `parameters.py` and `database_view.sql.j2` in the `datasets/sample_dataset` subfolder
+[?] Do you want to include a 'selections.cfg' file? (y/N): n
+
+[?] What's the file format for the database view? (ignore if core project files are not included): sql
+ > sql
+   py
+
+[?] What's the file format for the final view (if any)?: sql
+ > none
+   sql
+   py
+
+[?] What sample sqlite database do you wish to use (if any)?: seattle_weather
+   none
+   sample_database
+ > seattle_weather
+```
+
+Once the command is executed, the following files are created. This includes:
+
+- `.gitignore`, `project_vars.yaml`, `connections.py`, `requirements.txt`, and `squirrels.yaml` at the project root
+- `parameters.py`, `context.py` and `database_view.sql.j2` in the `datasets/sample_dataset` subfolder
 - `seattle_weather.db` sqlite database in the `database` folder
 
-<!-- For more details, see docs for the [init CLI]. -->
+For more details, see docs for the [init CLI].
 
 ## Provide the Database Connection
 
-Next, create a squirrels database profile with a specified profile name of your choice. For the rest of the tutorial, we will assume the profile name is `myprofile`.
+Next, create a squirrels database connection key. To do this, go in the `connections.py` file, and change the sqlalchemy url to the `seattle_weather.db` database.
 
-```bash
-squirrels set-profile myprofile --values sqlite /./database/seattle_weather.db "" ""
+In the return statement, you may change the `my_db` key to a new name of your choice for the database connection key. For the rest of this tutorial, we will assume the profile name is `sqlite_db`.
+
+At this point, your `connections.py` file should look something like this (ignoring comments).
+
+```python
+from typing import Dict
+from sqlalchemy import create_engine, QueuePool
+
+from squirrels import ConnectionSet, get_credential
+
+def main(proj: Dict[str, str], *args, **kwargs) -> ConnectionSet:
+    pool = create_engine('sqlite:///./database/seattle_weather.db')
+    return ConnectionSet({'sqlite_db': pool})
 ```
 
-The `--values` option let you specify the sql dialect/driver, database url, username, and password in the command line all at once instead of using the set of prompts.
-
-!!! Note
-    It is better practice to use an absolute path in the database url for the sqlite database. We are using a relative path to `seattle_weather.db` here for simplicity.
-
-In the `squirrels.yaml` file, set the `db_profile` to `myprofile`.
-
-<!-- For more details on database profiles, see docs for the [set-profile CLI]. -->
+In the `squirrels.yaml` file, set the `db_connection` to `sqlite_db`.
 
 ## Configure a Dataset
 
@@ -106,7 +121,7 @@ Rename the following files/folders to reflect the changes you made in the `squir
 In the `datasets/weather_by_time/` folder, there's a `parameters.py` file to specify the parameters for the `weather_by_time` dataset. Replace the contents of the `parameters.py` file with the following.
 
 ```python
-from typing import Callable, Dict
+from typing import Dict
 import squirrels as sq
 
 class GroupByOption(sq.ParameterOption):
@@ -129,7 +144,7 @@ def main() -> Dict[str, sq.Parameter]:
     }
 ```
 
-Classes like `ParameterOption`, `Parameter`, and `SingleSelectParameter` are provided by the squirrels framework. In the code above, we extend from the existing `ParameterOption` class to create our own class with additional attributes. We will be able to use these attributes in the sql query templates we define later. The `parameters.py` file must specify a `main()` function that returns a dictionary of parameter names (as keys) to parameter objects (as value). In the code above, we specified one single-select parameter called `group_by` which will affect the dimension column used for aggregating in the sql query.
+Classes like `ParameterOption`, `Parameter`, and `SingleSelectParameter` are provided by the squirrels framework. In the code above, we extend from the existing `ParameterOption` class to create our own class with additional attributes. We will be able to use these attributes in the SQL query templates we define later. The `parameters.py` file must specify a `main()` function that returns a dictionary of parameter names (as keys) to parameter objects (as value). In the code above, we specified one single-select parameter called `group_by` which will affect the dimension column used for aggregating in the SQL query.
 
 <!-- For more details on the available classes for parameter configurations, see docs for [parameters.py]. -->
 
@@ -152,15 +167,15 @@ GROUP BY {{ dim_col }}, {{ order_col }}
 ORDER BY {{ order_col }}
 ```
 
-The lines written like `{% set ... -%}` uses Jinja2 syntax to create variables for the templated sql to use. The `prms` function is available to retrieve a Parameter object, and for SingleSelectParameter's, the `.get_selected()` method is available to retrieve the selected ParameterOption, which we extended as a GroupByOption. Thus, the `dim_col` and `order_by_col` attributes are available on the GroupByOption.
+The lines written like `{% set ... -%}` uses Jinja2 syntax to create variables for the templated SQL to use. The `prms` function is available to retrieve a Parameter object, and for SingleSelectParameter's, the `.get_selected()` method is available to retrieve the selected ParameterOption, which we extended as a GroupByOption. Thus, the `dim_col` and `order_by_col` attributes are available on the GroupByOption.
 
-<!-- The database view file can also be a python file. For more details, see the docs for [database views]. -->
+<!-- The database view file can also be a Python file. For more details, see the docs for [database views]. -->
 
-Note that this example only uses one "database view", and the "final view" does not apply any further transformations. For more complex use cases, you can also write Jinja2 templated sql or python files for the final view as well to process on the API server from the results of one or more database views. 
+Note that this example only uses one "database view", and the "final view" does not apply any further transformations. For more complex use cases, you can also write Jinja2 templated SQL or Python files for the final view as well to process on the API server from the results of one or more database views. 
 
 <!-- For more details, see the docs for [final view]. -->
 
-In addition, this framework also lets you define the `dim_col` and `order_col` variables through python instead of through the Jinja template. 
+In addition, this framework also lets you define the `dim_col` and `order_col` variables through Python instead of through the Jinja template. 
 
 <!-- For more details, see the docs for [context.py]. -->
 
@@ -212,3 +227,5 @@ For a simple UI to test the API interactions, go to `http://localhost:8000/` fro
 [final view]: user-guide/final-view.md
 [test CLI]: cli-guide/test.md
 [run CLI]: cli-guide/run.md -->
+
+[venv]: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#installing-virtualenv
