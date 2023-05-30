@@ -29,7 +29,7 @@ db_connections: # optional if connections.py exists
 
 ## Adding a database connection in the connections.py file
 
-To add a connection in the connections.py file, you'll need to initialize a connector using the `partial()` function on whichever connection function is used by your database, and add in the name of the connection in the form of a QueuePool as a python library in the return statement of the `main()` function in the `connections.py` script.
+To add a connection in the connections.py file, you'll need to initialize a connector using the `partial()` function on whichever connection function is used by your database, and add in the connector in the form of a QueuePool as a python library in the return statement of the `main()` function in the `connections.py` script.
 
 TODO, make sure with Tim on the requirements of the connector
 
@@ -42,12 +42,6 @@ TODO, make sure with Tim on the requirements of the connector
         'my_db': QueuePool(sample_db_connector)
     })
 ```
-
-
-
-
-
-
 
 Next, create a squirrels database connection key. To do this, go in the `connections.py` file, and change the sqlalchemy url to the `seattle_weather.db` database.
 

@@ -1,6 +1,6 @@
 # Squirrels run
 
-The `squirrels run` command is the main command to actually activates the APIs for each of the datasets, including their parameters and results. When run locally, those will be hosted on the specified host and port.  
+The `squirrels run` command is the main command that actually activates the APIs for each of the datasets, including their parameters and results. When run locally, those will be hosted on the specified host and port.  
 
 The run command provides the following options:
 
@@ -17,5 +17,5 @@ options:
 
 ```
 
-The default port is http://127.0.0.1:8000, you can press Ctrl + C to shut it down.
+The default port is http://127.0.0.1:8000, and can be accessed through the browser. You can press Ctrl + C to shut it down.
 

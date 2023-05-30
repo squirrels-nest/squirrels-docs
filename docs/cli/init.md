@@ -26,13 +26,13 @@ After executing the command, the user would be able to spcify the what and which
 
 ```
 
-The first question answers whether all project files should be generated, if `Y` is specified, it will ask the user which file format the database view would be based off, where the user can specify either python or sql. It will then create all the core files, including a dataset folder which will house a sample database_view1.sql.j2 file, and the parameters.py file. It will also create the requirements.txt and squirrels.yaml files. If `n` is specified, then none of the above mentioned files and folders will be created. Squirrels will then ask individually, whether the optional files `connections.py`, `context.py`, and `selections.cfg` should be generated, regardless of the core files exist. 
+The first question answers whether all project files should be generated, if `Y` is specified, it will then ask the user which file format the database view should be based off, where the user can specify either python or sql. It will then create all the core files, including a dataset folder which will house a sample `database_view1.sql.j2 file`, and the `parameters.py` file if sql is chosen, and `database_view1.py` otherwise. It will also create the `requirements.txt` and `squirrels.yaml` files. If `n` is specified, then none of the above mentioned files and folders will be created, and quirrels will then ask individually, whether the optional files `connections.py`, `context.py`, and `selections.cfg` should be generated, regardless whether the core files exist. 
 
-The second to last question allows the user to specify what file format is to be used for the final view. Currently, we're only allowing for `sql` or python, and none if the user whishes to add a final view file himself later on. 
+The second to last question allows the user to specify what file format is to be used for the final view. Currently, we're only allowing for `sql` or python, and none if the user whishes to add a final view file themselves later on. 
 
-In the last question, the user can chose to which sample database to add, if any at all. Current options include the `sample_database` and `seattle_weather` sqlite databases. 
+In the last question, the user can chose to which sample database to add, if any at all. Current options include the `sample_database` and `seattle_weather` sqlite databases.
 
-The user can also add additional options to the init command:
+The user can also specify which files to add by providing additional options to the init command:
 
 ```bash
 usage: squirrels init [-h] [--no-overwrite] [--core] [--db-view {sql,py}] [--connections] [--context] [--selections-cfg] [--final-view {sql,py}] [--sample-db {sample_database,seattle_weather}]
