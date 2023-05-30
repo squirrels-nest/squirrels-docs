@@ -1,6 +1,8 @@
 # Squirrels run
 
-The `squirrels run` command is the main command to actually execute all the files in the squirrels project in the directory. It will connect to the databases using the connections provided in either `squirrels.yaml` or the `connections.py` files, execute the datasets, and host the results using Uvicorn running on the specified port, where the user can access the executed datasets using a browser. The run command provides the following options:
+The `squirrels run` command is the main command to actually activates the APIs for each of the datasets, including their parameters and results. When run locally, those will be hosted on the specified host and port.  
+
+The run command provides the following options:
 
 ```bash
 
@@ -16,3 +18,4 @@ options:
 ```
 
 The default port is http://127.0.0.1:8000, you can press Ctrl + C to shut it down.
+
