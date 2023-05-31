@@ -8,5 +8,11 @@ There are three commands used to access and govern credentials:
 
 To set a credential, the user can use the `squirrels set-credential [--values VALUES VALUES] key` command to do so. Replace the two `VALUES` in the above command after the `--value` flag with the username and the password for the connection you wish to use respectively, and the `key` positional argument with the name of the connection as specified in either the `squirrels.yaml` manifest file, or the `connections.py` file.
 
+For example, if one would like to set the credentials named `example` then one would run the following:
+
+```bash
+$  squirrels set-credential --values username 12345678 example
+```
+
 On the other hand, `get-all-credentials` and `delete-credential` will return all the credentials and delete them respectively.
 

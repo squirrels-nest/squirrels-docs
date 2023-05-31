@@ -1,7 +1,7 @@
 # Squirrels init
-The `squirrels init` command is the initializer command for the squirrels framework, it is used to set up a new project or to reinitialize an existing one. When used, it will populate the current directory with a barebones version of the squirrels framework, depending on the user's preference. (Make sure with Tim whether this deletes the files in the current directory)
+The `squirrels init` command is the initializer command for the squirrels framework, it is used to set up a new project or to reinitialize an existing one. When used, it will populate the current directory with a barebones version of the squirrels framework, depending on the user's preference. By default, the files created will overwrite the files in the directory, but other pre-existing files that don't share the same name as those selected to be made by the init command will not be touched. 
 
-After executing the command, the user would be able to spcify the what and which files should be initialized by answering the following questions:
+After executing the command, the user would be able to spcify the what and which files should be initialized by answering the following prompts:
 
 ```bash
 [?] Include all core project files? (Y/n): 
@@ -32,7 +32,7 @@ The second to last question allows the user to specify what file format is to be
 
 In the last question, the user can chose to which sample database to add, if any at all. Current options include the `sample_database` and `seattle_weather` sqlite databases.
 
-The user can also specify which files to add by providing additional options to the init command:
+Instead of going through the prompts, the user can also specify which files to add by providing additional options to the init command:
 
 ```bash
 usage: squirrels init [-h] [--no-overwrite] [--core] [--db-view {sql,py}] [--connections] [--context] [--selections-cfg] [--final-view {sql,py}] [--sample-db {sample_database,seattle_weather}]
