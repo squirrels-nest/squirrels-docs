@@ -57,7 +57,7 @@ def main(connection_set: sq.ConnectionSet,
 ```
 
 ## Creating the final view
-The final view holds whatever additional transformation that needs to happen after the query for the database views have been returned. The results from the database views are stored in the `database_views` dictionary, and individual dataframes can be retrieved by referring to the name of the view. The final view is not strictly needed, but can be useful depending on the project.  Use the following template as an starting point:
+The final view holds whatever additional transformation that needs to happen after the queries for the database views have been returned. The results from the database views are stored in the `database_views` dictionary, and individual dataframes can be retrieved by referring to the name of the view. The final view is not strictly needed, but can be useful depending on the project.  Use the following template as an starting point:
 
 ```python
 from typing import Dict, Any
