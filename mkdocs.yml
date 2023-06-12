@@ -28,6 +28,7 @@ nav:
   - Design for Commonality and Variability: how-to/common-vary.md
 - Front-End Reference:
   - Passing Parameter Selections: front-end/selections.md
+  - Response Schema: front-end/response.md
 
 markdown_extensions:
 - admonition

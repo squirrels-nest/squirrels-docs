@@ -110,7 +110,7 @@ def main(database_views: Dict[str, pd.DataFrame],
 
 (This is also a prime example of horrible style, please don't write code like this)
 
-In the seperate script, which we will name `standardize.py`, we can create a function named `standardize`.
+In the seperate script, which we will name `functions.py`, we can create a function named `standardize`.
 
 ```python
 import pandas as pd
@@ -124,7 +124,7 @@ def standardize(df: pd.DataFrame) -> pd.DataFrame:
 In the main script, we would then be able to import the function by using the following statement:
 
 ```python
-from standardize.py import standardize
+from functions import standardize
 ## write import * if you have other functions and want to import everything
 ```
 
@@ -134,7 +134,7 @@ Rewriting the first example would result in something like the following:
 from typing import Dict, Any
 import pandas as pd
 import squirrels as sq
-from standardize.py import standardize
+from functions import standardize
 
 def main(database_views: Dict[str, pd.DataFrame], 
          prms: sq.ParameterSet, ctx: Dict[str, Any], proj: Dict[str, Any], 

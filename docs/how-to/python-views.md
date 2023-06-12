@@ -19,7 +19,8 @@ def main(connection_set: sq.ConnectionSet,
          prms: sq.ParameterSet, ctx: Dict[str, Any], args: Dict[str, Any], 
          *p_args, **kwargs) -> pd.DataFrame:
     # pool = connection_set.get_connection_pool("default")
-    # conn = pool.connect() # use this to get a DBAPI connection from a Pool or sqlalchemy connection from an Engine
+    # conn = pool.connect() # use this to get a DBAPI connection from a Pool or 
+    # sqlalchemy connection from an Engine
     # conn = pool.raw_connection() # use this to get a DBAPI connection from an Engine
 
     # limit: str = ctx['limit'] # use this instead if context.py is defined
@@ -41,7 +42,8 @@ def main(connection_set: sq.ConnectionSet,
          prms: sq.ParameterSet, ctx: Dict[str, Any], args: Dict[str, Any], 
          *p_args, **kwargs) -> pd.DataFrame:
     # pool = connection_set.get_connection_pool("default")
-    # conn = pool.connect() # use this to get a DBAPI connection from a Pool or sqlalchemy connection from an Engine
+    # conn = pool.connect() # use this to get a DBAPI connection from a Pool or 
+    # sqlalchemy connection from an Engine
     # conn = pool.raw_connection() # use this to get a DBAPI connection from an Engine
 
     df = pd.DataFrame({

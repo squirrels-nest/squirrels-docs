@@ -17,7 +17,8 @@ db_connections: # optional if connections.py exists
   default:
     url: 'sqlite:///./database/seattle_weather.db'
 ```
-if you decide to use credentials, a new field for the credential_key should be provided, and depending on the type of database used, masks for username and password can also be used. If you're using sqlite, this should look something like this.
+
+If you decide to use credentials, a new field for the credential_key should be provided, and depending on the type of database used, masks for username and password can also be used. If you're using sqlite, this should look something like this.
 
 ```yaml
 db_connections: # optional if connections.py exists
