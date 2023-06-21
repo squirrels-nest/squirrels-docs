@@ -8,12 +8,12 @@ For example, we can update the `context.py` file contents to look like this:
 
 ```python
 from typing import Dict, Any
-import squirrels as sq
+import squirrels as sr
 
 from datasets.weather_by_time.parameters import GroupByOption
 
-def main(prms: sq.ParameterSet, args: Dict[str, Any], *p_args, **kwargs) -> Dict[str, Any]:
-    group_by_param: sq.SingleSelectParameter = prms["group_by"]
+def main(prms: Dict[str, sr.Parameter], args: Dict[str, Any], *p_args, **kwargs) -> Dict[str, Any]:
+    group_by_param: sr.SingleSelectParameter = prms["group_by"]
     selected_group_by: GroupByOption = group_by_param.get_selected()
     return {
         "dim_col": selected_group_by.dim_col,

@@ -11,7 +11,7 @@ We will start from scratch, so remove all the existing code in the `main` functi
 We will create a single-select parameter called "group_by" which will allow us to aggregate our weather metrics by year, quarter, month, etc. After the imports (before the `main` function), we can create our own "parameter option" class by extending from the existing `SelectParameterOption` class from `squirrels` and defining our own attributes. Here is the class definition:
 
 ```python
-class GroupByOption(sq.SelectParameterOption):
+class GroupByOption(sr.SelectParameterOption):
     def __init__(self, id, label, dim_col, order_by_col = None):
         super().__init__(id, label)
         self.dim_col = dim_col
@@ -41,32 +41,32 @@ The first parameter to the constructor for each `SelectParameterOption` (or `Gro
 
 ## Define the Parameters
 
-The `main` function must return a `ParameterSet` (a class from the squirrels library), and it simply takes a list of `Parameter` objects. We can define our "group_by_parameter" as such:
+The `main` function must return a `Sequence[Parameter]` (where `Parameter` is a class from the squirrels library). We can define our "group_by_parameter" as such:
 
 ```python
-group_by_parameter = sq.SingleSelectParameter('group_by', 'Group By', group_by_options)
+group_by_parameter = sr.SingleSelectParameter('group_by', 'Group By', group_by_options)
 ```
 
 Since this is the only parameter we are making for this dataset, we can return the parameter set like this:
 
 ```python
-return sq.ParameterSet([group_by_parameter])
+return [group_by_parameter]
 ```
 
 The contents of the `parameters.py` file should now look like this:
 
 ```python
-from typing import Dict, Any
-import squirrels as sq
+from typing import Sequence, Dict, Any
+import squirrels as sr
 
-class GroupByOption(sq.SelectParameterOption):
+class GroupByOption(sr.SelectParameterOption):
     def __init__(self, id, label, dim_col, order_by_col = None):
         super().__init__(id, label)
         self.dim_col = dim_col
         self.order_by_col = order_by_col if order_by_col is not None else dim_col
 
 
-def main(args: Dict[str, Any], *p_args, **kwargs) -> sq.ParameterSet:
+def main(args: Dict[str, Any], *p_args, **kwargs) -> Sequence[sr.Parameter]:
     group_by_options = [
         GroupByOption('0', 'Year', 'year'),
         GroupByOption('1', 'Quarter', 'quarter'),
@@ -75,7 +75,7 @@ def main(args: Dict[str, Any], *p_args, **kwargs) -> sq.ParameterSet:
         GroupByOption('4', 'Condition', 'condition')
     ]
 
-    group_by_parameter = sq.SingleSelectParameter('group_by', 'Group By', group_by_options)
+    group_by_parameter = sr.SingleSelectParameter('group_by', 'Group By', group_by_options)
     
-    return sq.ParameterSet([group_by_parameter])
+    return [group_by_parameter]
 ```

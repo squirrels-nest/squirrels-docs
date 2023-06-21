@@ -42,7 +42,7 @@ We can also test on non-default parameter selections. In the dataset folder, cha
 group_by = 2
 ```
 
-When we define multiple parameters, the order of the parameters specifed here must be the same as the order as defined in the `parameters.py` file (especially if cascading parameters exist). The "2" represents selecting the "Month" option for the `group_by` parameter. Run the following to render the SQL queries with `selections.cfg`:
+When we define multiple parameters, the order of the parameters specified here must be the same as the order as defined in the `parameters.py` file (especially if cascading parameters exist). The "2" represents selecting the "Month" option for the `group_by` parameter. Run the following to render the SQL queries with `selections.cfg`:
 
 ```bash
 squirrels test weather_by_time --cfg selections.cfg

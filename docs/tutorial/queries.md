@@ -2,7 +2,7 @@
 
 In the `weather_by_time` dataset folder, rename `database_view1.sql.j2` to `aggr_weather_metrics.sql.j2`. The `final_view.sql.j2` file name can remain the same.
 
-In these files, we will write the analytical sql query to return tabular results for the dataset. These sql query can be templated using Jinja, with access to the `prms`, `ctx`, and `args` variables which stand for "ParameterSet", "Context", and "Arguments" respectively. More information about these variables can be found in the "[Create Views with SQL and Jinja]" page. For now, just know that we can access the selected parameter value(s) by using `prms["parameter name"]` in Jinja.
+In these files, we will write the analytical sql query to return tabular results for the dataset. These sql query can be templated using Jinja, with access to the `prms`, `ctx`, and `args` variables which stand for "Parameter Set", "Context", and "Arguments" respectively. More information about these variables can be found in the "[Create Views with SQL and Jinja]" page. For now, just know that we can access the selected parameter value(s) by using `prms["parameter name"]` in Jinja.
 
 ## Define the Database View
 
