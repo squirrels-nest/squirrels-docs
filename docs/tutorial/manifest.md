@@ -69,9 +69,11 @@ datasets:
 
 Every dataset that's set in the `datasets` section must also have a matching folder name in `datasets` folder. In the `datasets` folder, rename `sample_dataset` to `weather_by_time`.
 
+More details on the manifest file can be found in the [Manifest File] topic guide.
 
 [credential management]: ../cli/credentials.md
 [Configure Database Connections]: ../how-to/database.md
+[Manifest File]: ../topics/manifest.md
 
 [yaml]: https://yaml.org/
 [Jinja]: https://jinja.palletsprojects.com/

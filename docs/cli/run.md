@@ -21,7 +21,7 @@ Assume you have a sample product named "sample_product", a sample dataset named 
 
 |URL Path|Description|
 |:-------|:----------|
-|/squirrels0/sample_product/v1|The catalog API|
+|/squirrels0|The catalog API|
 |/squirrels0/sample_product/v1/sample_dataset/parameters|The parameters API|
 |/squirrels0/sample_product/v1/sample_dataset|The dataset API|
 
