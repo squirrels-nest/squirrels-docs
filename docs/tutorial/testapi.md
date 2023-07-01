@@ -1,4 +1,4 @@
-# Activate the REST APIs & Test
+# Test the REST APIs
 
 In the `weather_by_time` datasets folder, go into `context.py` and replace the body of the `main` function to:
 
@@ -6,7 +6,7 @@ In the `weather_by_time` datasets folder, go into `context.py` and replace the b
 return {}
 ```
 
-We will discuss the `context.py` file later in the tutorial. For now, we are changing it to return an empty dictionary such that we can activate the REST APIs without errors.
+We will discuss the `context.py` file later in the tutorial, but for now, we are clearing it such that we can activate the REST APIs without errors.
 
 To activate the API server, simply run:
 
@@ -29,7 +29,7 @@ To do this for the `weather_by_time` dataset (using the default parameter select
 squirrels test weather_by_time
 ```
 
-This creates the folder path `outputs/weather_by_time` with the generated SQL queries (without actually running them). Confirm all output files look as expected. We can also use the following to run the generated queries as well and generate the database views / final view as csv files.
+This creates the folder path `outputs/weather_by_time` with the generated SQL queries (without actually running them). Take a look at the files in the folder to see what got generated. To run the generated queries as well, and write results as csv files, use the following to command.
 
 ```bash
 squirrels test weather_by_time --runquery
@@ -42,13 +42,13 @@ We can also test on non-default parameter selections. In the dataset folder, cha
 group_by = 2
 ```
 
-When we define multiple parameters, the order of the parameters specified here must be the same as the order as defined in the `parameters.py` file (especially if cascading parameters exist). The "2" represents selecting the "Month" option for the `group_by` parameter. Run the following to render the SQL queries with `selections.cfg`:
+When we define multiple parameters, the order of the parameters specified here must be the same as the order as defined in the `parameters.py` file (especially if cascading parameters exist). The "2" is the ID of the "Month" option for the `group_by` parameter. Run the following to render the SQL queries with `selections.cfg`:
 
 ```bash
 squirrels test weather_by_time --cfg selections.cfg
 ```
 
-See `squirrels test --help` or the page for the "[test command line]" for more details.
+See `squirrels test --help` or the page for the "[test command line]" for more details. See the next tutorial page to [Use the Context File](context.md).
 
 
 [run command line]: ../cli/run.md

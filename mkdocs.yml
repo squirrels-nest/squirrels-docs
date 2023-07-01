@@ -16,7 +16,7 @@ nav:
   - 4. Create the SQL Queries: tutorial/queries.md
   - 5. Activate the REST APIs & Test: tutorial/testapi.md
   - 6. Use the Context File: tutorial/context.md
-  - Final Thoughts: tutorial/conclusion.md
+  - What's Next?: tutorial/conclusion.md
 - Command Line Reference:
   - init: cli/init.md
   - load-modules: cli/load-modules.md
@@ -32,11 +32,13 @@ nav:
   - Create Views with SQL and Jinja: how-to/sql-views.md
   - Create Views with Python: how-to/python-views.md
   - Design for Commonality and Variability: how-to/common-vary.md
+  - Parameter Option Custom Fields: how-to/custom-fields.md
 - Front-End Reference:
   - Response Schema: front-end/response.md
   - Passing Parameter Selections: front-end/selections.md
   - Best Practices for REST API Response: front-end/best-practices.md
 - Release Notes:
+  - Version 0.1.1 (July 2, 2023): release-notes/v-0-1-1.md
   - Version 0.1.0 (June 11, 2023): release-notes/v-0-1-0.md
 
 markdown_extensions:
