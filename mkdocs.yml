@@ -29,6 +29,7 @@ nav:
   - Modifying Dates Using Squirrel's dateutils: topics/modify-dates.md
 - How To...:
   - Configure Database Connections: how-to/database.md
+  - Create Parameters: how-to/writing-parameters.md
   - Create Views with SQL and Jinja: how-to/sql-views.md
   - Create Views with Python: how-to/python-views.md
   - Design for Commonality and Variability: how-to/common-vary.md
@@ -43,3 +44,9 @@ nav:
 
 markdown_extensions:
 - admonition
+- attr_list
+- md_in_html
+
+plugins:
+- drawio_file
+

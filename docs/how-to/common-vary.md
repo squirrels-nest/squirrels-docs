@@ -13,7 +13,7 @@ All these tables have a column for user ID, state, and phone ID, and you want a 
 ```sql
 SELECT 
     ID_USER as USER_ID,
-    {{prms['location'].get_selected_value()}},
+    {{prms['location'].get_selected().column}},
     'Android' AS PHONE_TYPE,
     COUNT(DISTINCT PHONE_ID) AS CELL_COUNT  
 FROM TBL_ANDROID_USERS
@@ -56,11 +56,14 @@ Here a macro is declared by the `{% macro phone_macro(phonetable, user_id_name, 
 
 Supposed it's saved in the same directory, the macro can be imported into the main script by specifying the name of the script, and the name of the macro. 
 
+(TODO: Add in section to import form higher level folder)
+
 ```sql
 {% from 'phone_macro.sql.j2' import phone_macro %}
 ```
 
 The macro can then be called by using double curly braces, and passing in the variables in the followin manner:
+
 ```sql
 {{ phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', prms['location'].get_selected_value()) }}
 ```
@@ -147,4 +150,6 @@ def main(database_views: Dict[str, pd.DataFrame],
 ```
 
 Again, this is a pretty simple example, and importing scripts would allow for much more complex data manipulations to be organized and written in a much more readable manner.
+
+
 
