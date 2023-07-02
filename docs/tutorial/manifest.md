@@ -25,7 +25,7 @@ This section is where we set all the database connection details that we need. W
 
 Under `default`, change the url from `sqlite://${username}:${password}@/./database/sample_database.db` to `sqlite:///./database/seattle_weather.db`.
 
-The syntax for the URL uses [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls). Since sqlite databases don't require a username and password, the `credential_key` field can be omitted. More details on setting and using credential keys can be found in the pages for "[credential management]" command line reference and how to "[Configure Database Connections]".
+The syntax for the URL uses [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls). Since sqlite databases don't require a username and password, the `credential_key` field can be either set to null or omitted entirely. More details on setting and using credential keys can be found in the pages for "[credential management]" command line reference and how to "[Configure Database Connections]".
 
 The `db_connections` section should now look like this:
 

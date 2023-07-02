@@ -19,6 +19,8 @@ squirrels run --debug
 
 Then, in a web browser, go to `http://localhost:8000/` to interact with the dataset APIs you've just created using the Squirrels UI!
 
+Remember to shut down the API by pressing Ctrl + C before proceeding to the next step.
+
 ## Test the Rendered SQL Queries
 
 In practice, you may wish to review what the rendered SQL queries look like (for some set of parameter selections) before actually running the queries.

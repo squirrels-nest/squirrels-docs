@@ -87,6 +87,6 @@ A database view has access to the following keywords:
 
 The first `prms` variable contains all the parameters as specificed and returned in the `parameters.py` file in the form of a dictionary, where the key is the name of the parameter (the first argument passed into the constructor). Likewise, the `ctx` variable is a dictionary as well consisting of parameter options returned by `context.py`. The `proj` is also a similar dictionary, but contains the project information in the `squirrels.yaml` file. (TODO: Double check this with Tim) As shown in the example above, a parameter can be retrieved in the template like a standard Python map within a double curly bracket `{{}}` by specifying the key like `prms['upper_bound']`, and calling the method format the selected parameters, ie `prms['upper_bound'].get_selected_value()`
 
-![](squirrels_dependency.drawio.png)
+
 
 In the future, we also plan to add an optional argument analogus to the sql `USE` statement in the sql template in order to have a way to specify which database is to be used. 

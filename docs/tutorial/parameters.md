@@ -32,13 +32,13 @@ Arbitrary keyword arguments such as `dim_col` and `order_by_col` can be specifie
 The `main` function must return a `Sequence[Parameter]` (where `Parameter` is a class from the squirrels library). We can define our "group_by_parameter" as such:
 
 ```python
-group_by_parameter = sr.SingleSelectParameter('group_by', 'Group By', group_by_options)
+group_by_param = sr.SingleSelectParameter('group_by', 'Group By', group_by_options)
 ```
 
 Since this is the only parameter we are making for this dataset, we can return the parameter set like this:
 
 ```python
-return [group_by_parameter]
+return [group_by_param]
 ```
 
 ## End State
