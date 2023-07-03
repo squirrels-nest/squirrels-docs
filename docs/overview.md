@@ -1,6 +1,6 @@
-# Squirrels Framework
+# Overview 
 
-## Overview
+## The Squirrels Framework
 
 Squirrels is a dynamic and flexible framework designed to simplify and automate data analysis tasks for Business Intelligence and data analytics professionals, while easing the burden on data and machine learning engineers. It allows users to generate complex SQL queries dynamically, based on query parameters, and deliver tabular results. The framework is designed to answer evolving business questions and is particularly useful when the volume of data increases over time.
 
@@ -54,7 +54,7 @@ Finally, a "final view" is created in the API server's memory, which consolidate
  
 Here's an example diagram of how a Squirrels project might be set up:
 
-![Sample Diagram](../diagrams/framework_flow_chart.drawio.png)
+![Sample Diagram](../diagrams/framework_flow_chart.png)
 
 
 ## Applications
