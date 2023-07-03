@@ -32,7 +32,7 @@ Templated SQL queries or Python scripts are rendered to run against one or more 
 When a GET request is made to the base resource path of a project, all available datasets within the project are returned.
 
 ### 2. Parameter Retrieval
-If a GET request is made to a specific dataset's `/parameters` endpoint, all relevant parameter details for that dataset are fetched. This could involve retrieving data from a `parameters.py` file in the project's dataset folder or from database lookup tables.
+If a GET request is made to a specific dataset's parameters, all relevant parameter details for that dataset are fetched. This could involve retrieving data from a `parameters.py` file in the project's dataset folder or from database lookup tables.
 
 ### 3. Parameter Caching
 The first time a dataset API is triggered on a server, the parameters are converted into objects in memory. This process may involve database queries. Once these objects are cached in memory, subsequent API requests will not need to query the database for parameter details again.
