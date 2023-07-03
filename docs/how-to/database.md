@@ -8,7 +8,7 @@ To add a database connection in the squirrels.yaml file, you'll need to add the 
 
 1. The name of the connection, which, for example, is `default` in the `seattle_weather.db`. This is the name that we'll refer to for this connection in the other files
 2. Under the name that defines the collection, you'll need to provided a sqlalchemy url named `url` The syntax for the URL uses [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls).
-3. If you decide to use credentials, you'll also need to provide a `credential_key` in the field as well. Credentials can be set using the `squirrels set-credential` command covered here: [credential management]
+3. If you decide to use credentials, you'll also need to provide a `credential_key` in the field as well. Credentials can be set using the `squirrels set-credential` command covered here: [credential management](../cli/credentials.md)
 
 The `db_connections` section should look something like this:
 
@@ -23,7 +23,7 @@ If you decide to use credentials, a new field for the credential_key should be p
 ```yaml
 db_connections: # optional if connections.py exists
   default: 
-    credential_key: null # optional if null
+    credential_key: example # optional if null
     url: 'sqlite://${username}:${password}@/./database/sample_database.db'
 ```
 

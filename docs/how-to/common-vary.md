@@ -4,38 +4,55 @@
 In order to avoid duplications, the Jinja2 framework supports the use of macros to save a piece of SQL code template that can be used by other templates. To those unfamiliar with the term macro, a macro is essentially Jinja's analogy to a function. As we are using Jinja2 for our SQL templates, the squirrels framework supports the use of macros in all its xxx.sql.j2. files. 
 
 To provide an example, let's say that you are analyzing the geographical distribution of different phone makers in the United States. For that purpose, you have three tables from different datasources that you've imported into your database, each with different schemas: 
+
 1. `tbl_android_users`
 2. `tbl_users_apple`
 3. `tbl_dumbphone_users`
 
-All these tables have a column for user ID, state, and phone ID, and you want a view with all the users, the state or the city (depending on the parameter), the type of phone they use, and a count of the number of phones that they have. If you were to write out the full query, you'd have something like this.
+All these tables have a column for user ID, state, and phone ID, and you want a view with all the users, the state or the city (depending on the parameter), the type of phone they use, and a count of the number of phones that they have. For this example let's say that you have `parameters.py` defined in the following manner, where location is a single select parameter that specifies the location with the following options `CITY`, `COUNTY`, and `STATE`.  
+
+```python
+def main(args: Dict[str, Any], *p_args, **kwargs) -> Sequence[sr.Parameter]:
+
+    location_options = [
+        sr.SelectParameterOption('0', 'City', column = 'CITY'),
+        sr.SelectParameterOption('1', 'County', column = 'COUNTY'),
+        sr.SelectParameterOption('2', 'State', column = 'STATE')
+    ]
+
+    location_param = sr.SingleSelectParameter('location', 'Location', location_options)
+    
+    return [location_param]
+
+```
+
+If you were to write out the full query, you'd have something like this.
 
 ```sql
 SELECT 
     ID_USER as USER_ID,
-    {{prms['location'].get_selected().column}},
+    {{prms['location'].get_selected("column")}},
     'Android' AS PHONE_TYPE,
     COUNT(DISTINCT PHONE_ID) AS CELL_COUNT  
 FROM TBL_ANDROID_USERS
-GROUP BY USER_ID, {{prms['location'].get_selected_value()}}
+GROUP BY USER_ID, {{prms['location'].get_selected("column")}}
 UNION ALL
 SELECT 
     ID_ACCT as USER_ID,
-    {{prms['location'].get_selected_value()}},
+    {{prms['location'].get_selected("column")}},
     'Apple' AS PHONE_TYPE,
     COUNT(DISTINCT PHONE_ID) AS CELL_COUNT  
 FROM TBL_USERS_APPLE
-GROUP BY USER_ID, {{prms['location'].get_selected_value()}}
+GROUP BY USER_ID, {{prms['location'].get_selected("column")}}
 UNION ALL
 SELECT 
     ID_CUST as USER_ID,
-    {{prms['location'].get_selected_value()}},
+    {{prms['location'].get_selected("column")}},
     'DumbPhone' AS PHONE_TYPE,
     COUNT(DISTINCT CELL_ID) AS CELL_COUNT  
 FROM TBL_DUMBPHONE_USERS
-GROUP BY USER_ID, {{prms['location'].get_selected_value()}}
+GROUP BY USER_ID, {{prms['location'].get_selected("column")}}
 ```
-where location is a single select parameter that specifies the location, with the following options `CITY`, `COUNTY`, and `STATE`. 
 
 Pretty repetitive, huh? 
 
@@ -56,28 +73,32 @@ Here a macro is declared by the `{% macro phone_macro(phonetable, user_id_name, 
 
 Supposed it's saved in the same directory, the macro can be imported into the main script by specifying the name of the script, and the name of the macro. 
 
-(TODO: Add in section to import form higher level folder)
+```sql
+{% from phone_macro import phone_macro %}
+```
+
+Alternatively, if you'd like to save the file in another folder, then you'd need to import the macro by specifying the path to the file. For example, if you saved it in the root of the `dataset` folder, then you'd write your import statement like this:
 
 ```sql
-{% from 'phone_macro.sql.j2' import phone_macro %}
+{% from project.datasets.phone_macro import phone_macro %}
 ```
 
 The macro can then be called by using double curly braces, and passing in the variables in the followin manner:
 
 ```sql
-{{ phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', prms['location'].get_selected_value()) }}
+{{ phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', prms['location'].get_selected("column")) }}
 ```
 
 Rewriting the original script to use macros, we get something with much less duplicate code:
 
 ```sql
-{% from 'phone_macro.sql.j2' import phone_macro %}
+{% from phone_macro import phone_macro %}
 
-{{ phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', prms['location'].get_selected_value()) }}
+{{ phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', prms['location'].get_selected("column")) }}
 UNION ALL
-{{ phone_macro('TBL_USERS_APPLE', 'ID_ACCT', 'Apple', 'PHONE_ID', prms['location'].get_selected_value()) }}
+{{ phone_macro('TBL_USERS_APPLE', 'ID_ACCT', 'Apple', 'PHONE_ID', prms['location'].get_selected("column")) }}
 UNION ALL
-{{ phone_macro('TBL_DUMBPHONE_USERS', 'ID_CUST', 'DumbPhone', 'CELL_ID', prms['location'].get_selected_value()) }}
+{{ phone_macro('TBL_DUMBPHONE_USERS', 'ID_CUST', 'DumbPhone', 'CELL_ID', prms['location'].get_selected("column")) }}
 ```
 
 Please note that this is only one possible use case, and that there are millions of other use cases. For some more possible use cases, this guide [here](https://towardsdatascience.com/jinja-sql-%EF%B8%8F-7e4dff8d8778) provides some other use cases of macros used in sql Jinja templates. Although this is not squirrels specific, it should still provide be a nice reference. 
@@ -129,6 +150,8 @@ In the main script, we would then be able to import the function by using the fo
 ```python
 from functions import standardize
 ## write import * if you have other functions and want to import everything
+## if you saved it somewher other than the same folder, you'd need to specify the path:
+## from project.datasets.functions import standardize
 ```
 
 Rewriting the first example would result in something like the following:
