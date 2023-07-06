@@ -1,6 +1,6 @@
 # Creating Parameters
 
-All views, regardless of whether it's written using Python or SQL, saved in the dataset folder that the parameters specified in the `parameters.py` and `context.py` files. Before writing the templates, you'll need to specify the kinds of parameters that would be used. Below is an example of a `parameters.py` file included in the project: 
+Before writing the query templates, you'll need to specify the kinds of parameters that would be used. Below is an example of a `parameters.py` file included in the project: 
 
 ```python
 def main(args: Dict[str, Any], *p_args, **kwargs) -> sq.ParameterSet:
@@ -24,34 +24,26 @@ def main(args: Dict[str, Any], *p_args, **kwargs) -> sq.ParameterSet:
     
     date_example = sq.DateParameter('as_of_date', 'As Of Date', '2020-01-01')
     
-    number_example = sq.NumberParameter('upper_bound', 'Upper Bound', min_value=1, max_value=10, 
-                                        increment=1, default_value=5)
+    number_example = sq.NumberParameter('upper_bound', 'Upper Bound', min_value=1, max_value=10, increment=1, default_value=5)
     
     return [single_select_example, multi_select_example, date_example, number_example]
 ```
 
-Currently, there are three supported types of parameters:
+Currently, there are five supported types of parameters:
 
-1. Single Select Parameter
-Among the options provided, only one would be able to be selected from the UI.
+1. Single-select Parameter
 2. Multi-select Parameter
-Among the options provided, one or more options can be selected. 
 3. Date Parameter
-This is a range parameter, that allows a range of dates to be selected.
 4. Number Parameter
-This is also a range parameter, where a range of numbers can be selected. 
-5. NumRange Parameter
-6. Dataset Parameter
-
+5. DataSource Parameter
 
 In order to create a parameter, here are some basic steps:
 
 1. Create a `parameters.py` file for you dataset, this should be automatically generated in a sample dataset when you ran `squirrels init`.
 2. Copy/move the `parameters.py` file from the original sample dataset folder to your own dataset folder.
-3. In the file, create/Specify your parameter options
+3. In the file, create/specify your parameter options
 4. Initialize parameters
 5. Add parameter to the return list
-
 
 Steps 1 - 2 are self explanatory, so we will not go in detail for those. 
 
@@ -59,7 +51,7 @@ Steps 1 - 2 are self explanatory, so we will not go in detail for those.
 
 All parameters need options to choose from, and in the squirrels framework, most parameter options come in the form of a `SelectParameterOption` object, which houses all the data that pertains to that specific option, ie. its ID, label, and other custom attributes. We then use a list to contain all the parameter options for a single parameter, which will get passed through to the parameter constructor. 
 
-Using the example above, the parameter options for the single select and multi select is as following:
+Using the example above, the parameter options for the single-select and multi-select parameters are as following:
 
 ```python
     single_select_options = (
@@ -77,9 +69,15 @@ Using the example above, the parameter options for the single select and multi s
     )
 ```
 
-where the first argument is the SelectParameterOption's ID, and the next is its label. Those arguments are necessary, while the rest are optional. 
+In the SelectParameterOption constructor, the first argument is the ID, and the next is its label. Those arguments are necessary, while the rest are optional. 
 
-An example of a useful optional argument is the `parent_option_id` that's also in the example above. When specified, the parameter option would only show up, if the parameter id with the `parent_option_id` is selected. 
+An example of a useful optional argument is the `parent_option_id` that's also in the example above. When specified, the parameter option would only show up if the parameter id with the `parent_option_id` is selected. 
+
+If creating a DataSource parameter that converts itself into another parameter, specify a "DataSource" that represents the query or table name, and associate columns to specific attributes like ID and label. An example is shown where the table/query, ID column, and label column are required.
+
+```python
+    category_ds = sr.SelectionDataSource("SELECT DISTINCT Category_ID, Category FROM categories", "Category_ID", "Category")
+```
 
 ## Creating the parameters (Step 4)
 
@@ -95,11 +93,23 @@ In general, each constructor to create a parameter object follows the following 
 
 Note how since the multiselect parameter options uses the `parent_option_id` field, the call to the MultiSelectParameter's constructor also specifies the parent parameter to which the options refer.
 
-For the Date, Number, and NumRange parameters, please refer to the docstrings.
+The following are examples of Date and Number parameters:
 
-TODO -- Add explanation for the Dataset parameter.
+```python
+    date_example = sq.DateParameter('as_of_date', 'As Of Date', '2020-01-01')
 
-For more information on what parameters can do, please refer to the [Parameter Option Custom Fields](custom-fields.md) page for information on how to create custom fields.
+    number_example = sq.NumberParameter('upper_bound', 'Upper Bound', min_value=1, max_value=10, increment=1, default_value=5)
+```
+
+A DataSource parameter is a parameter that can convert itself into another parameter based on a lookup table in the database. The following example is a DataSource parameter specifying the parameter class it converts to, the ID, the label, and the selection datasource.
+
+```python
+    category_filter = sr.DataSourceParameter(sr.MultiSelectParameter, "category", "Category Filter", category_ds)
+```
+
+For more information on the Date, Number, and DataSource parameters, please refer to the docstrings.
+
+For more information on specifying custom fields on parameter options, please refer to this page for how to [Set Parameter Option Custom Fields](../how-to/custom-fields.md).
 
 ## Adding the parameters to the return set (Step 5)
 

@@ -1,4 +1,4 @@
-# Parameter Option Custom Fields
+# Set Parameter Option Custom Fields
 
 When building out multi-select or single-select parameters, you can associate all parameter option with a custom attribute, and access the attribute for the selected parameter option(s) at runtime in `context.py` or the query views.
 
@@ -7,7 +7,7 @@ Suppose you want to build a parameter for "time period" that has options "Year t
 1. Add the custom field "date_modifier" to each parameter option in `parameters.py`. Can be specified as arbitrary keyword arguments or using the `custom_fields` argument.
 2. Access the custom "date_modifier" at runtime for the selected option, and use it to transform some date string.
 
-More details on squirrel's date modifiers can be found in the [Modifying Dates Using Squirrel's dateutils](../topics/modify-dates.md) topic guide.
+More details on squirrel's date modifiers can be found in the how-to guide for [Modify Dates Using Squirrel's dateutils](../how-to/modify-dates.md).
 
 Custom fields can also come from lookup tables as "custom columns" when using the `custom_cols` argument in the constructor of `SelectionDataSource` for a `DataSourceParameter`.
 

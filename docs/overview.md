@@ -40,10 +40,10 @@ For each API request, a copy of the cached parameters is created, and parameter 
 ### 3. Generating Database Views
 Next, templated SQL queries or Python scripts are rendered to create "database views" by the dataset API. The queries can access Python variables for parameter objects, context variables, or project variables.
 
-### 4. Running the queries
-The generated queries are then run against the data base/warehouse, and the results are then fetched back to the API.
+### 4. Running the Database Queries
+The generated queries are then run against the database, and the results are then fetched back to the API.
 
-### 5. Generating the Final View
+### 5. Running the Final View Query
 Finally, a "final view" is created in the API server's memory, which consolidates all the database views to generate the final result for the dataset. The final view is also cached based on the query parameters provided, such that repeated API requests do not require redundant work.
 
 ### 6. Sending back the results
@@ -58,6 +58,6 @@ Squirrels' versatility makes it a handy tool for various data analytics scenario
 
 In essence, Squirrels is a powerful framework that promotes flexible, reusable, and efficient data analysis and answers evolving business questions, ensuring that your BI and data analysis is always ahead of the curve.
 
-Here's an example diagram of how a Squirrels project might be set up:
+Here's an example diagram of how a Squirrels project might be set up to have multiple datasets querying from multiple databases:
 
 ![Framework Flow Chart](static/framework_flow_chart.png)

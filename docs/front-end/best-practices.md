@@ -1,4 +1,4 @@
-# Best Practices for REST API Response
+# Best Practices for Using REST API Response
 
 Here are some best practices around using the response of the parameters and dataset API.
 

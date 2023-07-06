@@ -101,7 +101,36 @@ Its JSON schema is as follows:
 Below is an example response from the weather example: 
 
 ```json
-{"response_version":0,"products":[{"name":"seattle_weather","versions":[{"major_version":1,"latest_minor_version":0,"datasets":[{"name":"weather_by_time","label":"Weather by Time of Year","parameters_path":"/squirrels0/seattle-weather/v1/weather-by-time/parameters","result_path":"/squirrels0/seattle-weather/v1/weather-by-time","first_minor_version":0},{"name":"weather_trend","label":"Weather Trend","parameters_path":"/squirrels0/seattle-weather/v1/weather-trend/parameters","result_path":"/squirrels0/seattle-weather/v1/weather-trend","first_minor_version":0}]}]}]}
+{
+    "response_version": 0,
+    "products": [
+        {
+            "name": "seattle_weather",
+            "versions": [
+                {
+                    "major_version": 1,
+                    "latest_minor_version": 0,
+                    "datasets": [
+                        {
+                            "name": "weather_by_time",
+                            "label": "Weather by Time of Year",
+                            "parameters_path": "/squirrels0/seattle-weather/v1/weather-by-time/parameters",
+                            "result_path": "/squirrels0/seattle-weather/v1/weather-by-time",
+                            "first_minor_version": 0
+                        },
+                        {
+                            "name": "weather_trend",
+                            "label": "Weather Trend",
+                            "parameters_path": "/squirrels0/seattle-weather/v1/weather-trend/parameters",
+                            "result_path": "/squirrels0/seattle-weather/v1/weather-trend",
+                            "first_minor_version": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
 ```
 
 ## Parameters
@@ -225,7 +254,40 @@ The parameters response provides the information regarding what parmeters is to 
 Here's an example response from the weathers example: 
 
 ```json
-{"response_version":0,"parameters":[{"widget_type":"SingleSelectParameter","name":"group_by","label":"Group By","options":[{"id":"0","label":"Year"},{"id":"1","label":"Quarter"},{"id":"2","label":"Month"},{"id":"3","label":"Day of Year"},{"id":"4","label":"Condition"}],"trigger_refresh":false,"selected_id":"0"}]}
+{
+    "response_version": 0,
+    "parameters": [
+        {
+            "widget_type": "SingleSelectParameter",
+            "name": "group_by",
+            "label": "Group By",
+            "options": [
+                {
+                    "id": "0",
+                    "label": "Year"
+                },
+                {
+                    "id": "1",
+                    "label": "Quarter"
+                },
+                {
+                    "id": "2",
+                    "label": "Month"
+                },
+                {
+                    "id": "3",
+                    "label": "Day of Year"
+                },
+                {
+                    "id": "4",
+                    "label": "Condition"
+                }
+            ],
+            "trigger_refresh": false,
+            "selected_id": "0"
+        }
+    ]
+}
 ```
 
 ## Dataset
@@ -300,6 +362,62 @@ Below is its JSON schema:
 Here's an example response from the weather example: 
 
 ```json
-{"response_version":0,"schema":{"fields":[{"name":"year","type":"integer"},{"name":"temperature_high_C","type":"number"},{"name":"temperature_low_C","type":"number"},{"name":"precipitation_inches","type":"number"},{"name":"wind_mph","type":"number"}],"dimensions":[]},"data":[{"year":2012,"temperature_high_C":15.2767759563,"temperature_low_C":7.2896174863,"precipitation_inches":3.349726776,"wind_mph":3.4008196721},{"year":2013,"temperature_high_C":16.0589041096,"temperature_low_C":8.1539726027,"precipitation_inches":2.2684931507,"wind_mph":3.015890411},{"year":2014,"temperature_high_C":16.995890411,"temperature_low_C":8.6624657534,"precipitation_inches":3.3775342466,"wind_mph":3.3876712329},{"year":2015,"temperature_high_C":17.4279452055,"temperature_low_C":8.8356164384,"precipitation_inches":3.1210958904,"wind_mph":3.1597260274}]}
+{
+    "response_version": 0,
+    "schema": {
+        "fields": [
+            {
+                "name": "year",
+                "type": "integer"
+            },
+            {
+                "name": "temperature_high_C",
+                "type": "number"
+            },
+            {
+                "name": "temperature_low_C",
+                "type": "number"
+            },
+            {
+                "name": "precipitation_inches",
+                "type": "number"
+            },
+            {
+                "name": "wind_mph",
+                "type": "number"
+            }
+        ],
+        "dimensions": []
+    },
+    "data": [
+        {
+            "year": 2012,
+            "temperature_high_C": 15.2767759563,
+            "temperature_low_C": 7.2896174863,
+            "precipitation_inches": 3.349726776,
+            "wind_mph": 3.4008196721
+        },
+        {
+            "year": 2013,
+            "temperature_high_C": 16.0589041096,
+            "temperature_low_C": 8.1539726027,
+            "precipitation_inches": 2.2684931507,
+            "wind_mph": 3.015890411
+        },
+        {
+            "year": 2014,
+            "temperature_high_C": 16.995890411,
+            "temperature_low_C": 8.6624657534,
+            "precipitation_inches": 3.3775342466,
+            "wind_mph": 3.3876712329
+        },
+        {
+            "year": 2015,
+            "temperature_high_C": 17.4279452055,
+            "temperature_low_C": 8.8356164384,
+            "precipitation_inches": 3.1210958904,
+            "wind_mph": 3.1597260274
+        }
+    ]
+}
 ```
-

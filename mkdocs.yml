@@ -1,5 +1,5 @@
 site_name: Squirrels Documentation
-site_url: https://ty2huang.github.io/squirrels-docs/
+site_url: https://squirrels-nest.github.io/squirrels-docs/
 
 theme: readthedocs
 extra_css:
@@ -26,7 +26,6 @@ nav:
 - Topic Guides:
   - Manifest File (squirrels.yaml): topics/manifest.md
   - Major vs Minor Version (Best Practices): topics/versioning.md
-  - Modifying Dates Using Squirrel's dateutils: topics/modify-dates.md
 - How To...:
   - Configure Database Connections: how-to/database.md
   - Create Parameters: how-to/writing-parameters.md
@@ -34,10 +33,11 @@ nav:
   - Create Views with Python: how-to/python-views.md
   - Design for Commonality and Variability: how-to/common-vary.md
   - Parameter Option Custom Fields: how-to/custom-fields.md
+  - Modify Dates Using Squirrel's dateutils: how-to/modify-dates.md
 - Front-End Reference:
   - Response Schema: front-end/response.md
   - Passing Parameter Selections: front-end/selections.md
-  - Best Practices for REST API Response: front-end/best-practices.md
+  - Best Practices for Using REST API Response: front-end/best-practices.md
 - Release Notes:
   - Version 0.1.1 (July 2, 2023): release-notes/v-0-1-1.md
   - Version 0.1.0 (June 11, 2023): release-notes/v-0-1-0.md
@@ -46,7 +46,3 @@ markdown_extensions:
 - admonition
 - attr_list
 - md_in_html
-
-plugins:
-- drawio_file
-

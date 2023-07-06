@@ -22,7 +22,7 @@ group_by_options = [
 
 The first two parameters to the `SelectParameterOption` constructors are the ID and label. The ID that must be distinct across options and would never change in the future. For example, once the API consumers associate ID "0" to mean "group by year" then that association should never be broken even if the label or the ordering of the dropdown options change.
 
-Arbitrary keyword arguments such as `dim_col` and `order_by_col` can be specified to the `SelectParameterOption` constructor which will be treated as custom fields to the parameter option that can be used later. See topic guide on [Parameter Option Custom Fields](../topics/custom-fields.md) for more details.
+Arbitrary keyword arguments such as `dim_col` and `order_by_col` can be specified to the `SelectParameterOption` constructor which will be treated as custom fields to the parameter option that can be used later. See this page for how to [Set Parameter Option Custom Fields](../how-to/custom-fields.md).
 
 !!! Note
     The SelectParameterOption class has an `is_default` attribute to specify the parameter option(s) that are selected by default. By default, `is_default` is set to False. When none of the parameter options have `is_default` as True, the first option is default for single-select parameters, and nothing is selected by default for multi-select parameter.

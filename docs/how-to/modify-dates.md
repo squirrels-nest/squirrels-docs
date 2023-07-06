@@ -1,4 +1,4 @@
-# Modifying Dates Using Squirrel's dateutils
+# Modify Dates Using Squirrel's dateutils
 
 The squirrels library has a submodule called dateutils that can be used to transform date variables in Python with ease. To import the dateutils module, simply do:
 

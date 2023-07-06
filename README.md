@@ -1,6 +1,6 @@
 # Squirrels Documentation
 
-This is the source code repository for https://squirrels-nest.github.io/squirrels-docs/
+This is the source code repository for https://squirrels-nest.github.io/squirrels-docs/.
 
 ## Getting Started
 

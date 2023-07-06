@@ -53,7 +53,7 @@ To see the API endpoints that provides the information on the parameters and tab
 1. Parameters API: `http://localhost:8000/squirrels0/sample/v1/sample-dataset/parameters`
 2. Dataset API: `http://localhost:8000/squirrels0/sample/v1/sample-dataset`
 
-After you're done with the API Server, you can terminate it in the terminal using `ctrl-c`.
+After you're done with the API server, you can terminate it in the terminal by pressing "Ctrl+C".
 
 Now, we will use the `init` command again to add more files that'll come in handy for the rest of the tutorial. Run:
 
