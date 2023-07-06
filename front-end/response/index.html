@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/front-end/response/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Response Schema - Squirrels Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Response Schema";
+        var mkdocs_page_input_path = "front-end\\response.md";
+        var mkdocs_page_url = "/squirrels-docs/front-end/response/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Squirrels Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/initialize/">1. Initialize a Squirrels Project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/manifest/">2. Configure the Manifest File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/parameters/">3. Create the Dataset Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/queries/">4. Create the SQL Queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/testapi/">5. Activate the REST APIs & Test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Command Line Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/load-modules/">load-modules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/credentials/">credential management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/test/">test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Response Schema</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#catalog">Catalog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dataset">Dataset</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Squirrels Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Front-End Reference &raquo;</li>
+      <li>Response Schema</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="response-schema">Response Schema</h1>
+<p>The squirrels framework interacts with the front end by sending three types of JSON response: </p>
+<ol>
+<li>catalog</li>
+<li>parameters</li>
+<li>datasets</li>
+</ol>
+<h2 id="catalog">Catalog</h2>
+<p>The catalog response is named squirrels0, and its API path is: <code>catalog: /squirrels0</code>, and includes the higher level information regarding the entire project, ie. major and minor version numbers, pahts to the datasets and parameters, etc. </p>
+<p>Its JSON schema is as follows:</p>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;response_version&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;description&quot;: &quot;Version of response to control the logic for parsing&quot;
+    },
+    &quot;products&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;description&quot;: &quot;The list of API products in the catalog&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;name&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;Name of the product (may contain '/') specified in API path&quot;
+          },
+          &quot;versions&quot;: {
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;description&quot;: &quot;List of major versions for the product and applicable datasets&quot;,
+            &quot;items&quot;: {
+              &quot;type&quot;: &quot;object&quot;,
+              &quot;properties&quot;: {
+                &quot;major_version&quot;: {
+                  &quot;type&quot;: &quot;integer&quot;,
+                  &quot;description&quot;: &quot;Major version number for product, which is also specified in API path&quot;
+                },
+                &quot;datasets&quot;: {
+                  &quot;type&quot;: &quot;array&quot;,
+                  &quot;description&quot;: &quot;List of datasets applicable to major version&quot;,
+                  &quot;items&quot;: {
+                    &quot;type&quot;: &quot;object&quot;,
+                    &quot;properties&quot;: {
+                      &quot;name&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;Name of dataset specified in API path&quot;
+                      },
+                      &quot;label&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;Display label dataset&quot;
+                      },
+                      &quot;parameters_path&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;API path to dataset parameters. In the form '/&lt;product&gt;/v&lt;major version&gt;/&lt;dataset&gt;/parameters&quot;
+                      },
+                      &quot;result_path&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;API path to dataset results. In the form '/&lt;product&gt;/v&lt;major version&gt;/&lt;dataset&gt;&quot;
+                      },
+                      &quot;first_minor_version&quot;: {
+                        &quot;type&quot;: &quot;integer&quot;,
+                        &quot;description&quot;: &quot;The first minor version (in current major version) where the dataset was included. Datasets can only be removed in a new major version&quot;
+                      }
+                    },
+                    &quot;required&quot;: [
+                      &quot;name&quot;,
+                      &quot;label&quot;,
+                      &quot;parameters_path&quot;,
+                      &quot;result_path&quot;,
+                      &quot;first_minor_version&quot;
+                    ]
+                  }
+                }
+              },
+              &quot;required&quot;: [
+                &quot;major_version&quot;,
+                &quot;datasets&quot;
+              ]
+            }
+          }
+        },
+        &quot;required&quot;: [
+          &quot;name&quot;,
+          &quot;versions&quot;
+        ]
+      }
+    }
+  },
+  &quot;required&quot;: [
+    &quot;response_version&quot;,
+    &quot;products&quot;
+  ]
+}
+</code></pre>
+<p>Below is an example response from the weather example: </p>
+<pre><code class="language-json">{
+    &quot;response_version&quot;: 0,
+    &quot;products&quot;: [
+        {
+            &quot;name&quot;: &quot;seattle_weather&quot;,
+            &quot;versions&quot;: [
+                {
+                    &quot;major_version&quot;: 1,
+                    &quot;latest_minor_version&quot;: 0,
+                    &quot;datasets&quot;: [
+                        {
+                            &quot;name&quot;: &quot;weather_by_time&quot;,
+                            &quot;label&quot;: &quot;Weather by Time of Year&quot;,
+                            &quot;parameters_path&quot;: &quot;/squirrels0/seattle-weather/v1/weather-by-time/parameters&quot;,
+                            &quot;result_path&quot;: &quot;/squirrels0/seattle-weather/v1/weather-by-time&quot;,
+                            &quot;first_minor_version&quot;: 0
+                        },
+                        {
+                            &quot;name&quot;: &quot;weather_trend&quot;,
+                            &quot;label&quot;: &quot;Weather Trend&quot;,
+                            &quot;parameters_path&quot;: &quot;/squirrels0/seattle-weather/v1/weather-trend/parameters&quot;,
+                            &quot;result_path&quot;: &quot;/squirrels0/seattle-weather/v1/weather-trend&quot;,
+                            &quot;first_minor_version&quot;: 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<p>The parameters response provides the information regarding what parmeters is to be shown, and is named <code>parameters</code> Its API path is as follows:
+<code>/squirrels0/&lt;product&gt;/v&lt;major version&gt;/&lt;dataset&gt;/parameters</code></p>
+<p>Below is the JSON schema:</p>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;response_version&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;description&quot;: &quot;Version of response to control the logic for parsing&quot;
+    },
+    &quot;parameters&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;description&quot;: &quot;List of parameters application for the dataset&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;widget_type&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;Type of the parameter (SingleSelectParameter, MultiSelectParameter, DateParameter, NumberParameter, etc.)&quot;
+          },
+          &quot;name&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;Name of the parameter, matches the query parameter name for the dataset API&quot;
+          },
+          &quot;label&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;Display label for the parameter&quot;
+          },
+          &quot;options&quot;: {
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;description&quot;: &quot;List of selection options for SingleSelectParameter and MultiSelectParameter&quot;,
+            &quot;items&quot;: {
+              &quot;type&quot;: &quot;object&quot;,
+              &quot;properties&quot;: {
+                &quot;id&quot;: {
+                  &quot;type&quot;: &quot;string&quot;,
+                  &quot;description&quot;: &quot;ID for the option, to be used to pass selected options in query parameters&quot;
+                },
+                &quot;label&quot;: {
+                  &quot;type&quot;: &quot;string&quot;,
+                  &quot;description&quot;: &quot;Display label for the selection option&quot;
+                }
+              },
+              &quot;required&quot;: [
+                &quot;id&quot;,
+                &quot;label&quot;
+              ]
+            }
+          },
+          &quot;trigger_refresh&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;,
+            &quot;description&quot;: &quot;Whether new parameter selections should trigger another parameters API call, which can be used to change the options of children parameters. Only applicable to (and required for) SingleSelectParameter and MultiSelectParameter&quot;
+          },
+          &quot;selected_id&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;ID of the selected option. Only applicable to (and required for) SingleSelectParameter&quot;
+          },
+          &quot;selected_ids&quot;: {
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;description&quot;: &quot;ID of the selected option(s). Only applicable to (and required for) MultiSelectParameter&quot;,
+            &quot;items&quot;: {
+              &quot;type&quot;: &quot;string&quot;
+            }
+          },
+          &quot;include_all&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;,
+            &quot;description&quot;: &quot;Flag for whether no selections is same as all selected. Only applicable to (and required for) MultiSelectParameter&quot;
+          },
+          &quot;order_matters&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;,
+            &quot;description&quot;: &quot;Flag for whether the order of the selection matters. Only applicable to (and required for) MultiSelectParameter&quot;
+          },
+          &quot;selected_date&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;Selected date in yyyy-mm-dd format. Only applicable to (and required for) DateParameter&quot;
+          },
+          &quot;min_value&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;pattern&quot;: &quot;/^\d*\.?\d*$/&quot;,
+            &quot;description&quot;: &quot;Minimum number for a number slider. Only applicable to (and required for) NumberParameter&quot;
+          },
+          &quot;max_value&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;pattern&quot;: &quot;/^\d*\.?\d*$/&quot;,
+            &quot;description&quot;: &quot;Maximum number for a number slider. Only applicable to (and required for) NumberParameter&quot;
+          },
+          &quot;increment&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;pattern&quot;: &quot;/^\d*\.?\d*$/&quot;,
+            &quot;description&quot;: &quot;Steps / intervals for a number slider. Only applicable to (and required for) NumberParameter&quot;
+          },
+          &quot;selected_value&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;pattern&quot;: &quot;/^\d*\.?\d*$/&quot;,
+            &quot;description&quot;: &quot;Selected number on a number slider. Only applicable to (and required for) NumberParameter&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;widget_type&quot;,
+          &quot;name&quot;,
+          &quot;label&quot;
+        ]
+      }
+    }
+  },
+  &quot;required&quot;: [
+    &quot;response_version&quot;,
+    &quot;parameters&quot;
+  ]
+}
+</code></pre>
+<p>Here's an example response from the weathers example: </p>
+<pre><code class="language-json">{
+    &quot;response_version&quot;: 0,
+    &quot;parameters&quot;: [
+        {
+            &quot;widget_type&quot;: &quot;SingleSelectParameter&quot;,
+            &quot;name&quot;: &quot;group_by&quot;,
+            &quot;label&quot;: &quot;Group By&quot;,
+            &quot;options&quot;: [
+                {
+                    &quot;id&quot;: &quot;0&quot;,
+                    &quot;label&quot;: &quot;Year&quot;
+                },
+                {
+                    &quot;id&quot;: &quot;1&quot;,
+                    &quot;label&quot;: &quot;Quarter&quot;
+                },
+                {
+                    &quot;id&quot;: &quot;2&quot;,
+                    &quot;label&quot;: &quot;Month&quot;
+                },
+                {
+                    &quot;id&quot;: &quot;3&quot;,
+                    &quot;label&quot;: &quot;Day of Year&quot;
+                },
+                {
+                    &quot;id&quot;: &quot;4&quot;,
+                    &quot;label&quot;: &quot;Condition&quot;
+                }
+            ],
+            &quot;trigger_refresh&quot;: false,
+            &quot;selected_id&quot;: &quot;0&quot;
+        }
+    ]
+}
+</code></pre>
+<h2 id="dataset">Dataset</h2>
+<p>After the parameters have been selected, the dataset reponse is used to send over the actual data to be displayed/used in the form of a json file. Its API path is: <code>dataset: /squirrels0/&lt;product&gt;/v&lt;major version&gt;/&lt;dataset&gt;</code> and has the same name as the dataset. </p>
+<p>Below is its JSON schema:</p>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;response_version&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;description&quot;: &quot;Version of response to control the logic for parsing&quot;
+    },
+    &quot;schema&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;fields&quot;: {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;description&quot;: &quot;The ordering of the columns and their data types&quot;,
+          &quot;items&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;name&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;description&quot;: &quot;Name of the column&quot;
+              },
+              &quot;type&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;description&quot;: &quot;Data type of the column (string, number, etc.)&quot;
+              }
+            },
+            &quot;required&quot;: [
+              &quot;name&quot;,
+              &quot;type&quot;
+            ]
+          }
+        },
+        &quot;dimensions&quot;: {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;description&quot;: &quot;The dimension columns in specific order&quot;,
+          &quot;items&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;Name of the column&quot;
+          }
+        }
+      },
+      &quot;required&quot;: [
+        &quot;fields&quot;,
+        &quot;dimensions&quot;
+      ]
+    },
+    &quot;data&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;description&quot;: &quot;List of rows represented as JSON objects&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;
+      }
+    }
+  },
+  &quot;required&quot;: [
+    &quot;response_version&quot;,
+    &quot;schema&quot;,
+    &quot;data&quot;
+  ]
+}
+</code></pre>
+<p>Here's an example response from the weather example: </p>
+<pre><code class="language-json">{
+    &quot;response_version&quot;: 0,
+    &quot;schema&quot;: {
+        &quot;fields&quot;: [
+            {
+                &quot;name&quot;: &quot;year&quot;,
+                &quot;type&quot;: &quot;integer&quot;
+            },
+            {
+                &quot;name&quot;: &quot;temperature_high_C&quot;,
+                &quot;type&quot;: &quot;number&quot;
+            },
+            {
+                &quot;name&quot;: &quot;temperature_low_C&quot;,
+                &quot;type&quot;: &quot;number&quot;
+            },
+            {
+                &quot;name&quot;: &quot;precipitation_inches&quot;,
+                &quot;type&quot;: &quot;number&quot;
+            },
+            {
+                &quot;name&quot;: &quot;wind_mph&quot;,
+                &quot;type&quot;: &quot;number&quot;
+            }
+        ],
+        &quot;dimensions&quot;: []
+    },
+    &quot;data&quot;: [
+        {
+            &quot;year&quot;: 2012,
+            &quot;temperature_high_C&quot;: 15.2767759563,
+            &quot;temperature_low_C&quot;: 7.2896174863,
+            &quot;precipitation_inches&quot;: 3.349726776,
+            &quot;wind_mph&quot;: 3.4008196721
+        },
+        {
+            &quot;year&quot;: 2013,
+            &quot;temperature_high_C&quot;: 16.0589041096,
+            &quot;temperature_low_C&quot;: 8.1539726027,
+            &quot;precipitation_inches&quot;: 2.2684931507,
+            &quot;wind_mph&quot;: 3.015890411
+        },
+        {
+            &quot;year&quot;: 2014,
+            &quot;temperature_high_C&quot;: 16.995890411,
+            &quot;temperature_low_C&quot;: 8.6624657534,
+            &quot;precipitation_inches&quot;: 3.3775342466,
+            &quot;wind_mph&quot;: 3.3876712329
+        },
+        {
+            &quot;year&quot;: 2015,
+            &quot;temperature_high_C&quot;: 17.4279452055,
+            &quot;temperature_low_C&quot;: 8.8356164384,
+            &quot;precipitation_inches&quot;: 3.1210958904,
+            &quot;wind_mph&quot;: 3.1597260274
+        }
+    ]
+}
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../how-to/modify-dates/" class="btn btn-neutral float-left" title="Modify Dates Using Squirrel's dateutils"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../selections/" class="btn btn-neutral float-right" title="Passing Parameter Selections">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../how-to/modify-dates/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../selections/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

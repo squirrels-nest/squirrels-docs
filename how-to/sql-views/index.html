@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/how-to/sql-views/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/how-to/sql-views/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>Create Views with SQL and Jinja - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -64,6 +65,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul>
@@ -78,15 +81,56 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
                   </li>
               </ul>
-              <p class="caption"><span class="caption-text">How To...</span></p>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
               <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Create Views with SQL and Jinja</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#creating-database-views">Creating database views</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creating-an-empty-file-and-copying-step-1-2">Creating an empty file and copying (Step 1 - 2)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#adding-the-view-to-squirrelsyaml-step-3">Adding the view to squirrels.yaml (Step 3)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#populating-the-file-step-4">Populating the file (Step 4)</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -103,6 +147,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>How To... &raquo;</li>
       <li>Create Views with SQL and Jinja</li>
     <li class="wy-breadcrumbs-aside">
     </li>
@@ -113,9 +158,53 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="create-views-with-sql-and-jinja">Create Views with SQL and Jinja</h1>
+<p><strong>Note</strong>: This is the SQL version of how to create views, for the Python template version see: <a href="../python-views/">Create Views with Python</a></p>
+<p>There are two types of views that are relavent to a squirrels project: database views, and final views. The "database view" refers to the view that's directly selected from the database using a connection as described here <a href="../database/">Creating a Database Connection</a>, while on the other hand, the final view query joins the database views to generate the final dataset that is sent to the front end.</p>
+<h2 id="creating-database-views">Creating database views</h2>
+<p>Regardless whether you use Python or SQL for your database view, you'll need create the parameters in the parameters.py file. This is delineated here: <a href="../writing-parameters/">Creating Parameters</a>. </p>
+<p>To create a database view, here are a few simple steps to follow:</p>
+<ol>
+<li>Create sample file by using <code>squirrels init</code>.</li>
+<li>Copy over the file from the <code>sample_dataset</code> folder to your desired dataset folder, and rename the file accordingly. </li>
+<li>Update the file name in <code>squirrels.yaml</code> to the name of the file you've just copied over.</li>
+<li>Populate the file with the query template for your dataset.</li>
+</ol>
+<h3 id="creating-an-empty-file-and-copying-step-1-2">Creating an empty file and copying (Step 1 - 2)</h3>
+<p>Run the <code>squirrels init --core --db-view sql</code> command to create a <code>database_view1.sql.j2</code> file in the <code>sample_dataset</code> folder, or run <code>squirrels init --final-view sql</code> to create a <code>final_view.sql.j2</code> file. These files can then serve as templates for the subsequent SQL database views that you'll need to create for your project. After you've created and located the file(s), you can then copy it over to your desired dataset folder, and rename your file(s) accordingly.</p>
+<h3 id="adding-the-view-to-squirrelsyaml-step-3">Adding the view to squirrels.yaml (Step 3)</h3>
+<p>After a view has been created, regardless of whether it's using SQL or Python, the views will need to be added to the manifest files in order for the project to be able to see the files. Under <code>datasets</code>, add a name for the dataset folder the views are housed in, and provide the label for the dataset. Under <code>database_views</code>, provide each database views' file name, name of the connection under <code>db_connection</code>, and any additional arguments. Make sure to add the file suffixes.</p>
+<p>The datasets field should have at least this much:</p>
+<pre><code class="language-yaml">datasets:
+  &lt;your_dataset&gt;:
+    label: &lt;your_dataset label&gt;
+    database_views:
+      database_view1: 
+        file: &lt;new_database_view_name&gt;.sql.j2
+        db_connection: default # optional if default
+        args: {} # optional if empty
+    final_view: &lt;new_final_view_name&gt;.sql.j2
+    args: {} # optional if empty
+</code></pre>
+<h3 id="populating-the-file-step-4">Populating the file (Step 4)</h3>
+<p>After you've copied over the file, feel free to delete them and make your own view from scratch.</p>
+<p>The database view queries the database, and the final view is joins all the results of the database views together in a SQLite query. </p>
+<p>Both of these views are Jinja templates for SQL, and the standard Jinja syntax applies. For database views, the specific SQL syntax is determined by the database as specified in either <code>connection.py</code> or <code>squirrels.yaml</code>. See <a href="/how-to/database.md">Configure Database Connections</a> for more details regarding database connections and how to create it. </p>
+<p>Both the final and database views have access to the following keywords:</p>
+<ol>
+<li>prms</li>
+<li>ctx</li>
+<li>args</li>
+</ol>
+<p>The first <code>prms</code> variable contains all the parameters as specified in the <code>parameters.py</code> file in the form of a dictionary, where the key is the name of the parameter (the first argument passed into the parameter's constructor). Likewise, the <code>ctx</code> variable is a dictionary as well consisting of parameter options returned by <code>context.py</code>. The <code>args</code> is also a similar dictionary, but contains the project information in the <code>squirrels.yaml</code> file, see <a href="../../topics/manifest/">Manifest File (squirrels.yaml)</a> for more information on "project variables" and "args". </p>
+<p>A parameter can be retrieved in the template like a standard Python map within a double curly bracket <code>{{}}</code> by specifying the key like <code>prms['single_select_param']</code>, and calling a method for the selected parameter, such as <code>prms['single_select_param'].get_selected_label_quoted()</code>.</p>
+<p>In the future, we also plan to add an optional argument analogus to the sql <code>USE</code> statement in the sql template in order to have a way to specify which database is to be used dynamically. Currently, it can only be specified in the <code>squirrels.yaml</code> file as a fixed value using <code>db_connection</code>.</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../writing-parameters/" class="btn btn-neutral float-left" title="Create Parameters"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../python-views/" class="btn btn-neutral float-right" title="Create Views with Python">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -137,6 +226,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
+      <span><a href="../writing-parameters/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../python-views/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

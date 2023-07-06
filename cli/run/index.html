@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/cli/run/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/cli/run/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>run - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -64,6 +65,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul class="current">
@@ -76,17 +79,48 @@
                   <li class="toctree-l1"><a class="reference internal" href="../test/">test</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">run</a>
+    <ul class="current">
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -113,13 +147,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="the-run-cli">The run CLI</h1>
+<p>The <code>squirrels run</code> command is the main command that actually activates the APIs for each of the datasets, including their parameters and results. When run locally, those will be hosted on the specified host and port.  </p>
+<p>The run command provides the following options (this can be found from <code>squirrels run -h</code>):</p>
+<pre><code class="language-bash">usage: squirrels run [-h] [--no-cache] [--debug] [--host HOST] [--port PORT]
+
+options:
+  -h, --help   show this help message and exit
+  --no-cache   Do not cache any api results
+  --debug      In debug mode, all &quot;hidden parameters&quot; show in the parameters response
+  --host HOST
+  --port PORT
+</code></pre>
+<p>The default host is <code>127.0.0.1</code> and the default port is <code>8000</code>. While running, you can be access <a href="">http://127.0.0.1:8000</a> or <a href="">http://localhost:8000</a> from the browser to interact with the squirrels UI. </p>
+<p>Assume you have a sample product named "sample_product", a sample dataset named "sample_dataset", and the major version is set to 1. You can append the following paths to <a href="">http://localhost:8000</a> to retrieve various JSON results:</p>
+<table>
+<thead>
+<tr>
+<th align="left">URL Path</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">/squirrels0</td>
+<td align="left">The catalog API</td>
+</tr>
+<tr>
+<td align="left">/squirrels0/sample_product/v1/sample_dataset/parameters</td>
+<td align="left">The parameters API</td>
+</tr>
+<tr>
+<td align="left">/squirrels0/sample_product/v1/sample_dataset</td>
+<td align="left">The dataset API</td>
+</tr>
+</tbody>
+</table>
+<p>You can press Ctrl + C to shut down the API server.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../test/" class="btn btn-neutral float-left" title="test"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../how-to/database/" class="btn btn-neutral float-right" title="Configure Database Connections">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../topics/manifest/" class="btn btn-neutral float-right" title="Manifest File (squirrels.yaml)">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -145,7 +215,7 @@
       <span><a href="../test/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../how-to/database/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../topics/manifest/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

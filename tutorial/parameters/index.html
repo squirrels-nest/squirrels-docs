@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/parameters/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/tutorial/parameters/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>3. Create the Dataset Parameters - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -58,11 +59,11 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">3. Create the Dataset Parameters</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#define-a-custom-class-for-parameter-options">Define a Custom Class for Parameter Options</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#define-the-parameter-options">Define the Parameter Options</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#define-the-parameters">Define the Parameters</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#end-state">End State</a>
     </li>
     </ul>
                   </li>
@@ -71,6 +72,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../testapi/">5. Activate the REST APIs & Test</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../conclusion/">What's Next?</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
@@ -86,15 +89,44 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -123,63 +155,51 @@
               
                 <h1 id="create-the-dataset-parameters">Create the Dataset Parameters</h1>
 <p>Go into the <code>parameters.py</code> file in the <code>weather_by_time</code> dataset folder. This file contains the definitions of all the widget parameters used in the dataset through a <code>main</code> function. The possible widget parameter classes supported today are <code>SingleSelectParameter</code>, <code>MultiSelectParameter</code>, <code>DateParameter</code>, <code>NumberParameter</code>, and <code>DataSourceParameter</code>. The <code>DataSourceParameter</code> represents a parameter based on a lookup table in a database, and can convert itself into one of the other parameter types. The other parameter types should be self-explanatory.</p>
-<p>The classes (with constructors) are imported from the <code>squirrels</code> library, and all the widget parameter class constructors take <code>name</code> and <code>label</code> as required arguments. The <code>name</code> is what we use to reference the parameter in the dataset queries (as you'll see later in the tutorial), and it's also the name of the corresponding API query parameter. The <code>label</code> represents the human-readable display name to show on the user interface. Different parameter constructors have different required parameters, and most Python IDEs should be able to provide information on the required vs. optional parameters for each constructor.</p>
-<p>We will start from scratch, so remove all the existing code in the <code>main</code> function body.</p>
-<h2 id="define-a-custom-class-for-parameter-options">Define a Custom Class for Parameter Options</h2>
-<p>We will create a single-select parameter called "group_by" which will allow us to aggregate our weather metrics by year, quarter, month, etc. After the imports (before the <code>main</code> function), we can create our own "parameter option" class by extending from the existing <code>SelectParameterOption</code> class from <code>squirrels</code> and defining our own attributes. Here is the class definition:</p>
-<pre><code class="language-python">class GroupByOption(sq.SelectParameterOption):
-    def __init__(self, id, label, dim_col, order_by_col = None):
-        super().__init__(id, label)
-        self.dim_col = dim_col
-        self.order_by_col = order_by_col if order_by_col is not None else dim_col
-</code></pre>
-<p>The <code>dim_col</code> specifies the column name to group by, and the <code>order_by_col</code> lets us pick a column for ordering the results (or orders by <code>dim_col</code> if not specified). If we group by month for instance, we do not want to order by month name alphabetically.</p>
+<p>The classes are imported from the <code>squirrels</code> library, and all the widget parameter class constructors take <code>name</code> and <code>label</code> as required arguments. The <code>name</code> is what we use to reference the parameter in the dataset queries (as you'll see later in the tutorial), and it's also the name of the corresponding API query parameter. The <code>label</code> represents the human-readable display name to show on the user interface. Different parameter constructors have different required parameters, and most Python IDEs should be able to provide information on the required vs. optional parameters for each constructor.</p>
+<p>We will start from scratch, so remove all the existing code in the <code>main</code> function body. We will create one single-select parameter to specify the dimension to group by.</p>
 <h2 id="define-the-parameter-options">Define the Parameter Options</h2>
-<p>Inside the <code>main</code> function, we can now use the new <code>GroupByOption</code> class to define a list of parameter options as such:</p>
+<p>We first need to specify the list of parameter options. Inside the <code>main</code> function, specify the list of options as such:</p>
 <pre><code class="language-python">group_by_options = [
-    GroupByOption('0', 'Year', 'year'),
-    GroupByOption('1', 'Quarter', 'quarter'),
-    GroupByOption('2', 'Month', 'month_name', 'month_order'),
-    GroupByOption('3', 'Day of Year', 'day_of_year'),
-    GroupByOption('4', 'Condition', 'condition')
+    sr.SelectParameterOption('0', 'Year', dim_col='year'),
+    sr.SelectParameterOption('1', 'Quarter', dim_col='quarter'),
+    sr.SelectParameterOption('2', 'Month', dim_col='month_name', order_by_col='month_order'),
+    sr.SelectParameterOption('3', 'Day of Year', dim_col='day_of_year'),
+    sr.SelectParameterOption('4', 'Condition', dim_col='condition')
 ]
 </code></pre>
-<p>The first parameter to the constructor for each <code>SelectParameterOption</code> (or <code>GroupByOption</code> in this case) is an ID that must be distinct across options and would never change in the future. For example, once the API consumers associates ID "0" to mean "group by year" then that association should never be broken even if the label or the ordering of the dropdown options change.</p>
+<p>The first two parameters to the <code>SelectParameterOption</code> constructors are the ID and label. The ID that must be distinct across options and would never change in the future. For example, once the API consumers associate ID "0" to mean "group by year" then that association should never be broken even if the label or the ordering of the dropdown options change.</p>
+<p>Arbitrary keyword arguments such as <code>dim_col</code> and <code>order_by_col</code> can be specified to the <code>SelectParameterOption</code> constructor which will be treated as custom fields to the parameter option that can be used later. See this page for how to <a href="../../how-to/custom-fields/">Set Parameter Option Custom Fields</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The SelectParameterOption class has an <code>is_default</code> attribute to specify the parameter option(s) that are selected by default. By default, <code>is_default</code> is set to False. When none of the parameter options have <code>is_default</code> as True, the first option becomes default for single select parameters.</p>
+<p>The SelectParameterOption class has an <code>is_default</code> attribute to specify the parameter option(s) that are selected by default. By default, <code>is_default</code> is set to False. When none of the parameter options have <code>is_default</code> as True, the first option is default for single-select parameters, and nothing is selected by default for multi-select parameter.</p>
 </div>
 <h2 id="define-the-parameters">Define the Parameters</h2>
-<p>The <code>main</code> function must return a <code>ParameterSet</code> (a class from the squirrels library), and it simply takes a list of <code>Parameter</code> objects. We can define our "group_by_parameter" as such:</p>
-<pre><code class="language-python">group_by_parameter = sq.SingleSelectParameter('group_by', 'Group By', group_by_options)
+<p>The <code>main</code> function must return a <code>Sequence[Parameter]</code> (where <code>Parameter</code> is a class from the squirrels library). We can define our "group_by_parameter" as such:</p>
+<pre><code class="language-python">group_by_param = sr.SingleSelectParameter('group_by', 'Group By', group_by_options)
 </code></pre>
 <p>Since this is the only parameter we are making for this dataset, we can return the parameter set like this:</p>
-<pre><code class="language-python">return sq.ParameterSet([group_by_parameter])
+<pre><code class="language-python">return [group_by_param]
 </code></pre>
+<h2 id="end-state">End State</h2>
 <p>The contents of the <code>parameters.py</code> file should now look like this:</p>
-<pre><code class="language-python">from typing import Dict, Any
-import squirrels as sq
-
-class GroupByOption(sq.SelectParameterOption):
-    def __init__(self, id, label, dim_col, order_by_col = None):
-        super().__init__(id, label)
-        self.dim_col = dim_col
-        self.order_by_col = order_by_col if order_by_col is not None else dim_col
+<pre><code class="language-python">from typing import Sequence, Dict, Any
+import squirrels as sr
 
 
-def main(args: Dict[str, Any], *p_args, **kwargs) -&gt; sq.ParameterSet:
+def main(args: Dict[str, Any], *p_args, **kwargs) -&gt; Sequence[sr.Parameter]:
     group_by_options = [
-        GroupByOption('0', 'Year', 'year'),
-        GroupByOption('1', 'Quarter', 'quarter'),
-        GroupByOption('2', 'Month', 'month_name', 'month_order'),
-        GroupByOption('3', 'Day of Year', 'day_of_year'),
-        GroupByOption('4', 'Condition', 'condition')
+        sr.SelectParameterOption('0', 'Year', dim_col='year'),
+        sr.SelectParameterOption('1', 'Quarter', dim_col='quarter'),
+        sr.SelectParameterOption('2', 'Month', dim_col='month_name', order_by_col='month_order'),
+        sr.SelectParameterOption('3', 'Day of Year', dim_col='day_of_year'),
+        sr.SelectParameterOption('4', 'Condition', dim_col='condition')
     ]
 
-    group_by_parameter = sq.SingleSelectParameter('group_by', 'Group By', group_by_options)
+    group_by_param = sr.SingleSelectParameter('group_by', 'Group By', group_by_options)
 
-    return sq.ParameterSet([group_by_parameter])
+    return [group_by_param]
 </code></pre>
+<p>See the next tutorial page to <a href="../queries/">Create the SQL Queries</a>.</p>
               
             </div>
           </div><footer>

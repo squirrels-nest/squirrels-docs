@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/how-to/modify-dates/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Modify Dates Using Squirrel's dateutils - Squirrels Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Modify Dates Using Squirrel\u0027s dateutils";
+        var mkdocs_page_input_path = "how-to\\modify-dates.md";
+        var mkdocs_page_url = "/squirrels-docs/how-to/modify-dates/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Squirrels Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/initialize/">1. Initialize a Squirrels Project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/manifest/">2. Configure the Manifest File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/parameters/">3. Create the Dataset Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/queries/">4. Create the SQL Queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/testapi/">5. Activate the REST APIs & Test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Command Line Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/load-modules/">load-modules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/credentials/">credential management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/test/">test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../database/">Configure Database Connections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../writing-parameters/">Create Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../python-views/">Create Views with Python</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Modify Dates Using Squirrel's dateutils</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#offset-by-time-period">Offset by Time Period</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#get-n-th-day-of-calendar-cycle">Get N-th Day of Calendar Cycle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#date-modification-pipeline">Date Modification Pipeline</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modifying-date-strings-or-timestamps">Modifying Date Strings or Timestamps</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Squirrels Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>How To... &raquo;</li>
+      <li>Modify Dates Using Squirrel's dateutils</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="modify-dates-using-squirrels-dateutils">Modify Dates Using Squirrel's dateutils</h1>
+<p>The squirrels library has a submodule called dateutils that can be used to transform date variables in Python with ease. To import the dateutils module, simply do:</p>
+<pre><code class="language-python">from squirrels import dateutils as du
+</code></pre>
+<p>The examples below demonstrates how to modify a given date by number of time periods and/or get some day of a calendar cycle. The format of the date can be datetime objects, string dates, or unix timestamps (as float). Assume we have a datetime object variable called <code>date_obj</code>.</p>
+<h2 id="offset-by-time-period">Offset by Time Period</h2>
+<p>The following classes can be used to offset a datetime object by some time period.</p>
+<ul>
+<li>OffsetYears</li>
+<li>OffsetMonths</li>
+<li>OffsetWeeks</li>
+<li>OffsetDays</li>
+</ul>
+<p>Each of their constructors take an argument <code>offset</code> for the number of time periods to offset by (can be positive or negative), and each class contains a modify method to modify an input date.</p>
+<p>To add 3 weeks to <code>date_obj</code>, the code you write can look something like this:</p>
+<pre><code class="language-python">new_date = OffsetWeeks(3).modify(date_obj)
+</code></pre>
+<h2 id="get-n-th-day-of-calendar-cycle">Get N-th Day of Calendar Cycle</h2>
+<p>The following classes can be used to get a certain day of some calendar cycle from some datetime object.</p>
+<ul>
+<li>DayIdxOfMonthsCycle</li>
+<li>DayIdxOfYear</li>
+<li>DayIdxOfQuarter</li>
+<li>DayIdxOfMonth</li>
+<li>DayIdxOfWeek</li>
+</ul>
+<p>Each of their constuctors take an parameter <code>idx</code> to specify the day number of cycle. Positive numbers like 1 and 2 represent the first and second day, while negative numbers like -1 and -2 represent the last and second last day. 0 cannot be used.</p>
+<p>For DayIdxOfMonthsCycle, the length of the cycle in months can be specified with the parameter <code>num_months_in_cycle</code>. This is unlike DayIdxOfMonth where the length of the cycle is always one month. DayIdxOfYear, DayIdxOfQuarter, and DayIdxOfMonth are equivalent to DayIdxOfMonthsCycle when the <code>num_months_in_cycle</code> values 12, 3, and 1 respectively.</p>
+<p>For DayIdxOfWeek, the first day of the week (using the DayOfWeek enum which contains values Monday, Tuesday, etc. until Sunday) can be specified using the <code>first_day_of_week</code> parameter. The first month of the year can be specified (using the Month enum which contains values January, February, etc. until December) with the parameter <code>first_month_of_X</code> where X is "cycle", "year", and "quarter" for DayIdxOfMonthsCycle, DayIdxOfYear, and DayIdxOfQuarter respectively.</p>
+<p>Each of these classes contain a modify method to modify an input date as well.</p>
+<p>Here are some problems and solutions in code using these classes.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Problem</th>
+<th align="left">Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Get the same or prior Friday</td>
+<td align="left"><code>DayIdxOfWeek(idx=1, first_day_of_week=DayOfWeek.Friday).modify(date_obj)</code></td>
+</tr>
+<tr>
+<td align="left">Get the same or next Friday</td>
+<td align="left"><code>DayIdxOfWeek(idx=-1, first_day_of_week=DayOfWeek.Saturday).modify(date_obj)</code></td>
+</tr>
+<tr>
+<td align="left">If Wednesday to Friday, round up to Friday. <br>Otherwise round down to Friday</td>
+<td align="left"><code>DayIdxOfWeek(idx=3, first_day_of_week=DayOfWeek.Wednesday).modify(date_obj)</code></td>
+</tr>
+<tr>
+<td align="left">Get the third last day of month</td>
+<td align="left"><code>DayIdxOfMonth(idx=-3).modify(date_obj)</code></td>
+</tr>
+<tr>
+<td align="left">Suppose a "Third Year" occurs every 4 months from <br>February 1st. Get the beginning of current Third Year</td>
+<td align="left"><code>DayIdxOfMonthsCycle(idx=1, num_months_in_cycle=4, first_month_of_cycle=Month.February).modify(date_obj)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="date-modification-pipeline">Date Modification Pipeline</h2>
+<p>A class called <code>DateModPipeline</code> lets you stitch together multiple instances of the date modification classes above into a single date modification class. Simply specify a sequence of date modification class instances in the constructor. Using this pipeline approach allows one to make almost any date transformation possible.</p>
+<p>Here are some more examples of problems and solutions.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Problem</th>
+<th align="left">Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Get the next Friday</td>
+<td align="left"><code>DateModPipeline([DayIdxOfWeek(1, DayOfWeek.Friday), OffsetWeeks(1)]).modify(date_obj)</code></td>
+</tr>
+<tr>
+<td align="left">Get the prior Friday</td>
+<td align="left"><code>DateModPipeline([DayIdxOfWeek(-1, DayOfWeek.Saturday), OffsetWeeks(-1)]).modify(date_obj)</code></td>
+</tr>
+<tr>
+<td align="left">Get the second Friday of the current quarter. <br>First month of quarter is January</td>
+<td align="left"><code>DateModPipeline([DayIdxOfQuarter(1), DayIdxOfWeek(-1, DayOfWeek.Saturday), OffsetWeeks(1)]).modify(date_obj)</code></td>
+</tr>
+</tbody>
+</table>
+<p>In addition to the <code>modify</code> method, this class also lets you get a list of date objects with the method <code>get_date_list</code>. It takes an input start date and a step (as an Offset* date modifier), modifies the start date to get the end date, and returns the dates from start to end by step. Below is an example of getting every Friday going back from June 15th 2023 to beginning of Quarter.</p>
+<pre><code class="language-python">modifier = DateModPipeline([DayIdxOfQuarter(1), DayIdxOfWeek(-1, DayOfWeek.Saturday)])
+date_list = modifier.get_date_list(datetime(2023, 6, 15), OffsetWeeks(-1))
+</code></pre>
+<h2 id="modifying-date-strings-or-timestamps">Modifying Date Strings or Timestamps</h2>
+<p>More often then not, the dates that you're working with are date formatted strings or timestamps as floats. Although it should be easy enough to convert to datetime object and back, the dateutils module also provides <code>DateStringModifier</code> and <code>TimestampModifier</code> classes to simplify your code. Just like <code>DateModPipeline</code>, both these classes have a constructor that takes a sequence of date modification class instances, a <code>modify</code> method, and a <code>get_date_list</code> method.</p>
+<p>For <code>DateStringModifier</code>, the constructor also takes an optional <code>date_format</code> argument for the date format of the outputs. The methods <code>modify</code> and <code>get_date_list</code> take an input date as string, and an optional <code>input_format</code> argument for the date format of the input date.</p>
+<p>For <code>TimestampModifier</code>, the input date for methods <code>modify</code> and <code>get_date_list</code> are floats representing the UNIX timestamp of the date. The output dates are also in the same format.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../custom-fields/" class="btn btn-neutral float-left" title="Parameter Option Custom Fields"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../front-end/response/" class="btn btn-neutral float-right" title="Response Schema">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../custom-fields/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../front-end/response/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

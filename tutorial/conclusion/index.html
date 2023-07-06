@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/tutorial/testapi/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/tutorial/conclusion/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>5. Activate the REST APIs & Test - Squirrels Documentation</title>
+    <title>What's Next? - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -13,9 +13,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "5. Activate the REST APIs \u0026 Test";
-        var mkdocs_page_input_path = "tutorial\\testapi.md";
-        var mkdocs_page_url = "/squirrels-docs/tutorial/testapi/";
+        var mkdocs_page_name = "What\u0027s Next?";
+        var mkdocs_page_input_path = "tutorial\\conclusion.md";
+        var mkdocs_page_url = "/squirrels-docs/tutorial/conclusion/";
       </script>
     
     <script src="../../js/jquery-3.6.0.min.js" defer></script>
@@ -61,15 +61,13 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../queries/">4. Create the SQL Queries</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">5. Activate the REST APIs & Test</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#test-the-rendered-sql-queries">Test the Rendered SQL Queries</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../testapi/">5. Activate the REST APIs & Test</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../conclusion/">What's Next?</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">What's Next?</a>
+    <ul class="current">
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
@@ -140,7 +138,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Tutorial &raquo;</li>
-      <li>5. Activate the REST APIs & Test</li>
+      <li>What's Next?</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -149,42 +147,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="test-the-rest-apis">Test the REST APIs</h1>
-<p>In the <code>weather_by_time</code> datasets folder, go into <code>context.py</code> and replace the body of the <code>main</code> function to:</p>
-<pre><code class="language-python">return {}
-</code></pre>
-<p>We will discuss the <code>context.py</code> file later in the tutorial, but for now, we are clearing it such that we can activate the REST APIs without errors.</p>
-<p>To activate the API server, simply run:</p>
-<pre><code class="language-bash">squirrels run --debug
-</code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code>--debug</code> argument is optional here. This is specified to be able to test with hidden parameters, though no hidden parameters were set up for this tutorial. See <code>squirrels run --help</code> or the "<a href="../../cli/run/">run command line</a>" page for more details.</p>
-</div>
-<p>Then, in a web browser, go to <code>http://localhost:8000/</code> to interact with the dataset APIs you've just created using the Squirrels UI!</p>
-<p>Remember to shut down the API server by pressing "Ctrl+C" before proceeding to the next step.</p>
-<h2 id="test-the-rendered-sql-queries">Test the Rendered SQL Queries</h2>
-<p>In practice, you may wish to review what the rendered SQL queries look like (for some set of parameter selections) before actually running the queries.</p>
-<p>To do this for the <code>weather_by_time</code> dataset (using the default parameter selections), run:</p>
-<pre><code class="language-bash">squirrels test weather_by_time
-</code></pre>
-<p>This creates the folder path <code>outputs/weather_by_time</code> with the generated SQL queries (without actually running them). Take a look at the files in the folder to see what got generated. To run the generated queries as well, and write results as csv files, use the following to command.</p>
-<pre><code class="language-bash">squirrels test weather_by_time --runquery
-</code></pre>
-<p>We can also test on non-default parameter selections. In the dataset folder, change the contents of the <code>selections.cfg</code> file to: </p>
-<pre><code class="language-config">[parameters]
-group_by = 2
-</code></pre>
-<p>When we define multiple parameters, the order of the parameters specified here must be the same as the order as defined in the <code>parameters.py</code> file (especially if cascading parameters exist). The "2" is the ID of the "Month" option for the <code>group_by</code> parameter. Run the following to render the SQL queries with <code>selections.cfg</code>:</p>
-<pre><code class="language-bash">squirrels test weather_by_time --cfg selections.cfg
-</code></pre>
-<p>See <code>squirrels test --help</code> or the page for the "<a href="../../cli/test/">test command line</a>" for more details. See the next tutorial page to <a href="../context/">Use the Context File</a>.</p>
+                <h1 id="whats-next">What's Next?</h1>
+<p>A Squirrels project may also contain multiple datasets, or datasets with multiple database views, but that's outside the scope of this tutorial. For an expanded version of the "seattle weather example" project, see this git repo here:</p>
+<p><a href="https://github.com/squirrels-nest/weather-analytics-api-example">https://github.com/squirrels-nest/weather-analytics-api-example</a></p>
+<p>It serves as an example of how to share common Python code or SQL across multiple datasets while allowing their parameter or query definitions to differ. You can also see this page for how to "<a href="../../how-to/common-vary/">Design for Commonality and Variability</a>".</p>
+<p>In addition, see the topic guide for <a href="../../topics/versioning/">Versioning Best Practices</a> for understanding when to increment the major and minor version for your squirrels project. If you're working with dates, check out this guide for how to <a href="../../how-to/modify-dates/">Modify Dates Using Squirrels</a>.</p>
+<p>A user guide for the available classes/methods in squirrels library is not yet available, but hopefully, navigating them in an IDE shouldn't be too difficult as docstrings are provided for all public methods. Given this, you should be all ready to create your own project!</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../queries/" class="btn btn-neutral float-left" title="4. Create the SQL Queries"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../context/" class="btn btn-neutral float-right" title="6. Use the Context File">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../context/" class="btn btn-neutral float-left" title="6. Use the Context File"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../cli/init/" class="btn btn-neutral float-right" title="init">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -207,10 +181,10 @@ group_by = 2
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../queries/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../context/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../context/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../cli/init/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

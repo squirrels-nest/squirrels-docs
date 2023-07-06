@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/topics/manifest/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Manifest File (squirrels.yaml) - Squirrels Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Manifest File (squirrels.yaml)";
+        var mkdocs_page_input_path = "topics\\manifest.md";
+        var mkdocs_page_url = "/squirrels-docs/topics/manifest/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Squirrels Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/initialize/">1. Initialize a Squirrels Project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/manifest/">2. Configure the Manifest File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/parameters/">3. Create the Dataset Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/queries/">4. Create the SQL Queries</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/testapi/">5. Activate the REST APIs & Test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Command Line Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/load-modules/">load-modules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/credentials/">credential management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/test/">test</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Manifest File (squirrels.yaml)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#modules">modules</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#project_variables">project_variables</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#db_connections">db_connections</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#datasets">datasets</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#settings">settings</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How To...</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Squirrels Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Topic Guides &raquo;</li>
+      <li>Manifest File (squirrels.yaml)</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="manifest-file-squirrelsyaml">Manifest File (squirrels.yaml)</h1>
+<p>The manifest file contains the following sections that is described in detail below.</p>
+<ol>
+<li>modules</li>
+<li>project_variables</li>
+<li>db_connections</li>
+<li>datasets</li>
+<li>settings</li>
+</ol>
+<h2 id="modules">modules</h2>
+<p>This section is used to specify the list of git repos (with tag) that the project uses as modules. This can be useful to share the same Python code or Jinja macros across projects. See the <a href="../../cli/load-modules/">load-modules CLI guide</a> for details.</p>
+<h2 id="project_variables">project_variables</h2>
+<p>This section contains project variables that can be referenced within the project. The project variables "product", "major_version", and "minor_version" are mandatory, and they must be of type string, integer, and integer respectively. Additional custom project variables can also be added. See example below:</p>
+<pre><code class="language-yaml">project_variables:
+  product: sample
+  major_version: 1
+  minor_version: 0
+  custom_var: example
+</code></pre>
+<p>The product and major_version are used in forming the appropriate REST API paths. In the future, a deployment service will use the product, major_version, and minor_version to update a catalog of products and versions available which can then be retrieved using the catalog API (more details of the catalog API are provided in the <a href="../../front-end/response/">Response Schema</a> front-end guide). Then, for the parameters or dataset paths, a request header called "x-minor-version" can be used to control the minor version used (or latest is used if omitted).</p>
+<p>For information incrementing major version vs minor version best practices, see the <a href="../versioning/">Major vs Minor Version</a> topic guide.</p>
+<h2 id="db_connections">db_connections</h2>
+<p>This section can be used to specify database connections by providing a map between keys and <a href="https://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls">SQLAlchemy Database URLs</a>. This section is optional if connections.py is provided, and both can be used at the same time (though connections.py takes precedence if there are common keys). And example of the section may look something like this:</p>
+<pre><code class="language-yaml">db_connections:
+  default: 
+    url: 'dialect+driver:////absolute/path/to/database1.db'
+  custom_db_conn_key:
+    url: 'dialect+driver:///./relative/path/to/database2.db'
+</code></pre>
+<p>Between this section and connections.py, the key "default" must be specified if any connection key is specified (it is possible to not specify any connection keys for certain use cases without database views in SQL). If a username and password is required in the URL, then they can be set using <code>squirrels set-credential &lt;key&gt;</code> with some credential key (see the [Credential Management CLI guide]). Then, you can specify the credential key under the connection key with the attribute <code>credential_key</code> and use the placeholders <code>${username}</code> and <code>${password}</code> in the URL. If <code>credential_key</code> is null or not set, the <code>${username}</code> and <code>${password}</code> placeholders will become empty strings. See example below for specifying a connection key with credentials.</p>
+<pre><code class="language-yaml">db_connections:
+  default: 
+    credential_key: some_key
+    url: 'dialect+driver://${username}:${password}@//path/to/database1.db'
+</code></pre>
+<p>For details on using a connections.py file, see the <a href="../../how-to/database/">Configure Database Connections</a> how-to guide.</p>
+<h2 id="datasets">datasets</h2>
+<p>In this section, the list of dataset names and dataset attributes can be defined. Under each dataset name, the attributes are the <code>label</code>, <code>database_views</code>, <code>final_view</code>, and <code>args</code>. Any dataset name specified here must also have the same folder name in the <code>datasets</code> folder.</p>
+<p>The <code>label</code> is simply the display name for the dataset to appear as in a dropdown menu. This attribute is required.</p>
+<p>The <code>database_views</code> specifies the list of database view names and database view attributes can be defined. This attribute can be optional if no database views are required. Under the database view name, the required attribute is <code>file</code>, and optional attributes are <code>db_connection</code> and <code>args</code>. Or for simplicity, the value mapped to the database view name can also be a string for the equivalent <code>file</code> attribute.
+- The <code>file</code> must be a Jinja SQL or Python file relative to the dataset folder. 
+- The <code>db_connection</code> is the database connection defined in the <code>db_connections</code> section or connections.py. If <code>db_connection</code> is not specified, it defaults to "default". 
+- The <code>args</code> is for specifying arguments at the database view level, and can override arguments specified at the project level or dataset level. These arguments can be referenced by any database view or final view file.</p>
+<p>The <code>final_view</code> represents the final query for the dataset. It can be a Jinja SQL or Python file relative to the dataset folder (which can reference the results of the database views), or it can be the name of a database view. This attribute is required.</p>
+<p>The <code>args</code> attribute is for specifying arguments at the dataset level, and can override arguments specified at the project level (i.e., the project variables). This attribute is optional.</p>
+<p>Below shows an example of using the datasets section to construct a single sample dataset with 2 database views.</p>
+<pre><code class="language-yaml">datasets:
+  sample_dataset:
+    label: Sample Dataset
+    database_views:
+      database_view1: 
+        file: db_view1.sql.j2
+        db_connection: custom_db_conn_key
+        args:
+          arg1: db_view_val1
+          arg2: db_view_val2
+      database_view2: db_view2.py
+    final_view: final_view.sql.j2
+    args:
+      arg0: dataset_val0
+      arg1: dataset_val1
+</code></pre>
+<h2 id="settings">settings</h2>
+<p>Certain settings can be specified in this setting. This section is optional if no settings need to be changed from their defaults. Below is an example of using this section.</p>
+<pre><code class="language-yaml">settings:
+  parameters.cache.size: 1024
+  parameters.cache.ttl: 86400
+</code></pre>
+<p>Here are the current list of setting keys available. Deafult is used when the key is not specified.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Setting Key</th>
+<th align="left">Default</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">parameters.cache.size</td>
+<td align="left">1024</td>
+<td align="left">The maximum number of responses that the LRU cache of the parameters API can store</td>
+</tr>
+<tr>
+<td align="left">parameters.cache.ttl</td>
+<td align="left">86400</td>
+<td align="left">The time to live (in seconds) for the LRU cache of the parameters API. Default is 1 day</td>
+</tr>
+<tr>
+<td align="left">results.cache.size</td>
+<td align="left">128</td>
+<td align="left">The maximum number of responses that the LRU cache of the results API can store</td>
+</tr>
+<tr>
+<td align="left">results.cache.ttl</td>
+<td align="left">3600</td>
+<td align="left">The time to live (in seconds) for the LRU cache of the results API. Default is 1 hour</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../cli/run/" class="btn btn-neutral float-left" title="run"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../versioning/" class="btn btn-neutral float-right" title="Major vs Minor Version (Best Practices)">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../cli/run/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../versioning/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

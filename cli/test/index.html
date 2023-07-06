@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/cli/test/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/cli/test/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>test - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -64,6 +65,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul class="current">
@@ -74,19 +77,54 @@
                   <li class="toctree-l1"><a class="reference internal" href="../credentials/">credential management</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">test</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#using-a-selectionscfg-file">Using a selections.cfg File</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-an-excel-workbook-for-datasource-parameter-data">Using an Excel Workbook for DataSource Parameter Data</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../run/">run</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -113,7 +151,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="the-test-cli">The test CLI</h1>
+<p>The <code>squirrels test &lt;dataset&gt;</code> command is used to facilitate the debugging process for the user. For a given dataset, the test command creates outputs for parameters API response and rendered sql queries. </p>
+<p>The test command takes in a mandatory <code>dataset</code> argument, where the user can spcify the name of the dataset to be tested, as provided in <code>squirrels.yaml</code> file. When executed, the command will also create an <code>outputs</code> folder, where all the results will be stored. </p>
+<p>All the details on command line arguments be found using <code>squirrels test -h</code>. The result is as follows:</p>
+<pre><code>usage: squirrels test [-h] [-c CFG] [-d DATA] [-r] dataset
+
+positional arguments:
+  dataset               Name of dataset (provided in squirrels.yaml) to test. Results are written in an &quot;outputs&quot; folder
+
+options:
+  -h, --help            show this help message and exit
+  -c CFG, --cfg CFG     Configuration file for parameter selections. Path is relative to the dataset's folder
+  -d DATA, --data DATA  Excel file with lookup data to avoid making a database connection. Path is relative to the dataset's folder
+  -r, --runquery        Runs all database queries and final view, and produce the results as csv files
+</code></pre>
+<h2 id="using-a-selectionscfg-file">Using a selections.cfg File</h2>
+<p>It is good practice to create a <code>selections.cfg</code> file for your datasets to use with the <code>test</code> command. You can create a sample <code>selections.cfg</code> file by running <code>squirrels init --selections-cfg</code>.</p>
+<p>The <code>selections.cfg</code> file should specify all the parameter names and selected values under the [parameters] header. The parameter names (left of equal signs) should be specified in the same order specified in <code>parameters.py</code> (which avoids ambiguity especially if parameter dependencies are set). The selected values (right of equal signs) should follow the same format that the front-end uses to specify selected values for various parameter types, described <a href="../../front-end/selections/">here</a>.</p>
+<p>Assuming that the <code>selections.cfg</code> file is created in a dataset folder called <code>example</code>, simply run</p>
+<p><code>squirrels test example --cfg selections.cfg</code> </p>
+<p>to render the SQL queries with the specified parameter selections.</p>
+<h2 id="using-an-excel-workbook-for-datasource-parameter-data">Using an Excel Workbook for DataSource Parameter Data</h2>
+<p>In the absence of an internet connection, the <code>test</code> command would not work if there are datasource parameters linked to a dimension table/query from an external database. Thus, it is also a good practice to use an Excel workbook to contain all the dimension table data (or a sample of it).</p>
+<p>In the Excel workbook, the sheet name must be the name of the datasource parameter, and the residing table (starting at cell A1) must have the same columns as the linked dimension table/query. For example, suppose there is a DataSourceParameter defined like this:</p>
+<pre><code class="language-python">example_options = sr.SelectionDataSource('SELECT x as index, y as label FROM table', 'index', 'label')
+ds_param = sr.DataSourceParameter(sr.MultiSelectParameter, 'test_param', 'Test Parameter', example_options)
+</code></pre>
+<p>Then the Excel workbook must have at least a worksheet named "test_param" containing a table with columns "index" and "label".</p>
+<p>Assuming the Excel workbook is named <code>lu_data.xlsx</code> in a dataset folder called <code>example</code>, simply run </p>
+<p><code>squirrels test example --data lu_data.xlsx</code> </p>
+<p>to render the SQL queries without having to use an internet connection!</p>
               
             </div>
           </div><footer>

@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/manifest/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/tutorial/manifest/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>2. Configure the Manifest File - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -72,6 +73,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul>
@@ -86,15 +89,44 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -123,7 +155,7 @@
               
                 <h1 id="configure-the-manifest-file">Configure the Manifest File</h1>
 <p>Go to the <code>squirrels.yaml</code> file. This is the manifest file to configure most of the properties of the Squirrels project.</p>
-<p>In this tutorial, we will focus on the <code>project_variables</code>, <code>db_connections</code>, and <code>datasets</code> sections. We will also assume that all comments in the <a href="https://yaml.org/">yaml</a> file (every '#' to end of line) are removed.</p>
+<p>In this tutorial, we will focus on the <code>project_variables</code>, <code>db_connections</code>, and <code>datasets</code> sections.</p>
 <h2 id="setting-the-project-variables">Setting the Project Variables</h2>
 <p>The project variables <code>product</code>, <code>major_version</code>, and <code>minor_version</code> are required. In additional to those, you are free to add any of your own project variable.</p>
 <p>In this tutorial, we will be making dataset APIs related to historical weather data in Seattle. Change the <code>product</code> to <code>seattle_weather</code>. We can leave <code>major_version</code> and <code>minor_version</code> unchanged.</p>
@@ -134,9 +166,9 @@
   minor_version: 0
 </code></pre>
 <h2 id="setting-the-database-connections">Setting the Database Connections</h2>
-<p>This section is where we set all the database connection details that we need. We provide a list of connection names here and refer to them in other files. The connection name <code>default</code> must be provided for database views (and <code>DataSourceParameter</code>, which will be mentioned later) that don't specify a connection name explicitly.</p>
+<p>This section is where we set all the database connection details that we need. We provide a list of connection names here and refer to them in other files. The connection name <code>default</code> must be provided for components with sql queries that don't specify a connection name explicitly.</p>
 <p>Under <code>default</code>, change the url from <code>sqlite://${username}:${password}@/./database/sample_database.db</code> to <code>sqlite:///./database/seattle_weather.db</code>.</p>
-<p>The syntax for the URL uses <a href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">sqlalchemy database URLs</a>. Since sqlite databases don't require a username and password, the <code>credential_key</code> field can be omitted. More details on setting and using credential keys can be found on the pages for "<a href="../../cli/credentials/">credential management</a>" command line reference and how to "<a href="../../how-to/database/">Configure Database Connections</a>".</p>
+<p>The syntax for the URL uses <a href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">sqlalchemy database URLs</a>. Since sqlite databases don't require a username and password, the <code>credential_key</code> field can be either set to null or omitted entirely. More details on setting and using credential keys can be found in the pages for "<a href="../../cli/credentials/">credential management</a>" command line reference and how to "<a href="../../how-to/database/">Configure Database Connections</a>".</p>
 <p>The <code>db_connections</code> section should now look like this:</p>
 <pre><code class="language-yaml">db_connections:
   default:
@@ -149,18 +181,13 @@
 <h2 id="defining-the-datasets">Defining the Datasets</h2>
 <p>This section is where we define the attributes for all datasets created by the squirrels project. Every dataset defined will have their own "parameters API" and "dataset API".</p>
 <p>Currently, there is one dataset with the name <code>sample_dataset</code> (and label <code>Sample Dataset</code>). Change the name to <code>weather_by_time</code>, and change the label to <code>Weather by Time of Year</code>.</p>
-<p>Every dataset defined would have 0 or more <code>database_views</code> and exactly 1 <code>final_view</code>. Each of the <code>database_views</code>/<code>final_view</code> can either be </p>
+<p>Every dataset defined would have 0 or more <code>database_views</code> and exactly 1 <code>final_view</code>. Each of the <code>database_views</code> and <code>final_view</code> can either be: </p>
 <ol>
-<li>A string for the file name of the SQL file (templated with <a href="https://jinja.palletsprojects.com/">Jinja</a>) or Python file to run, or </li>
-<li>An object with the <code>file</code> key and additional optional keys such as <code>db_connection</code> and <code>args</code>. </li>
+<li>A string for the file name of the SQL file (templated with <a href="https://jinja.palletsprojects.com/">Jinja</a>) or Python file to run. Or...</li>
+<li>An object with the <code>file</code> key (for the same file name in item 1 above) and additional optional keys such as <code>db_connection</code> and <code>args</code>. </li>
 </ol>
-<p>In addition to being a templated SQL or Python file, the <code>final_view</code> can also be the name of one of the database views. </p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>At runtime, all the database views for the dataset are run in parallel. If the final view is a SQL file, all the database view results are loaded into an in-memory sqlite database where the table names are the same as the database view names. If the final view is a Python file, the database view results are accessible as a dictionary of database view names to pandas Dataframes. More details on writing final views will come later in the tutorial.</p>
-</div>
+<p>In addition to being a templated SQL or Python file, the <code>final_view</code> can also be a string for the name of one of the database views. For database views, if <code>db_connection</code> is not specified (including if the value is string for file name instead of object), then "default" is used for <code>db_connection</code>.</p>
 <p>Change the name <code>database_view1</code> to <code>aggregate_weather_metrics</code>, and replace its value from an object to the string <code>aggr_weather_metrics.sql.j2</code>. Change the value of <code>final_view</code> to <code>final_view.sql.j2</code>.</p>
-<p>You may also remove the optional <code>args</code> key to the <code>weather_by_time</code> dataset. The <code>datasets</code> section should now look like this:</p>
 <pre><code class="language-yaml">datasets:
   weather_by_time:
     label: Weather by Time of Year
@@ -168,7 +195,8 @@
       aggregate_weather_metrics: aggr_weather_metrics.sql.j2
     final_view: final_view.sql.j2
 </code></pre>
-<p>Every dataset that's set in the <code>datasets</code> section must also have a matching folder name in <code>datasets</code> folder. In the <code>datasets</code> folder, rename <code>sample_dataset</code> to <code>weather_by_time</code>.</p>
+<p>Every dataset that's set in the <code>datasets</code> section must also have a matching folder name in <code>datasets</code> folder. In the <code>datasets</code> folder, rename <code>sample_dataset</code> to <code>weather_by_time</code>. Inside the folder, rename <code>database_view1.sql.j2</code> to <code>aggr_weather_metrics.sql.j2</code>.</p>
+<p>More details on the manifest file can be found in the <a href="../../topics/manifest/">Manifest File</a> topic guide. See the next tutorial page to <a href="../parameters/">Create the Dataset Parameters</a>.</p>
               
             </div>
           </div><footer>

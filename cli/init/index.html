@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/cli/init/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/cli/init/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>init - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -64,10 +65,14 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">init</a>
+    <ul class="current">
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../load-modules/">load-modules</a>
                   </li>
@@ -78,15 +83,44 @@
                   <li class="toctree-l1"><a class="reference internal" href="../run/">run</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -113,12 +147,89 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="the-init-cli">The init CLI</h1>
+<p>The <code>squirrels init</code> command is the initializer command for the squirrels framework, it is used to set up a new project or to reinitialize an existing one. When used, it will populate the current directory with a barebones version of the squirrels framework, depending on the user's preference. By default, the files created will not overwrite files that already exist. This behaviour can be changed by using the <code>--overwrite</code> option.</p>
+<p>After executing the command, the user would be able to specify which files should be initialized by answering the following prompts:</p>
+<pre><code class="language-bash">[?] Include all core project files? (Y/n): 
+
+[?] What's the file format for the database view?:
+ &gt; sql
+   py
+
+[?] Do you want to add a 'connections.py' file? (y/N): 
+
+[?] Do you want to add a 'context.py' file? (y/N): 
+
+[?] Do you want to add a 'selections.cfg' file? (y/N): 
+
+[?] What's the file format for the final view (if any)?:
+ &gt; none
+   sql
+   py
+
+[?] What sample sqlite database do you wish to use (if any)?:
+ &gt; none
+   sample_database
+   seattle_weather
+
+</code></pre>
+<p>The first question answers whether all project files should be generated. If <code>Y</code> or <code>y</code> is specified, it will then ask the user whether the <code>database_view1</code> file should be either python or sql. It will then create all the core files, which include:</p>
+<ul>
+<li>A sample <code>parameters.py</code> file in the <code>datasets/sample_dataset</code> folder</li>
+<li>A sample <code>database_view1.sql.j2</code> or <code>database_view1.py</code> file in the <code>datasets/sample_dataset</code> folder</li>
+<li>A <code>.gitignore</code> file</li>
+<li>A <code>requirements.txt</code> file</li>
+<li>A sample <code>squirrels.yaml</code> file</li>
+</ul>
+<p>Additional prompts are also provided to inquire whether the following files are needed.</p>
+<table>
+<thead>
+<tr>
+<th align="left">File</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>connections.py</code></td>
+<td align="left">Used to specify keys to SQL database connections by providing a dictionary of <br>strings to sqlalchemy Engines or Pools. This can be used in addition to, or in place <br>of, the <code>db_connections</code> section of <code>squirrels.yaml</code></td>
+</tr>
+<tr>
+<td align="left"><code>context.py</code></td>
+<td align="left">At runtime, after parameter selections are applied, this file can be used to transform <br>selected parameter options into any python variable</td>
+</tr>
+<tr>
+<td align="left"><code>selections.cfg</code></td>
+<td align="left">Can be used with the "squirrels test" command to apply parameter selections to test <br>the rendered SQL queries</td>
+</tr>
+<tr>
+<td align="left"><code>final_view.sql.j2</code> or <code>final_view.py</code></td>
+<td align="left">A "final view" file can be specified (as sql or python) to join all the database views <br>into a single dataframe</td>
+</tr>
+</tbody>
+</table>
+<p>In the last question, the user can choose to include a sample sqlite database. Current options include the <code>sample_database</code> and <code>seattle_weather</code> databases.</p>
+<p>Further usage details can be found by running <code>squirrels init -h</code> which prints the text below. The user can also choose which files to add by providing additional command line options, avoiding the prompts above. This applies to all command line options below except for <code>-h</code> and <code>--overwrite</code>.</p>
+<pre><code class="language-bash">usage: squirrels init [-h] [--overwrite] [--core] [--db-view {sql,py}] [--connections] [--context] [--selections-cfg] [--final-view {sql,py}] [--sample-db {sample_database,seattle_weather}]
+
+options:
+  -h, --help            show this help message and exit
+  --overwrite           Overwrite files that already exist
+  --core                Include all core files
+  --db-view {sql,py}    Create database view as sql (default) or python file if &quot;--core&quot; is specified
+  --connections         Include the connections.py file
+  --context             Include the context.py file
+  --selections-cfg      Include the selections.cfg file
+  --final-view {sql,py}
+                        Include final view as sql or python file
+  --sample-db {sample_database,seattle_weather}
+                        Sample sqlite database to include
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../tutorial/context/" class="btn btn-neutral float-left" title="6. Use the Context File"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../tutorial/conclusion/" class="btn btn-neutral float-left" title="What's Next?"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../load-modules/" class="btn btn-neutral float-right" title="load-modules">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -142,7 +253,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../tutorial/context/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../tutorial/conclusion/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../load-modules/" style="color: #fcfcfc">Next &raquo;</a></span>

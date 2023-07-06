@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/initialize/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/tutorial/initialize/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>1. Initialize a Squirrels Project - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -66,6 +67,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul>
@@ -80,15 +83,44 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -152,13 +184,13 @@
 <p>Go ahead and take a quick glance at the new files (no need to fully understand them now). Then, run the API server using the command:</p>
 <pre><code class="language-bash">squirrels run
 </code></pre>
-<p>In a web browser, go to <code>http://localhost:8000/</code> or <code>http://127.0.0.1:8000/</code>. This leads you to the Squirrels UI, a convenient interface for testing the dataset APIs. Without changing the widget parameters, clicking "Apply" will show you the dataset for the default parameter selections. For now, the "Upper Bound" parameter is the only one that affects the dataset results.</p>
+<p>In a web browser, go to <code>http://localhost:8000/</code> or <code>http://127.0.0.1:8000/</code>. This leads you to the Squirrels UI, a convenient interface for testing the dataset APIs. Without changing the widget parameters, click the "Apply" button to display the dataset for the default parameter selections (take some time now to generate various datasets using different parameter selections).</p>
 <p>To see the API endpoints that provides the information on the parameters and tabular results on the "Sample Dataset", you can use the following URLs to access the JSON results for the default parameter selections:</p>
 <ol>
 <li>Parameters API: <code>http://localhost:8000/squirrels0/sample/v1/sample-dataset/parameters</code></li>
 <li>Dataset API: <code>http://localhost:8000/squirrels0/sample/v1/sample-dataset</code></li>
 </ol>
-<p>After you're done with the API Server, you can terminate it in the terminal using <code>ctrl-c</code>.</p>
+<p>After you're done with the API server, you can terminate it in the terminal by pressing "Ctrl+C".</p>
 <p>Now, we will use the <code>init</code> command again to add more files that'll come in handy for the rest of the tutorial. Run:</p>
 <pre><code class="language-bash">squirrels init --context --selections-cfg --final-view sql --sample-db seattle_weather
 </code></pre>
@@ -167,7 +199,8 @@
 <li><code>context.py</code>, <code>final_view.sql.j2</code>, and <code>selections.cfg</code> in the <code>datasets/sample_dataset</code> subfolder</li>
 <li><code>seattle_weather.db</code> sqlite database in the <code>database</code> folder</li>
 </ul>
-<p>Note that when specifying command line arguments to <code>squirrels init</code>, the prompt no longer show up. You can see <code>squirrels init --help</code> for more details on what various command line arguments do. Currently, all arguments except "--help" and "--overwrite" disables the prompts.</p>
+<p>Note that when specifying arguments to the <code>squirrels init</code> command, prompts no longer show up. You can see <code>squirrels init --help</code> for more details on what various command line arguments do. Currently, all arguments except "--help" and "--overwrite" disables the prompts.</p>
+<p>See the next tutorial page to <a href="../manifest/">Configure the Manifest File</a>.</p>
               
             </div>
           </div><footer>

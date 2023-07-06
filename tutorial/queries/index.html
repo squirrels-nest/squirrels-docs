@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/tutorial/queries/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/tutorial/queries/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>4. Create the SQL Queries - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -70,6 +71,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul>
@@ -84,15 +87,44 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -120,13 +152,12 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="create-the-sql-queries">Create the SQL Queries</h1>
-<p>In the <code>weather_by_time</code> dataset folder, rename <code>database_view1.sql.j2</code> to <code>aggr_weather_metrics.sql.j2</code>. The <code>final_view.sql.j2</code> file name can remain the same.</p>
-<p>In these files, we will write the analytical sql query to return tabular results for the dataset. These sql query can be templated using Jinja, with access to the <code>prms</code>, <code>ctx</code>, and <code>args</code> variables which stand for "ParameterSet", "Context", and "Arguments" respectively. More information about these variables can be found in the "<a href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>" page. For now, just know that we can access the selected parameter value(s) by using <code>prms["parameter name"]</code> in Jinja.</p>
+<p>In the <code>weather_by_time</code> dataset folder, rename <code>database_view1.sql.j2</code> to <code>aggr_weather_metrics.sql.j2</code> if you haven't already. The <code>final_view.sql.j2</code> file name can remain the same.</p>
+<p>In these files, we will write the analytical sql query to return tabular results for the dataset. These sql query can be templated using Jinja, with access to the <code>prms</code>, <code>ctx</code>, and <code>args</code> variables which stand for "Parameter Set", "Context", and "Arguments" respectively. More information about these variables can be found in the how to "<a href="../../how-to/sql-views/">Create Views with SQL and Jinja</a>" page. For now, just know that we can access the selected parameter value(s) by using <code>prms["parameter name"]</code> in Jinja.</p>
 <h2 id="define-the-database-view">Define the Database View</h2>
 <p>In <code>aggr_weather_metrics.sql.j2</code>, change its contents to the following:</p>
-<pre><code class="language-sql">{% set selected_group_by = prms[&quot;group_by&quot;].get_selected() -%}
-{% set dim_col = selected_group_by.dim_col -%}
-{% set order_col = selected_group_by.order_by_col -%}
+<pre><code class="language-sql">{% set dim_col = prms[&quot;group_by&quot;].get_selected(&quot;dim_col&quot;) -%}
+{% set order_col = prms[&quot;group_by&quot;].get_selected(&quot;order_by_col&quot;, default_field=&quot;dim_col&quot;) -%}
 
 SELECT {{ dim_col }}
     , {{ order_col }} as ordering
@@ -138,11 +169,10 @@ FROM weather
 GROUP BY {{ dim_col }}, {{ order_col }}
 </code></pre>
 <p>This query finds the average temperature, precipitation level, and wind speed by year, or by year of month, or by day of year, etc. based the selected value of the <code>group_by</code> parameter.</p>
-<p>The <code>set</code> keyword is Jinja syntax for assigning variables. The <code>prms['group_by']</code> returns a <code>SingleSelectParameter</code> (as we previously defined in <code>parameters.py</code>), which contains the method <code>.get_selected()</code> for getting the <code>ParameterOption</code> object (or more specifically, a <code>GroupByOption</code> object). Since we've defined the attributes <code>dim_col</code> and <code>order_by_col</code> in the <code>GroupByOption</code> class, we know we can access them from the <code>selected_group_by</code> variable above.</p>
+<p>The <code>set</code> keyword is Jinja syntax for assigning variables. The <code>prms['group_by']</code> returns a <code>SingleSelectParameter</code> (as we previously defined in <code>parameters.py</code>), which contains the method <code>.get_selected()</code> for getting specific fields of the selected <code>SelectParameterOption</code>. We've previously defined <code>dim_col</code> in all the options in <code>parameters.py</code>, but only specified <code>order_by_col</code> for one of the option. The <code>.get_selected()</code> has the argument "default_field" to pick <code>dim_col</code> for the <code>order_by_col</code> if <code>order_by_col</code> does not exist as a custom field.</p>
 <h2 id="define-the-final-view">Define the Final View</h2>
 <p>In <code>final_view.sql.j2</code>, change its contents to the following:</p>
-<pre><code class="language-sql">{% set selected_group_by = prms[&quot;group_by&quot;].get_selected() -%}
-{% set dim_col = selected_group_by.dim_col -%}
+<pre><code class="language-sql">{% set dim_col = prms[&quot;group_by&quot;].get_selected(&quot;dim_col&quot;) -%}
 
 SELECT {{ dim_col }}
     , temperature_high_C
@@ -156,8 +186,9 @@ ORDER BY ordering
 <ol>
 <li>The table <code>aggregate_weather_metrics</code> in the "FROM" clause is the name of the database view we defined in <code>aggr_weather_metrics.sql.j2</code>. The name was specified in <code>squirrels.yaml</code>.</li>
 <li>In this query, we are selecting all columns except the <code>ordering</code> column, which is what we use in the "ORDER BY" clause instead.</li>
-<li>The first two lines where we set the <code>selected_group_by</code> and <code>dim_col</code> variables are repeated with the database view file. The repetition can be avoided either by using <a href="https://ttl255.com/jinja2-tutorial-part-6-include-and-import/">Jinja's include/import</a>, or by using a <code>context.py</code> file which will be discussed later in the tutorial.</li>
+<li>The first line where we set <code>dim_col</code> is repeated with the database view file. This can be avoided either by using <a href="https://ttl255.com/jinja2-tutorial-part-6-include-and-import/">Jinja's include/import</a>, or by using a <code>context.py</code> file which will be discussed later in the tutorial.</li>
 </ol>
+<p>See the next tutorial page to <a href="../testapi/">Test the REST APIs</a>.</p>
               
             </div>
           </div><footer>

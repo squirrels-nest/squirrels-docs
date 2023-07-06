@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/how-to/database/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/how-to/custom-fields/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Configure Database Connections - Squirrels Documentation</title>
+    <title>Parameter Option Custom Fields - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -13,9 +13,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Configure Database Connections";
-        var mkdocs_page_input_path = "how-to\\database.md";
-        var mkdocs_page_url = "/squirrels-docs/how-to/database/";
+        var mkdocs_page_name = "Parameter Option Custom Fields";
+        var mkdocs_page_input_path = "how-to\\custom-fields.md";
+        var mkdocs_page_url = "/squirrels-docs/how-to/custom-fields/";
       </script>
     
     <script src="../../js/jquery-3.6.0.min.js" defer></script>
@@ -90,13 +90,7 @@
               </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Configure Database Connections</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#adding-a-database-connection-in-squirrelsyaml">Adding a database connection in squirrels.yaml</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#adding-a-database-connection-in-the-connectionspy-file">Adding a database connection in the connections.py file</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../database/">Configure Database Connections</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../writing-parameters/">Create Parameters</a>
                   </li>
@@ -106,7 +100,15 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../common-vary/">Design for Commonality and Variability</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../custom-fields/">Parameter Option Custom Fields</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Parameter Option Custom Fields</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-associating-custom-fields-to-parameter-options">1. Associating Custom Fields to Parameter Options</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-access-the-custom-fields-at-runtime">2. Access the Custom Fields at Runtime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specifying-custom-columns-for-datasourceparameter">Specifying Custom Columns for DataSourceParameter</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../modify-dates/">Modify Dates Using Squirrel's dateutils</a>
                   </li>
@@ -142,7 +144,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>How To... &raquo;</li>
-      <li>Configure Database Connections</li>
+      <li>Parameter Option Custom Fields</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -151,52 +153,84 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="configure-database-connections">Configure Database Connections</h1>
-<p>All database connections are currently handled by sqlalchemy in the current version, with future expansion into no-sql databases on the horizon. Database connections in the squirrels framework can be added and configured either in the <code>connections.py</code> file, or under the <code>db_connections</code> field in the manifest file (<code>squirrels.yaml</code>). These two options are provided to allow for greater flexibility in terms of project design, and one can work without the other.</p>
-<h2 id="adding-a-database-connection-in-squirrelsyaml">Adding a database connection in squirrels.yaml</h2>
-<p>To add a database connection in the squirrels.yaml file, you'll need to add the connection in the form of a collection under <code>db_connections</code>. There are two things that you'll need to add:</p>
+                <h1 id="set-parameter-option-custom-fields">Set Parameter Option Custom Fields</h1>
+<p>When building out multi-select or single-select parameters, you can associate all parameter option with a custom attribute, and access the attribute for the selected parameter option(s) at runtime in <code>context.py</code> or the query views.</p>
+<p>Suppose you want to build a parameter for "time period" that has options "Year to Date" or "Year over Year", and you want to associate each option with one of squirrel's DateModifier classes. You would:</p>
 <ol>
-<li>The name of the connection. This is the name that we'll refer to for this connection in the other files.</li>
-<li>Under the name that defines the collection, you'll need to provided a sqlalchemy url named <code>url</code> The syntax for the URL uses <a href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">sqlalchemy database URLs</a>.</li>
-<li>If you decide to use credentials, you'll also need to provide a <code>credential_key</code> in the field as well. Credentials can be set using the <code>squirrels set-credential</code> command covered here: <a href="../../cli/credentials/">credential management</a></li>
+<li>Add the custom field "date_modifier" to each parameter option in <code>parameters.py</code>. Can be specified as arbitrary keyword arguments or using the <code>custom_fields</code> argument.</li>
+<li>Access the custom "date_modifier" at runtime for the selected option, and use it to transform some date string.</li>
 </ol>
-<p>The <code>db_connections</code> section should look something like this:</p>
-<pre><code class="language-yaml">db_connections: # optional if connections.py exists
-  default:
-    url: 'sqlite:///./database/seattle_weather.db'
+<p>More details on squirrel's date modifiers can be found in the how-to guide for <a href="../modify-dates/">Modify Dates Using Squirrel's dateutils</a>.</p>
+<p>Custom fields can also come from lookup tables as "custom columns" when using the <code>custom_cols</code> argument in the constructor of <code>SelectionDataSource</code> for a <code>DataSourceParameter</code>.</p>
+<h2 id="1-associating-custom-fields-to-parameter-options">1. Associating Custom Fields to Parameter Options</h2>
+<p>In <code>parameters.py</code>, you can use arbitrary keyword arguments as follows to specify custom fields. Note the <code>date_modifier</code> keyword arguments to <code>SelectParameterOption</code>.</p>
+<pre><code class="language-python">from squirrels import dateutils as du
+import squirrels as sr
+
+...
+
+ytd_date_modifier = du.DateStringModifier([du.DayIdxOfYear(1)])
+yoy_date_modifier = du.DateStringModifier([du.OffsetYears(-1)])
+time_period_options = [
+    sr.SelectParameterOption(&quot;t0&quot;, &quot;Year to Date&quot;, date_modifier=ytd_date_modifier),
+    sr.SelectParameterOption(&quot;t1&quot;, &quot;Year over Year&quot;, date_modifier=yoy_date_modifier)
+]
+time_period_param = sr.SingleSelectParameter(&quot;time_period&quot;, &quot;Time Period&quot;, time_period_options)
 </code></pre>
-<p>If you decide to use credentials, a new field for the credential_key should be provided, and depending on the type of database used, masks for username and password can also be used. This should look something like below.</p>
-<pre><code class="language-yaml">db_connections: # optional if connections.py exists
-  default: 
-    credential_key: example # optional if null
-    url: 'sqlite://${username}:${password}@/./database/sample_database.db'
+<p>You can also specify custom fields as a dictionary using the <code>custom_fields</code> argument. This is an alternative example for "Year to Date":</p>
+<pre><code class="language-python">sr.SelectParameterOption(&quot;t0&quot;, &quot;Year to Date&quot;, custom_fields={&quot;date_modifier&quot;:ytd_date_modifier})
 </code></pre>
-<p>A connection named "default" must be specified here unless it's specified in the connections.py file. Any database view or DataSource parameter that doesn't specify a database connection will use "default".</p>
-<h2 id="adding-a-database-connection-in-the-connectionspy-file">Adding a database connection in the connections.py file</h2>
-<p>To add a connection in the <code>connections.py</code> file, you'll need to create a connection engine/pool using the same sqlalchemy URL as one would do in the <code>squirrels.yaml</code> file as well. Again, the schema for the URL can be found here: <a href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">sqlalchemy database URLs</a>. After that's created, it will then need to be passed to the return statement in the form of a python dictionary, where the key corresponding to the connection engine is the name that should be referred to in the <code>db_connection</code> field under each dataset in the <code>squirrels.yaml</code> files.</p>
-<p>If credentials are needed, they can also be added by providing the credential key to the get_credential function. And the username and passwords can be accessed with cred.username and cred.password respectively. Refer to the SQLAlchemy URL guide on how to use the credentials in the urls.</p>
-<p>The squirrel framework also allows the user to use a QueuePool in place of the create_engine function. </p>
-<pre><code class="language-python">def main(proj: Dict[str, Any], *p_args, **kwargs) -&gt; Dict[str, Union[Engine, Pool]]:
-
-    ## Example of getting the username and password set with &quot;$ squirrels set-credential [key]&quot;
-    # cred = get_credential('my_key') # then use cred.username and cred.password to access the username and password
-
-    # Create a connection pool / engine
-    pool = create_engine('sqlite:///./database/sample_database.db')
-
-    ## Example of using QueuePool instead for a custom db connector:
-    # connection_creator = lambda: sqlite3.connect('./database/sample_database.db', check_same_thread=False)
-    # pool = QueuePool(connection_creator)
-
-    return {'default': pool}
+<h2 id="2-access-the-custom-fields-at-runtime">2. Access the Custom Fields at Runtime</h2>
+<p>You can get the date modifier(s) of the selected option(s) using the <code>get_selected</code> method for <code>SingleSelectParameter</code> (returns one value) or the <code>get_selected_list</code> method for <code>MultiSelectParameter</code> (returns a list of values). Both methods take a string argument called <code>field</code> (first positional argument) that lets you get the custom field(s) for the selected option(s). If the <code>field</code> is not specified, the methods return the <code>SelectParameterOption</code> object(s) instead.</p>
+<p>Assume we have a date string to modify called <code>latest_date</code> (perhaps derived from another parameter). The following example applies the selected date_modifier of the "time_period" parameter to <code>latest_date</code>, which can be done purely in Python in the <code>context.py</code> file.</p>
+<pre><code class="language-python">time_period_param: sr.SingleSelectParameter = prms[&quot;time_period&quot;]
+date_modifier = time_period_param.get_selected(&quot;date_modifier&quot;)
+start_date = date_modifier.modify(latest_date)
 </code></pre>
-<p>A connection named "default" must be specified here unless it's specified in the squirrels.yaml file. Any database view or DataSource parameter that doesn't specify a database connection will use "default".</p>
+<p>Alternatively, the selected <code>date_modifier</code> can also be accessed like this:</p>
+<pre><code class="language-python">date_modifier = time_period_param.get_selected().custom_fields[&quot;date_modifier&quot;]
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you prefer to not use <code>context.py</code>, variables can be set in the Jinja SQL views with <code>{% set var_name = ... %}</code>.</p>
+</div>
+<h2 id="specifying-custom-columns-for-datasourceparameter">Specifying Custom Columns for DataSourceParameter</h2>
+<p>Instead of using a <code>date_modifier</code>, suppose that the start date comes from a lookup table in the database instead. For instance, the lookup table can look like the following where the "start_date_column" gets updated regularly.</p>
+<table>
+<thead>
+<tr>
+<th align="left">time_period_id</th>
+<th align="left">time_period_label</th>
+<th align="left">start_date_column</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">t0</td>
+<td align="left">Year to Date</td>
+<td align="left">2023-01-01</td>
+</tr>
+<tr>
+<td align="left">t1</td>
+<td align="left">Year over Year</td>
+<td align="left">2022-07-02</td>
+</tr>
+</tbody>
+</table>
+<p>Instead of specifying a <code>SingleSelectParameter</code> for <code>time_period_param</code>, it can be a <code>DataSourceParameter</code> (using <code>custom_cols</code>) that converts itself into a <code>SingleSelectParameter</code> instead.</p>
+<pre><code class="language-python">time_period_ds = sr.SelectionDataSource(&quot;time_period_table&quot;, &quot;time_period_id&quot;, &quot;time_period_label&quot;, custom_cols={&quot;start_date&quot;: &quot;start_date_column&quot;})
+time_period_param = sr.DataSourceParameter(sr.SingleSelectParameter, &quot;time_period&quot;, &quot;Time Period&quot;, time_period_ds)
+</code></pre>
+<p>Then, in <code>context.py</code>, the selected start date can be accessed as follows.</p>
+<pre><code class="language-python">time_period_param: sr.SingleSelectParameter = prms[&quot;time_period&quot;]
+start_date = time_period_param.get_selected(&quot;start_date&quot;)
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../topics/versioning/" class="btn btn-neutral float-left" title="Major vs Minor Version (Best Practices)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../writing-parameters/" class="btn btn-neutral float-right" title="Create Parameters">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../common-vary/" class="btn btn-neutral float-left" title="Design for Commonality and Variability"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../modify-dates/" class="btn btn-neutral float-right" title="Modify Dates Using Squirrel's dateutils">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -219,10 +253,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../topics/versioning/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../common-vary/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../writing-parameters/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../modify-dates/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

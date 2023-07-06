@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/how-to/common-vary/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/how-to/common-vary/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
     <title>Design for Commonality and Variability - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -64,6 +65,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul>
@@ -78,17 +81,50 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../cli/run/">run</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Design for Commonality and Variability</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#sharing-common-sql-syntax-using-jinja-import-and-macros">Sharing common SQL syntax using Jinja import and macros</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sharing-code-with-python">Sharing code with Python</a>
+    </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -116,11 +152,144 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="design-for-commonality-and-variability">Design for Commonality and Variability</h1>
+<h2 id="sharing-common-sql-syntax-using-jinja-import-and-macros">Sharing common SQL syntax using Jinja import and macros</h2>
+<p>In order to avoid duplications, the Jinja2 framework supports the use of macros to save a piece of SQL code template that can be used by other templates. To those unfamiliar with the term macro, a macro is essentially Jinja's analogy to a function. As we are using Jinja2 for our SQL templates, the squirrels framework supports the use of macros in all its SQL/Jinja files. </p>
+<p>To provide an example, let's say that you are analyzing the geographical distribution of different phone makers in the United States. For that purpose, you have three tables from different datasources that you've imported into your database, each with different schemas: </p>
+<ol>
+<li><code>tbl_android_users</code></li>
+<li><code>tbl_users_apple</code></li>
+<li><code>tbl_dumbphone_users</code></li>
+</ol>
+<p>All these tables have columns for user ID, location (city, county, state, etc), and phone ID, and you want a view with all the users, the state or the city (depending on the parameter), the type of phone they use, and a count of the number of phones that they have. For this example let's say that you have <code>parameters.py</code> defined in the following manner, where location is a single-select parameter that specifies the location with the following options <code>City</code>, <code>County</code>, and <code>State</code>.  </p>
+<pre><code class="language-python">def main(args: Dict[str, Any], *p_args, **kwargs) -&gt; Sequence[sr.Parameter]:
+
+    location_options = [
+        sr.SelectParameterOption('0', 'City', column = 'CITY'),
+        sr.SelectParameterOption('1', 'County', column = 'COUNTY'),
+        sr.SelectParameterOption('2', 'State', column = 'STATE')
+    ]
+
+    location_param = sr.SingleSelectParameter('location', 'Location', location_options)
+
+    return [location_param]
+</code></pre>
+<p>If you were to write out the full query, you'd have something like this.</p>
+<pre><code class="language-sql">SELECT 
+    ID_USER as USER_ID,
+    {{ prms['location'].get_selected(&quot;column&quot;) }},
+    'Android' AS PHONE_TYPE,
+    COUNT(DISTINCT PHONE_ID) AS CELL_COUNT  
+FROM TBL_ANDROID_USERS
+GROUP BY USER_ID, {{ prms['location'].get_selected(&quot;column&quot;) }}
+UNION ALL
+SELECT 
+    ID_ACCT as USER_ID,
+    {{ prms['location'].get_selected(&quot;column&quot;) }},
+    'Apple' AS PHONE_TYPE,
+    COUNT(DISTINCT PHONE_ID) AS CELL_COUNT  
+FROM TBL_USERS_APPLE
+GROUP BY USER_ID, {{ prms['location'].get_selected(&quot;column&quot;) }}
+UNION ALL
+SELECT 
+    ID_CUST as USER_ID,
+    {{ prms['location'].get_selected(&quot;column&quot;) }},
+    'DumbPhone' AS PHONE_TYPE,
+    COUNT(DISTINCT CELL_ID) AS CELL_COUNT  
+FROM TBL_DUMBPHONE_USERS
+GROUP BY USER_ID, {{ prms['location'].get_selected(&quot;column&quot;) }}
+</code></pre>
+<p>Pretty repetitive, huh? </p>
+<p>Instead of writing out the entire thing, one way we can simplify this is to write a generic subquery in the form of a macro in a seperate file, which we'll name <code>macros.sql.j2</code>. Inside this file, we will need to define a macro by writing:</p>
+<pre><code class="language-sql">{% macro phone_macro(phone_table, user_id_column, phone_id_name, phone_type_name, location) -%}
+SELECT 
+    {{ user_id_column }} as USER_ID,
+    {{ location }},
+    '{{ phone_type_name }}' AS PHONE_TYPE,
+    COUNT(DISTINCT {{ phone_id_name }}) AS CELL_COUNT  
+FROM {{ phone_table }}
+GROUP BY USER_ID, {{ location }}
+{%- endmacro -%}
+</code></pre>
+<p>Here, a macro named <code>phone_macro</code> is defined, followed by the required variables. These variables can then be used by the definition of the macro with double curly brackets. The final <code>{%- endmacro -%}</code> commands specifies the end of the definition. </p>
+<p>Suppose the file is saved in the "datasets" folder. The macro can be imported into the main script by specifying the path of the script (relative to the project root), and the name of the macro. </p>
+<pre><code class="language-sql">{% from 'datasets/macros.sql.j2' import phone_macro -%}
+</code></pre>
+<p>The macro can then be called by using double curly braces, and passing in the variables in the following manner:</p>
+<pre><code class="language-sql">{{ phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', prms['location'].get_selected(&quot;column&quot;)) }}
+</code></pre>
+<p>An alternative way to refer to the "phone_macro" can also be done as such:</p>
+<pre><code class="language-sql">{% import 'datasets/macros.sql.j2' as m -%}
+
+{{ m.phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', prms['location'].get_selected(&quot;column&quot;)) }}
+</code></pre>
+<p>Rewriting the original script to use macros, we get something with much less duplicate code:</p>
+<pre><code class="language-sql">{% from 'datasets/macros.sql.j2' import phone_macro -%}
+
+{% set location_col = prms['location'].get_selected(&quot;column&quot;) -%}
+
+{{ phone_macro('TBL_ANDROID_USERS', 'ID_USER', 'Android', 'PHONE_ID', location_col) }}
+UNION ALL
+{{ phone_macro('TBL_USERS_APPLE', 'ID_ACCT', 'Apple', 'PHONE_ID', location_col) }}
+UNION ALL
+{{ phone_macro('TBL_DUMBPHONE_USERS', 'ID_CUST', 'DumbPhone', 'CELL_ID', location_col) }}
+</code></pre>
+<p>Please note that this is only one possible use case, and that there are millions of other use cases. For some more possible use cases, this guide <a href="https://towardsdatascience.com/jinja-sql-%EF%B8%8F-7e4dff8d8778">here</a> provides some other use cases of macros used in sql Jinja templates. Although this is not squirrels specific, it should still serve as a nice reference. </p>
+<h2 id="sharing-code-with-python">Sharing code with Python</h2>
+<p>Similar to using Jinja and SQL, you can also import functions from other scripts using Python as well. </p>
+<p>To give an example, suppose that you have multiple different dataframes from different sources that you'd like to standardize by renaming the columns, and return joined table of all of them. If you were to do that all in the same script with the power of copy/pasting, you might have something like this:</p>
+<pre><code class="language-python">from typing import Dict, Any
+import pandas as pd
+import squirrels as sr
+
+
+def main(database_views: Dict[str, pd.DataFrame], 
+         prms: Dict[str, sr.Parameter], ctx: Dict[str, Any], args: Dict[str, Any], 
+         *p_args, **kwargs) -&gt; pd.DataFrame:
+    df1 = database_views['database_view1'].rename(columns={&quot;user_id&quot;: &quot;id_user&quot;, &quot;geo_id&quot;: &quot;location&quot;, &quot;account_id&quot;: &quot;id_acct&quot;})
+    df1 = df1[[&quot;id_user&quot;,&quot;location&quot;,&quot;id_acct&quot;]]
+
+    df2 = database_views['database_view2'].rename(columns={&quot;us_id&quot;: &quot;id_user&quot;, &quot;state&quot;: &quot;location&quot;, &quot;id_a&quot;: &quot;id_acct&quot;})
+    df2 = df2[[&quot;id_user&quot;,&quot;location&quot;,&quot;id_acct&quot;]]
+
+    df3 = database_views['database_view3'].rename(columns={&quot;cust_id&quot;: &quot;id_user&quot;, &quot;city&quot;: &quot;location&quot;, &quot;account_num&quot;: &quot;id_acct&quot;})
+    df3 = df3[[&quot;id_user&quot;,&quot;location&quot;,&quot;id_acct&quot;]]
+
+    return pd.concat([df1, df2, df3], ignore_index = True)
+</code></pre>
+<p>(This is also a prime example of horrible style, please don't write code like this).</p>
+<p>In the seperate script, which we will name <code>functions.py</code>, we can create a function named <code>standardize</code>.</p>
+<pre><code class="language-python">import pandas as pd
+
+def standardize(df: pd.DataFrame, id_user_col: str, location_col: str, id_acct_col: str) -&gt; pd.DataFrame:
+    df = df.rename(columns={id_user_col: &quot;id_user&quot;, location_col: &quot;location&quot;, id_acct_col: &quot;id_acct&quot;})
+    return df[[&quot;id_user&quot;,&quot;location&quot;,&quot;id_acct&quot;]]
+</code></pre>
+<p>Suppose <code>functions.py</code> is saved in the datasets folder. In the main script, we would then be able to import the file relative to the root of the project:</p>
+<pre><code class="language-python">from datasets import functions as f
+</code></pre>
+<p>Rewriting the first example would result in something like the following:</p>
+<pre><code class="language-python">from typing import Dict, Any
+import pandas as pd
+import squirrels as sr
+
+from datasets import functions as f
+
+def main(database_views: Dict[str, pd.DataFrame], 
+         prms: Dict[str, sr.Parameter], ctx: Dict[str, Any], args: Dict[str, Any], 
+         *p_args, **kwargs) -&gt; pd.DataFrame:
+
+    df1 = f.standardize(database_views['database_view1'])
+    df2 = f.standardize(database_views['database_view2'])
+    df3 = f.standardize(database_views['database_view3'])
+    return pd.concat([df1, df2, df3], ignore_index = True)
+</code></pre>
+<p>Again, this is a pretty simple example, and importing scripts would allow for much more complex data manipulations to be organized and written in a much more readable manner.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../database/" class="btn btn-neutral float-left" title="Configure Database Connections"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../python-views/" class="btn btn-neutral float-left" title="Create Views with Python"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../custom-fields/" class="btn btn-neutral float-right" title="Parameter Option Custom Fields">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -143,8 +312,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../database/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../python-views/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../custom-fields/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

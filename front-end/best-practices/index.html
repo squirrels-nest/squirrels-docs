@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/tutorial/testapi/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/front-end/best-practices/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>5. Activate the REST APIs & Test - Squirrels Documentation</title>
+    <title>Best Practices for Using REST API Response - Squirrels Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -13,9 +13,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "5. Activate the REST APIs \u0026 Test";
-        var mkdocs_page_input_path = "tutorial\\testapi.md";
-        var mkdocs_page_url = "/squirrels-docs/tutorial/testapi/";
+        var mkdocs_page_name = "Best Practices for Using REST API Response";
+        var mkdocs_page_input_path = "front-end\\best-practices.md";
+        var mkdocs_page_url = "/squirrels-docs/front-end/best-practices/";
       </script>
     
     <script src="../../js/jquery-3.6.0.min.js" defer></script>
@@ -50,26 +50,22 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Tutorial</span></p>
-              <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/installation/">Installation</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../initialize/">1. Initialize a Squirrels Project</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/initialize/">1. Initialize a Squirrels Project</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../manifest/">2. Configure the Manifest File</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/manifest/">2. Configure the Manifest File</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../parameters/">3. Create the Dataset Parameters</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/parameters/">3. Create the Dataset Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../queries/">4. Create the SQL Queries</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/queries/">4. Create the SQL Queries</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">5. Activate the REST APIs & Test</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#test-the-rendered-sql-queries">Test the Rendered SQL Queries</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/testapi/">5. Activate the REST APIs & Test</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../context/">6. Use the Context File</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/context/">6. Use the Context File</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../conclusion/">What's Next?</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorial/conclusion/">What's Next?</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
@@ -110,12 +106,14 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Front-End Reference</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/response/">Response Schema</a>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../response/">Response Schema</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/selections/">Passing Parameter Selections</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../selections/">Passing Parameter Selections</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Best Practices for Using REST API Response</a>
+    <ul class="current">
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Release Notes</span></p>
@@ -139,8 +137,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Tutorial &raquo;</li>
-      <li>5. Activate the REST APIs & Test</li>
+          <li>Front-End Reference &raquo;</li>
+      <li>Best Practices for Using REST API Response</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -149,42 +147,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="test-the-rest-apis">Test the REST APIs</h1>
-<p>In the <code>weather_by_time</code> datasets folder, go into <code>context.py</code> and replace the body of the <code>main</code> function to:</p>
-<pre><code class="language-python">return {}
-</code></pre>
-<p>We will discuss the <code>context.py</code> file later in the tutorial, but for now, we are clearing it such that we can activate the REST APIs without errors.</p>
-<p>To activate the API server, simply run:</p>
-<pre><code class="language-bash">squirrels run --debug
-</code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code>--debug</code> argument is optional here. This is specified to be able to test with hidden parameters, though no hidden parameters were set up for this tutorial. See <code>squirrels run --help</code> or the "<a href="../../cli/run/">run command line</a>" page for more details.</p>
-</div>
-<p>Then, in a web browser, go to <code>http://localhost:8000/</code> to interact with the dataset APIs you've just created using the Squirrels UI!</p>
-<p>Remember to shut down the API server by pressing "Ctrl+C" before proceeding to the next step.</p>
-<h2 id="test-the-rendered-sql-queries">Test the Rendered SQL Queries</h2>
-<p>In practice, you may wish to review what the rendered SQL queries look like (for some set of parameter selections) before actually running the queries.</p>
-<p>To do this for the <code>weather_by_time</code> dataset (using the default parameter selections), run:</p>
-<pre><code class="language-bash">squirrels test weather_by_time
-</code></pre>
-<p>This creates the folder path <code>outputs/weather_by_time</code> with the generated SQL queries (without actually running them). Take a look at the files in the folder to see what got generated. To run the generated queries as well, and write results as csv files, use the following to command.</p>
-<pre><code class="language-bash">squirrels test weather_by_time --runquery
-</code></pre>
-<p>We can also test on non-default parameter selections. In the dataset folder, change the contents of the <code>selections.cfg</code> file to: </p>
-<pre><code class="language-config">[parameters]
-group_by = 2
-</code></pre>
-<p>When we define multiple parameters, the order of the parameters specified here must be the same as the order as defined in the <code>parameters.py</code> file (especially if cascading parameters exist). The "2" is the ID of the "Month" option for the <code>group_by</code> parameter. Run the following to render the SQL queries with <code>selections.cfg</code>:</p>
-<pre><code class="language-bash">squirrels test weather_by_time --cfg selections.cfg
-</code></pre>
-<p>See <code>squirrels test --help</code> or the page for the "<a href="../../cli/test/">test command line</a>" for more details. See the next tutorial page to <a href="../context/">Use the Context File</a>.</p>
+                <h1 id="best-practices-for-using-rest-api-response">Best Practices for Using REST API Response</h1>
+<p>Here are some best practices around using the response of the parameters and dataset API.</p>
+<ol>
+<li>If choosing to cache the response, the cache key should incorporate all query parameters, the "x-minor-version" header, and the "x-num-decimals" header. And coordinate with the data team to understand how frequently the back-end data changes to decide on an appropriate time-to-live for the cache. However, note that there is some level of caching done by the squirrels project already.</li>
+<li>Sometimes, the set of dataset columns can be different based on query parameters provided. If you are uploading the results to a database table with a fixed schema, then columns in the database table and not the dataset API response should be null. Also, columns in the dataset API response but not the database table should be ignored.</li>
+<li>The standard for new minor version of the dataset API should be that no existing columns are removed (though this is not the standard for new major versions). However, the ordering of the columns is not guaranteed. Thus when processing the result, use columns by name and not by its order.</li>
+</ol>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../queries/" class="btn btn-neutral float-left" title="4. Create the SQL Queries"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../context/" class="btn btn-neutral float-right" title="6. Use the Context File">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../selections/" class="btn btn-neutral float-left" title="Passing Parameter Selections"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../release-notes/v-0-1-1/" class="btn btn-neutral float-right" title="Version 0.1.1 (July 2, 2023)">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -207,10 +182,10 @@ group_by = 2
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../queries/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../selections/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../context/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../release-notes/v-0-1-1/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

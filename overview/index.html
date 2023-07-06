@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ty2huang.github.io/squirrels-docs/overview/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://squirrels-nest.github.io/squirrels-docs/overview/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
     <title>Overview - Squirrels Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../static/style.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -47,6 +48,44 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">Overview</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#the-squirrels-framework">The Squirrels Framework</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#features">Features</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dynamic-queries-with-sql-jinja-or-python">Dynamic Queries with SQL Jinja or Python</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#api-access-to-datasets">API Access to Datasets</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cascading-parameters">Cascading Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#in-memory-caching">In-memory Caching</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#context-variables">Context Variables</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#database-and-final-views">Database and Final Views</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#framework-workflow">Framework Workflow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#0-initialize-query">0. Initialize Query</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#1-parameter-retrieval-caching">1. Parameter Retrieval &amp; Caching</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-parameter-setting">2. Parameter Setting</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-generating-database-views">3. Generating Database Views</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-running-the-database-queries">4. Running the Database Queries</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-running-the-final-view-query">5. Running the Final View Query</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-sending-back-the-results">6. Sending back the results</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#applications">Applications</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -66,6 +105,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../tutorial/context/">6. Use the Context File</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial/conclusion/">What's Next?</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Command Line Reference</span></p>
               <ul>
@@ -80,15 +121,44 @@
                   <li class="toctree-l1"><a class="reference internal" href="../cli/run/">run</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Topic Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../topics/manifest/">Manifest File (squirrels.yaml)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../topics/versioning/">Major vs Minor Version (Best Practices)</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">How To...</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../how-to/database/">Configure Database Connections</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../sql-views.md">Create Views with SQL and Jinja</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/writing-parameters/">Create Parameters</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../python-views.md">Create Views with Python</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/sql-views/">Create Views with SQL and Jinja</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/python-views/">Create Views with Python</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../how-to/common-vary/">Design for Commonality and Variability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/custom-fields/">Parameter Option Custom Fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/modify-dates/">Modify Dates Using Squirrel's dateutils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Front-End Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../front-end/response/">Response Schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../front-end/selections/">Passing Parameter Selections</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../front-end/best-practices/">Best Practices for Using REST API Response</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Release Notes</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../release-notes/v-0-1-1/">Version 0.1.1 (July 2, 2023)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../release-notes/v-0-1-0/">Version 0.1.0 (June 11, 2023)</a>
                   </li>
               </ul>
       </div>
@@ -115,6 +185,43 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="overview">Overview</h1>
+<h2 id="the-squirrels-framework">The Squirrels Framework</h2>
+<p>Squirrels is a dynamic and flexible framework designed to simplify and automate data analysis tasks for Business Intelligence and data analytics professionals, while easing the burden on data and machine learning engineers. It allows users to generate complex SQL queries dynamically, based on query parameters, and deliver tabular results. The framework is designed to answer evolving business questions and is particularly useful when the volume of data increases over time.</p>
+<p>With a primary focus on reusability and flexibility, Squirrels allows for query logic to be stored and shared across multiple applications, thus promoting efficient use of resources and time. The framework makes it possible to create REST APIs that perform calculations, offering parameter values via query parameters and delivering tabular results via the response body.</p>
+<h2 id="features">Features</h2>
+<h3 id="dynamic-queries-with-sql-jinja-or-python">Dynamic Queries with SQL Jinja or Python</h3>
+<p>Squirrels utilizes Jinja as a templating language for rendering complex SQL queries. These queries are grouped into 'datasets', enabling the dynamic generation of queries based on business needs. Additionally, Squirrels supports Python to generate dynamic queries, providing a more flexible tool for handling NoSQL databases and for executing more complex transformations when needed." </p>
+<h3 id="api-access-to-datasets">API Access to Datasets</h3>
+<p>Applications can access these datasets and their associated parameters via well-defined API endpoints.</p>
+<h3 id="cascading-parameters">Cascading Parameters</h3>
+<p>The framework supports dynamic cascading parameters that adjust based on the selected values. These parameters can be specified within the dataset folder or fetched from database lookup tables.</p>
+<h3 id="in-memory-caching">In-memory Caching</h3>
+<p>After the first API call, the framework caches parameter objects in memory, enhancing the performance of subsequent calls.</p>
+<h3 id="context-variables">Context Variables</h3>
+<p>Squirrels allows for the creation of "context variables" at runtime, based on selected parameters. These context variables, along with fixed project variables, can be used within templated SQL queries.</p>
+<h3 id="database-and-final-views">Database and Final Views</h3>
+<p>Templated SQL queries or Python scripts are rendered to run against one or more databases to generate "database views". These views are then combined to form the final result or "final view". For improved scalability, this operation is performed in the API server's memory. The results are cached based on query parameters for efficiency.</p>
+<h2 id="framework-workflow">Framework Workflow</h2>
+<h3 id="0-initialize-query">0. Initialize Query</h3>
+<p>When a GET request is made to the base resource path of a project, all available datasets within the project are returned.</p>
+<h3 id="1-parameter-retrieval-caching">1. Parameter Retrieval &amp; Caching</h3>
+<p>If a GET request is made to a specific dataset's parameters, all relevant parameter details for that dataset are fetched and cached. This could involve retrieving data from a <code>parameters.py</code> file in the project's dataset folder or from database lookup tables. Once these objects are cached in memory, subsequent API requests will not need to query the database for parameter details again.</p>
+<h3 id="2-parameter-setting">2. Parameter Setting</h3>
+<p>For each API request, a copy of the cached parameters is created, and parameter values are assigned from the query parameters. These copies allow for concurrent API requests without risking parameter selection overrides.</p>
+<h3 id="3-generating-database-views">3. Generating Database Views</h3>
+<p>Next, templated SQL queries or Python scripts are rendered to create "database views" by the dataset API. The queries can access Python variables for parameter objects, context variables, or project variables.</p>
+<h3 id="4-running-the-database-queries">4. Running the Database Queries</h3>
+<p>The generated queries are then run against the database, and the results are then fetched back to the API.</p>
+<h3 id="5-running-the-final-view-query">5. Running the Final View Query</h3>
+<p>Finally, a "final view" is created in the API server's memory, which consolidates all the database views to generate the final result for the dataset. The final view is also cached based on the query parameters provided, such that repeated API requests do not require redundant work.</p>
+<h3 id="6-sending-back-the-results">6. Sending back the results</h3>
+<p>The results are then sent back to the client by the server in the form of a JSON file using the schema outlined here: <a href="../front-end/response/">Front End Response</a>.</p>
+<p><img alt="Squirrels Backend" src="../static/squirrels-backend-workflow.png" /></p>
+<h2 id="applications">Applications</h2>
+<p>Squirrels' versatility makes it a handy tool for various data analytics scenarios, extending beyond just financial data. It can be used to create APIs for analyzing weather metrics by time period/location, demographics of population segments, or revenue/expenses for various business segments.</p>
+<p>In essence, Squirrels is a powerful framework that promotes flexible, reusable, and efficient data analysis and answers evolving business questions, ensuring that your BI and data analysis is always ahead of the curve.</p>
+<p>Here's an example diagram of how a Squirrels project might be set up to have multiple datasets querying from multiple databases:</p>
+<p><img alt="Framework Flow Chart" src="../static/framework_flow_chart.png" /></p>
               
             </div>
           </div><footer>
