@@ -1,69 +1,56 @@
 # Configure Database Connections
 
-All database connections are currently handeled by sqlalchemy in the current version, with future expansion into no-sql databases on the horizon. Database connections in the squirrels framework can be added and configured either the `connections.py` file, or under the `db_connections` field in the manifest file (`squirrels.yaml`). These two options are provided to allow for greater flexibility in terms of project design. They have the equal functionalities, one can work without the other.
+All database connections are currently handled by sqlalchemy in the current version, with future expansion into no-sql databases on the horizon. Database connections in the squirrels framework can be added and configured either in the `connections.py` file, or under the `db_connections` field in the manifest file (`squirrels.yaml`). These two options are provided to allow for greater flexibility in terms of project design, and one can work without the other.
 
 ## Adding a database connection in squirrels.yaml
 
-To add a database connection in the squirrels.yaml file, you'll need to add the connection in the form of a collection under the `db_connections` collection. There are two things that you'll need to add:
-1. The name of the connection, which, for example, is `default` in the seattle_weather.db. This is the name that we'll refer to for this connection in the other files
-2. Under the name that defines the collection, you'll need to provided a sqlalchemy url named `url`
-3. If you decide to use credentials, you'll also need to provide a `credential_key` in the field as well. TODO, ask Tim how this actually works
+To add a database connection in the squirrels.yaml file, you'll need to add the connection in the form of a collection under `db_connections`. There are two things that you'll need to add:
 
-The syntax for the URL uses [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls). Since sqlite databases don't require a username and password, the `credential_key` field can be omitted. More details on setting and using credential keys can be found on the pages for "[credential management]" command line reference and how to "[Configure Database Connections]".
+1. The name of the connection. This is the name that we'll refer to for this connection in the other files.
+2. Under the name that defines the collection, you'll need to provided a sqlalchemy url named `url` The syntax for the URL uses [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls).
+3. If you decide to use credentials, you'll also need to provide a `credential_key` in the field as well. Credentials can be set using the `squirrels set-credential` command covered here: [credential management](../cli/credentials.md)
 
-The `db_connections` section should now look like this:
+The `db_connections` section should look something like this:
 
 ```yaml
-db_connections:
+db_connections: # optional if connections.py exists
   default:
     url: 'sqlite:///./database/seattle_weather.db'
 ```
-if you decide to use credentials, the section should look something like this:
+
+If you decide to use credentials, a new field for the credential_key should be provided, and depending on the type of database used, masks for username and password can also be used. This should look something like below.
 
 ```yaml
 db_connections: # optional if connections.py exists
   default: 
-    credential_key: null # optional if null
+    credential_key: example # optional if null
     url: 'sqlite://${username}:${password}@/./database/sample_database.db'
 ```
 
+A connection named "default" must be specified here unless it's specified in the connections.py file. Any database view or DataSource parameter that doesn't specify a database connection will use "default".
+
 ## Adding a database connection in the connections.py file
 
-To add a connection in the connections.py file, you'll need to initialize a connector using the `partial()` function on whichever connection function is used by your database, and add in the name of the connection in the form of a QueuePool as a python library in the return statement of the `main()` function in the `connections.py` script.
+To add a connection in the `connections.py` file, you'll need to create a connection engine/pool using the same sqlalchemy URL as one would do in the `squirrels.yaml` file as well. Again, the schema for the URL can be found here: [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls). After that's created, it will then need to be passed to the return statement in the form of a python dictionary, where the key corresponding to the connection engine is the name that should be referred to in the `db_connection` field under each dataset in the `squirrels.yaml` files.
 
-TODO, make sure with Tim on the requirements of the connector
+If credentials are needed, they can also be added by providing the credential key to the get_credential function. And the username and passwords can be accessed with cred.username and cred.password respectively. Refer to the SQLAlchemy URL guide on how to use the credentials in the urls.
+
+The squirrel framework also allows the user to use a QueuePool in place of the create_engine function. 
 
 ```python
-    # cred = sq.get_credential('my_key')
-    # user, pw = cred.username, cred.password
+def main(proj: Dict[str, Any], *p_args, **kwargs) -> Dict[str, Union[Engine, Pool]]:
+
+    ## Example of getting the username and password set with "$ squirrels set-credential [key]"
+    # cred = get_credential('my_key') # then use cred.username and cred.password to access the username and password
+
+    # Create a connection pool / engine
+    pool = create_engine('sqlite:///./database/sample_database.db')
+
+    ## Example of using QueuePool instead for a custom db connector:
+    # connection_creator = lambda: sqlite3.connect('./database/sample_database.db', check_same_thread=False)
+    # pool = QueuePool(connection_creator)
     
-    sample_db_connector = partial(sqlite3.connect, './database/colleges.db', check_same_thread=False)
-    return ConnectionSet({
-        'my_db': QueuePool(sample_db_connector)
-    })
+    return {'default': pool}
 ```
 
-
-
-
-
-
-
-Next, create a squirrels database connection key. To do this, go in the `connections.py` file, and change the sqlalchemy url to the `seattle_weather.db` database.
-
-In the return statement, you may change the `my_db` key to a new name of your choice for the database connection key. For the rest of this tutorial, we will assume the profile name is `sqlite_db`.
-
-At this point, your `connections.py` file should look something like this (ignoring comments).
-
-```python
-from typing import Dict
-from sqlalchemy import create_engine, QueuePool
-
-from squirrels import ConnectionSet, get_credential
-
-def main(proj: Dict[str, str], *args, **kwargs) -> ConnectionSet:
-    pool = create_engine('sqlite:///./database/seattle_weather.db')
-    return ConnectionSet({'sqlite_db': pool})
-```
-
-In the `squirrels.yaml` file, set the `db_connection` to `sqlite_db`.
+A connection named "default" must be specified here unless it's specified in the squirrels.yaml file. Any database view or DataSource parameter that doesn't specify a database connection will use "default".

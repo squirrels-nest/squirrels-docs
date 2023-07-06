@@ -46,14 +46,14 @@ Go ahead and take a quick glance at the new files (no need to fully understand t
 squirrels run
 ```
 
-In a web browser, go to `http://localhost:8000/` or `http://127.0.0.1:8000/`. This leads you to the Squirrels UI, a convenient interface for testing the dataset APIs. Without changing the widget parameters, clicking "Apply" will show you the dataset for the default parameter selections. For now, the "Upper Bound" parameter is the only one that affects the dataset results.
+In a web browser, go to `http://localhost:8000/` or `http://127.0.0.1:8000/`. This leads you to the Squirrels UI, a convenient interface for testing the dataset APIs. Without changing the widget parameters, click the "Apply" button to display the dataset for the default parameter selections (take some time now to generate various datasets using different parameter selections).
 
 To see the API endpoints that provides the information on the parameters and tabular results on the "Sample Dataset", you can use the following URLs to access the JSON results for the default parameter selections:
 
 1. Parameters API: `http://localhost:8000/squirrels0/sample/v1/sample-dataset/parameters`
 2. Dataset API: `http://localhost:8000/squirrels0/sample/v1/sample-dataset`
 
-After you're done with the API Server, you can terminate it in the terminal using `ctrl-c`.
+After you're done with the API server, you can terminate it in the terminal by pressing "Ctrl+C".
 
 Now, we will use the `init` command again to add more files that'll come in handy for the rest of the tutorial. Run:
 
@@ -66,4 +66,6 @@ The following files have been added.
 - `context.py`, `final_view.sql.j2`, and `selections.cfg` in the `datasets/sample_dataset` subfolder
 - `seattle_weather.db` sqlite database in the `database` folder
 
-Note that when specifying command line arguments to `squirrels init`, the prompt no longer show up. You can see `squirrels init --help` for more details on what various command line arguments do. Currently, all arguments except "--help" and "--overwrite" disables the prompts.
+Note that when specifying arguments to the `squirrels init` command, prompts no longer show up. You can see `squirrels init --help` for more details on what various command line arguments do. Currently, all arguments except "--help" and "--overwrite" disables the prompts.
+
+See the next tutorial page to [Configure the Manifest File](manifest.md).

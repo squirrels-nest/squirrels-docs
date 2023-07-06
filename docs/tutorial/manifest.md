@@ -2,7 +2,7 @@
 
 Go to the `squirrels.yaml` file. This is the manifest file to configure most of the properties of the Squirrels project.
 
-In this tutorial, we will focus on the `project_variables`, `db_connections`, and `datasets` sections. We will also assume that all comments in the [yaml] file (every '#' to end of line) are removed.
+In this tutorial, we will focus on the `project_variables`, `db_connections`, and `datasets` sections.
 
 ## Setting the Project Variables
 
@@ -21,11 +21,11 @@ project_variables:
 
 ## Setting the Database Connections
 
-This section is where we set all the database connection details that we need. We provide a list of connection names here and refer to them in other files. The connection name `default` must be provided for database views (and `DataSourceParameter`, which will be mentioned later) that don't specify a connection name explicitly.
+This section is where we set all the database connection details that we need. We provide a list of connection names here and refer to them in other files. The connection name `default` must be provided for components with sql queries that don't specify a connection name explicitly.
 
 Under `default`, change the url from `sqlite://${username}:${password}@/./database/sample_database.db` to `sqlite:///./database/seattle_weather.db`.
 
-The syntax for the URL uses [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls). Since sqlite databases don't require a username and password, the `credential_key` field can be omitted. More details on setting and using credential keys can be found on the pages for "[credential management]" command line reference and how to "[Configure Database Connections]".
+The syntax for the URL uses [sqlalchemy database URLs](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls). Since sqlite databases don't require a username and password, the `credential_key` field can be either set to null or omitted entirely. More details on setting and using credential keys can be found in the pages for "[credential management]" command line reference and how to "[Configure Database Connections]".
 
 The `db_connections` section should now look like this:
 
@@ -44,19 +44,14 @@ This section is where we define the attributes for all datasets created by the s
 
 Currently, there is one dataset with the name `sample_dataset` (and label `Sample Dataset`). Change the name to `weather_by_time`, and change the label to `Weather by Time of Year`.
 
-Every dataset defined would have 0 or more `database_views` and exactly 1 `final_view`. Each of the `database_views`/`final_view` can either be 
+Every dataset defined would have 0 or more `database_views` and exactly 1 `final_view`. Each of the `database_views` and `final_view` can either be: 
 
-1. A string for the file name of the SQL file (templated with [Jinja]) or Python file to run, or 
-2. An object with the `file` key and additional optional keys such as `db_connection` and `args`. 
+1. A string for the file name of the SQL file (templated with [Jinja]) or Python file to run. Or...
+2. An object with the `file` key (for the same file name in item 1 above) and additional optional keys such as `db_connection` and `args`. 
 
-In addition to being a templated SQL or Python file, the `final_view` can also be the name of one of the database views. 
-
-!!! Note
-    At runtime, all the database views for the dataset are run in parallel. If the final view is a SQL file, all the database view results are loaded into an in-memory sqlite database where the table names are the same as the database view names. If the final view is a Python file, the database view results are accessible as a dictionary of database view names to pandas Dataframes. More details on writing final views will come later in the tutorial.
+In addition to being a templated SQL or Python file, the `final_view` can also be a string for the name of one of the database views. For database views, if `db_connection` is not specified (including if the value is string for file name instead of object), then "default" is used for `db_connection`.
 
 Change the name `database_view1` to `aggregate_weather_metrics`, and replace its value from an object to the string `aggr_weather_metrics.sql.j2`. Change the value of `final_view` to `final_view.sql.j2`.
-
-You may also remove the optional `args` key to the `weather_by_time` dataset. The `datasets` section should now look like this:
 
 ```yaml
 datasets:
@@ -67,11 +62,13 @@ datasets:
     final_view: final_view.sql.j2
 ```
 
-Every dataset that's set in the `datasets` section must also have a matching folder name in `datasets` folder. In the `datasets` folder, rename `sample_dataset` to `weather_by_time`.
+Every dataset that's set in the `datasets` section must also have a matching folder name in `datasets` folder. In the `datasets` folder, rename `sample_dataset` to `weather_by_time`. Inside the folder, rename `database_view1.sql.j2` to `aggr_weather_metrics.sql.j2`.
 
+More details on the manifest file can be found in the [Manifest File] topic guide. See the next tutorial page to [Create the Dataset Parameters](parameters.md).
 
 [credential management]: ../cli/credentials.md
 [Configure Database Connections]: ../how-to/database.md
+[Manifest File]: ../topics/manifest.md
 
 [yaml]: https://yaml.org/
 [Jinja]: https://jinja.palletsprojects.com/

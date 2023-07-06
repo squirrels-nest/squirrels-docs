@@ -1,12 +1,8 @@
 # Introducing Squirrels
 
-A Python API framework for generating dynamic queries for analytics.
-
----
-
-Squirrels is an API framework for creating APIs that generate SQL queries & dataframes dynamically from query parameters. 
+Squirrels is a Python API framework for creating APIs that generate SQL queries & dataframes dynamically from query parameters. 
  
-Start by reading through [Tutorial] pages. Or check out the [Overview] page for understanding the framework.
+Get started by going through the [Tutorial]. Or check out the [Overview] page for understanding the framework.
 
 [Tutorial]: tutorial/installation.md
 [Overview]: overview.md
